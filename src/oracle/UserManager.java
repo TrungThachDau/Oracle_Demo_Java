@@ -942,10 +942,6 @@ public class UserManager extends javax.swing.JFrame {
     private javax.swing.JTextField txtSearch;
     private javax.swing.JTextField txtTK;
     // End of variables declaration//GEN-END:variables
-
-    private void RemoveTableItem(JTable table) {
-        DefaultTableModel model = (DefaultTableModel) table.getModel();
-            model.setRowCount(0);
-            table.removeAll();
-    }
 }
+    
+
