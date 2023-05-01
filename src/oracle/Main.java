@@ -212,6 +212,24 @@ public class Main extends javax.swing.JFrame {
                 i.printStackTrace();
             }
           }
+         else if(ckbRemeberMe.isSelected()==false)
+          {
+             try {
+                FileOutputStream fileOut = new FileOutputStream("login.dat");
+                ObjectOutputStream out = new ObjectOutputStream(fileOut);
+                out.writeObject("");
+                out.writeObject("");
+                out.close();
+                fileOut.close();
+            } catch (IOException i) {
+                i.printStackTrace();
+            }
+          }
+          else
+          {
+                JOptionPane.showMessageDialog(null, "Lỗi");
+          }
+
           
 
 

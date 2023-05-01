@@ -10,6 +10,7 @@ import java.sql.*;
 import java.util.Vector;
 
 import javax.swing.JOptionPane;
+import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 /**
  *
@@ -55,6 +56,8 @@ public class PGA extends javax.swing.JFrame {
 
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
+        txtSearch = new javax.swing.JTextField();
+        btnSeach = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setName("PGA"); // NOI18N
@@ -72,25 +75,49 @@ public class PGA extends javax.swing.JFrame {
         ));
         jScrollPane1.setViewportView(jTable1);
 
+        txtSearch.setFocusCycleRoot(true);
+
+        btnSeach.setText("Tìm");
+        btnSeach.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSeachActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jScrollPane1)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 549, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(14, Short.MAX_VALUE))
+                .addGap(233, 233, 233)
+                .addComponent(txtSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 307, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnSeach, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(264, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 371, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(15, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtSearch, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnSeach, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 10, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 469, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnSeachActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSeachActionPerformed
+        // TODO add your handling code here:
+        try {
+            Search();
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Lỗi truy vấn: " + ex.getMessage(), "Lỗi", JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_btnSeachActionPerformed
     public void loadData() throws SQLException
     {
         try
@@ -123,7 +150,7 @@ public class PGA extends javax.swing.JFrame {
         } catch(SQLException ex)
         {
             JOptionPane.showMessageDialog(null, "Lỗi truy vấn: " + ex.getMessage(), "Lỗi", JOptionPane.ERROR_MESSAGE);
-            Logger.getLogger(SGA.class.getName()).log(Level.SEVERE, null, ex);
+           
         }
     }
     /**
@@ -160,9 +187,52 @@ public class PGA extends javax.swing.JFrame {
             }
         });
     }
-
+public void Search() throws SQLException
+    {
+        RemoveTableItem(jTable1);
+        
+        try
+        {
+            oracle.openConnection();
+            String sql = "Select * from V$PROCESS_MEMORY where PID like '%"+txtSearch.getText()+"%'";
+            Statement stmt = oracle.conn.createStatement();
+            ResultSet rs = stmt.executeQuery(sql);
+            while(rs.next())
+            {String pid = rs.getString("PID");
+                String serial = rs.getString("SERIAL#");
+                String category = rs.getString("CATEGORY");
+                String allocated = rs.getString("ALLOCATED");
+                String used = rs.getString("USED");
+                String max = rs.getString("MAX_ALLOCATED");
+                String conid = rs.getString("CON_ID");
+                Vector<String> v = new Vector<String>();
+                v.add(pid);
+                v.add(serial);
+                v.add(category);
+                v.add(allocated);
+                v.add(used);
+                v.add(max);
+                v.add(conid);
+                vdata.add(v);         
+            }
+            
+            jTable1.updateUI();
+            oracle.closeConnection();
+        } catch(SQLException ex)
+        {
+            JOptionPane.showMessageDialog(null, "Lỗi truy vấn: " + ex.getMessage(), "Lỗi", JOptionPane.ERROR_MESSAGE);
+        }
+        
+    }
+private void RemoveTableItem(JTable table) {
+        DefaultTableModel model = (DefaultTableModel) table.getModel();
+            model.setRowCount(0);
+            table.removeAll();
+    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnSeach;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
+    private javax.swing.JTextField txtSearch;
     // End of variables declaration//GEN-END:variables
 }

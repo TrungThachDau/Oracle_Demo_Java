@@ -94,6 +94,8 @@ public class UserManager extends javax.swing.JFrame {
         btnUnlockUser = new javax.swing.JButton();
         ResetPassword = new javax.swing.JLabel();
         btnChangePassword = new javax.swing.JButton();
+        txtSearch = new javax.swing.JTextField();
+        btnSearch = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         addWindowListener(new java.awt.event.WindowAdapter() {
@@ -406,13 +408,25 @@ public class UserManager extends javax.swing.JFrame {
                 .addContainerGap(64, Short.MAX_VALUE))
         );
 
+        btnSearch.setText("Tìm");
+        btnSearch.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSearchActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 441, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 441, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(txtSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 350, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnSearch)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -423,14 +437,18 @@ public class UserManager extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(40, 40, 40)
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(txtSearch, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnSearch))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jScrollPane1))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(layout.createSequentialGroup()
-                .addGap(38, 38, 38)
-                .addComponent(jScrollPane1)
-                .addContainerGap())
         );
 
         jPanel2.getAccessibleContext().setAccessibleName("");
@@ -726,6 +744,14 @@ public class UserManager extends javax.swing.JFrame {
             
         }
     }//GEN-LAST:event_btnChangePasswordActionPerformed
+
+    private void btnSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearchActionPerformed
+        try {
+                           Search();
+                       } catch (SQLException ex) {
+                           JOptionPane.showMessageDialog(null, "Lỗi truy vấn: " + ex.getMessage(), "Lỗi", JOptionPane.ERROR_MESSAGE);
+                       }          // TODO add your handling code here:
+    }//GEN-LAST:event_btnSearchActionPerformed
     
 
     /**
@@ -779,6 +805,48 @@ public class UserManager extends javax.swing.JFrame {
             Logger.getLogger(SGA.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+    public void Search() throws SQLException
+    {
+        RemoveTableItem(jTable1);
+        
+        try
+        {
+            oracle.openConnection();
+            String sql = "select username,account_status, profile,default_tablespace, last_login  from dba_users WHERE username LIKE '%"+txtSearch.getText()+"%'";
+            Statement stmt = oracle.conn.createStatement();
+            ResultSet rs = stmt.executeQuery(sql);
+            while(rs.next())
+            {
+                String one = rs.getString("USERNAME");
+                String two = rs.getString("ACCOUNT_STATUS");
+                String three = rs.getString("PROFILE");
+                String four = rs.getString("DEFAULT_TABLESPACE");
+                String five = rs.getString("LAST_LOGIN");
+                
+                
+                Vector<String> v = new Vector<String>();
+                v.add(one);
+                v.add(two);
+                v.add(three);
+                v.add(four);
+                v.add(five);
+                vdata.add(v);
+                     
+            }
+            
+            jTable1.updateUI();
+            oracle.closeConnection();
+        } catch(SQLException ex)
+        {
+            JOptionPane.showMessageDialog(null, "Lỗi truy vấn: " + ex.getMessage(), "Lỗi", JOptionPane.ERROR_MESSAGE);
+        }
+        
+    }
+    private void RemoveTableItem(JTable table) {
+            DefaultTableModel model = (DefaultTableModel) table.getModel();
+                model.setRowCount(0);
+                table.removeAll();
+        }
     public void loadComboBox(JComboBox<String> jComboBox, String sql,String rowname)
     {
         try {
@@ -847,6 +915,7 @@ public class UserManager extends javax.swing.JFrame {
     private javax.swing.JButton btnRevokeProfile;
     private javax.swing.JButton btnRevokeRole;
     private javax.swing.JButton btnRevokeSession;
+    private javax.swing.JButton btnSearch;
     private javax.swing.JButton btnUnlockUser;
     private javax.swing.JComboBox<String> cbbProfile;
     private javax.swing.JComboBox<String> cbbRole;
@@ -870,6 +939,7 @@ public class UserManager extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
     private javax.swing.JTextField txtMK;
+    private javax.swing.JTextField txtSearch;
     private javax.swing.JTextField txtTK;
     // End of variables declaration//GEN-END:variables
 
