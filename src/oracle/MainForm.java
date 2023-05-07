@@ -50,6 +50,7 @@ public class MainForm extends javax.swing.JFrame {
         SessionManager = new javax.swing.JMenuItem();
         Tablespace = new javax.swing.JMenuItem();
         jMenuItem7 = new javax.swing.JMenuItem();
+        jMenuItem8 = new javax.swing.JMenuItem();
         jMenu4 = new javax.swing.JMenu();
         menuItemRole = new javax.swing.JMenuItem();
         menuItemUser = new javax.swing.JMenuItem();
@@ -157,6 +158,14 @@ public class MainForm extends javax.swing.JFrame {
             }
         });
         jMenu3.add(jMenuItem7);
+
+        jMenuItem8.setText("Chính sách");
+        jMenuItem8.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem8ActionPerformed(evt);
+            }
+        });
+        jMenu3.add(jMenuItem8);
 
         jMenuBar1.add(jMenu3);
 
@@ -308,8 +317,7 @@ public class MainForm extends javax.swing.JFrame {
         // TODO add your handling code here:
         
         
-            datafile fm = new datafile();
-        fm.setVisible(true);
+            new Tablespaceview().setVisible(true);
         
         
     }//GEN-LAST:event_TablespaceActionPerformed
@@ -363,6 +371,11 @@ public class MainForm extends javax.swing.JFrame {
         AuditView fm = new AuditView();
         fm.setVisible(true);
     }//GEN-LAST:event_jMenuItem7ActionPerformed
+
+    private void jMenuItem8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem8ActionPerformed
+        // TODO add your handling code here:
+        new Policy().setVisible(true);
+    }//GEN-LAST:event_jMenuItem8ActionPerformed
     
     /**
      * @param args the command line arguments
@@ -421,6 +434,7 @@ public class MainForm extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem5;
     private javax.swing.JMenuItem jMenuItem6;
     private javax.swing.JMenuItem jMenuItem7;
+    private javax.swing.JMenuItem jMenuItem8;
     private javax.swing.JLabel lbl_last_login;
     private javax.swing.JLabel lbl_username;
     private javax.swing.JMenuItem menuItemChangePw;

@@ -27,6 +27,7 @@ public class BackupDB extends javax.swing.JFrame {
      */
     OracleConnection oracle;
     public BackupDB() {
+        oracle = new OracleConnection();
         initComponents();
     }
 
@@ -44,6 +45,8 @@ public class BackupDB extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         btnXuatSQL = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jTextArea1 = new javax.swing.JTextArea();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Sao lưu Cơ sở dữ liệu");
@@ -57,12 +60,18 @@ public class BackupDB extends javax.swing.JFrame {
 
         jLabel1.setText("Chọn đường dẫn");
 
-        btnXuatSQL.setText("Xuất ra SQL");
+        btnXuatSQL.setText("Sao lưu");
         btnXuatSQL.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnXuatSQLActionPerformed(evt);
             }
         });
+
+        jTextArea1.setEditable(false);
+        jTextArea1.setColumns(20);
+        jTextArea1.setRows(5);
+        jTextArea1.setText("\n");
+        jScrollPane1.setViewportView(jTextArea1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -76,11 +85,15 @@ public class BackupDB extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jButton1))
                     .addGroup(layout.createSequentialGroup()
+                        .addGap(122, 122, 122)
+                        .addComponent(btnXuatSQL))
+                    .addGroup(layout.createSequentialGroup()
                         .addGap(100, 100, 100)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnXuatSQL))))
-                .addContainerGap(138, Short.MAX_VALUE))
+                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(17, 17, 17)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 638, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(23, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -91,9 +104,11 @@ public class BackupDB extends javax.swing.JFrame {
                     .addComponent(jLabel1))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 11, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 23, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnXuatSQL)
-                .addGap(37, 37, 37))
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 284, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         pack();
@@ -118,11 +133,11 @@ public class BackupDB extends javax.swing.JFrame {
         if (result == JOptionPane.YES_OPTION)
         {
             String path = jLabel2.getText();
-            File file = new File(path + "\\export_schema.dmp");
+            File file = new File(path + "\\admin.dmp");
                 if (file.exists()) {
                     file.delete();
                 }
-                file = new File(path + "\\export_schema.log");
+                file = new File(path + "\\expdpadmin.log");
                 if (file.exists()) {
                     file.delete();
                 }
@@ -132,32 +147,33 @@ public class BackupDB extends javax.swing.JFrame {
                 String sql = "CREATE OR REPLACE DIRECTORY dmpdir AS '" + path + "'";
                 Statement st = oracle.conn.createStatement();
                 st.executeUpdate(sql);
-            
+                oracle.closeConnection();
                 
     
-             } catch (Exception e) {
+             } catch (Exception ex) {
+                  JOptionPane.showMessageDialog(null, "Lỗi truy vấn: " + ex.getMessage(), "Lỗi", JOptionPane.ERROR_MESSAGE);
                 // TODO: handle exception
              }
              
             try {
-                JOptionPane.showMessageDialog(null, "Đang xuất dữ liệu");
-                String cmd = "expdp '/ as sysdba' directory=dmpdir dumpfile=export_schema.dmp logfile=export_schema.log schemas=admin";
+                
+                //String cmd = "expdp '/ as sysdba' directory=dmpdir dumpfile=export_schema.dmp logfile=export_schema.log schemas=admin";
+                String cmd="expdp \"'/ as sysdba'\" schemas=admin directory=DMPDIR dumpfile=admin.dmp logfile=expdpadmin.log";
                 ProcessBuilder pb = new ProcessBuilder("cmd.exe", "/c", cmd);
                 pb.redirectErrorStream(true);
                 Process p = pb.start();
                 BufferedReader in = new BufferedReader(new InputStreamReader(p.getInputStream()));
                 String line = null;
                 while ((line = in.readLine()) != null) {
+                    jTextArea1.append(line+"\n");
                     System.out.println(line);
                     
                 }
                 in.close();
                 p.waitFor();
-                JOptionPane.showMessageDialog(null, "Xuất thành công");
+                JOptionPane.showMessageDialog(null, "Xong!");
             } catch (IOException e) {
-    
-    
-    
+                    
             } catch (InterruptedException e) {
             }
         }
@@ -215,5 +231,7 @@ public class BackupDB extends javax.swing.JFrame {
     private javax.swing.JFileChooser jFileChooser1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTextArea jTextArea1;
     // End of variables declaration//GEN-END:variables
 }

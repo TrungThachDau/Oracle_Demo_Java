@@ -3,7 +3,14 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/D:/GitHub/Oracle_Demo_Java/src/oracle/Tablespaceview.java</file>
+            <file>file:/D:/GitHub/Oracle_Demo_Java/src/oracle/Policy.java</file>
+            <file>file:/D:/GitHub/Oracle_Demo_Java/src/oracle/SGA.java</file>
+            <file>file:/D:/GitHub/Oracle_Demo_Java/src/oracle/BackupDB.java</file>
+            <file>file:/D:/GitHub/Oracle_Demo_Java/src/oracle/Main.java</file>
+            <file>file:/D:/GitHub/Oracle_Demo_Java/src/oracle/RestoreDB.java</file>
+            <file>file:/D:/GitHub/Oracle_Demo_Java/src/oracle/BackupRestore.java</file>
+            <file>file:/D:/GitHub/Oracle_Demo_Java/src/oracle/RoleManager.java</file>
+            <file>file:/D:/GitHub/Oracle_Demo_Java/src/oracle/Instance.java</file>
         </group>
     </open-files>
 </project-private>

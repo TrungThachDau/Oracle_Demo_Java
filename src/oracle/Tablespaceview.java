@@ -11,6 +11,7 @@ import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -27,14 +28,12 @@ public class Tablespaceview extends javax.swing.JFrame {
     OracleConnection oracle;
     public Tablespaceview() {
         initComponents();
-    setTitle("Quản lý phiên");
+    setTitle("Tablespace");
         oracle = new OracleConnection();
-        vheader.add("SID");
-        vheader.add("Serial");
-        vheader.add("Chương trình");
-        vheader.add("Người dùng");
-        vheader.add("Trạng thái");
-        vheader.add("Thiết bị");
+        vheader.add("ID tệp");
+        vheader.add("Tên tablespace");
+        vheader.add("Đường dẫn Datafile");
+        vheader.add("Kích thước");
         jTable1.setModel(new DefaultTableModel(vdata, vheader));
         try {
             loadData();
@@ -70,6 +69,19 @@ public class Tablespaceview extends javax.swing.JFrame {
         btnTao = new javax.swing.JButton();
         txtTuMoRong = new javax.swing.JTextField();
         txtTablespaceName = new javax.swing.JTextField();
+        jPanel2 = new javax.swing.JPanel();
+        jLabel8 = new javax.swing.JLabel();
+        jLabel9 = new javax.swing.JLabel();
+        jLabel10 = new javax.swing.JLabel();
+        txtDFName = new javax.swing.JTextField();
+        jLabel11 = new javax.swing.JLabel();
+        txtDFSize = new javax.swing.JTextField();
+        jLabel12 = new javax.swing.JLabel();
+        txtAutoExtendDF = new javax.swing.JTextField();
+        jLabel13 = new javax.swing.JLabel();
+        txtMaxDF = new javax.swing.JTextField();
+        btnThemDBF = new javax.swing.JButton();
+        btnXoaTableSpace = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         addWindowListener(new java.awt.event.WindowAdapter() {
@@ -126,7 +138,7 @@ public class Tablespaceview extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 143, Short.MAX_VALUE)
                     .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -147,7 +159,7 @@ public class Tablespaceview extends javax.swing.JFrame {
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(jPanel1Layout.createSequentialGroup()
                                         .addComponent(txtDF2Name, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 19, Short.MAX_VALUE)
                                         .addComponent(jLabel6))
                                     .addGroup(jPanel1Layout.createSequentialGroup()
                                         .addGap(4, 4, 4)
@@ -158,7 +170,7 @@ public class Tablespaceview extends javax.swing.JFrame {
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(txtTuMoRongToiDa, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(txtDF2Size, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                        .addContainerGap(12, Short.MAX_VALUE))
+                        .addContainerGap(24, Short.MAX_VALUE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(txtTablespaceName, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
@@ -186,16 +198,110 @@ public class Tablespaceview extends javax.swing.JFrame {
                     .addComponent(txtDF2Size, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel6))
                 .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(txtTuMoRongToiDa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jLabel4)
-                        .addComponent(jLabel5)
-                        .addComponent(txtTuMoRong, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel4)
+                    .addComponent(jLabel5)
+                    .addComponent(txtTuMoRong, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtTuMoRongToiDa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(btnTao)
                 .addContainerGap(11, Short.MAX_VALUE))
         );
+
+        jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("Bổ sung Datafile"));
+
+        jLabel8.setText("Tablespace đã chọn");
+
+        jLabel10.setText("Tên Datafile");
+
+        jLabel11.setText("Kích cỡ");
+
+        jLabel12.setText("Tự mở rộng");
+
+        jLabel13.setText("Tối đa");
+
+        btnThemDBF.setText("Thêm");
+        btnThemDBF.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnThemDBFActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(20, 20, 20)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(jPanel2Layout.createSequentialGroup()
+                                        .addGap(2, 2, 2)
+                                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                            .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                                .addComponent(jLabel11, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                .addGap(48, 48, 48))))
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                                        .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(60, 60, 60))
+                                    .addGroup(jPanel2Layout.createSequentialGroup()
+                                        .addGap(1, 1, 1)
+                                        .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(txtDFName)
+                                    .addComponent(txtDFSize)
+                                    .addComponent(txtMaxDF)
+                                    .addComponent(txtAutoExtendDF, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 148, Short.MAX_VALUE)))))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(btnThemDBF)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(17, 17, 17)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel8)
+                    .addComponent(jLabel9))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel10)
+                    .addComponent(txtDFName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel11)
+                    .addComponent(txtDFSize, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel12)
+                    .addComponent(txtAutoExtendDF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(17, 17, 17)
+                        .addComponent(jLabel13))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(18, 18, 18)
+                        .addComponent(txtMaxDF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(18, 18, 18)
+                .addComponent(btnThemDBF)
+                .addContainerGap(16, Short.MAX_VALUE))
+        );
+
+        btnXoaTableSpace.setText("Xóa Tablespace");
+        btnXoaTableSpace.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnXoaTableSpaceActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -203,21 +309,28 @@ public class Tablespaceview extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 496, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(274, 274, 274))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 1016, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnXoaTableSpace))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(224, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(37, 37, 37)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 356, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(10, 10, 10)
-                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(20, Short.MAX_VALUE))
+                .addGap(53, 53, 53)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(47, Short.MAX_VALUE))
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 468, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(btnXoaTableSpace)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
 
         pack();
@@ -245,15 +358,16 @@ public class Tablespaceview extends javax.swing.JFrame {
         String df1Size=txtDF1Size.getText();
         String df2Name=txtDF2Name.getText();
         String df2Size=txtDF2Size.getText();
+        String tuMoRong = txtTuMoRong.getText();
         String tuMoRongToiDa=txtTuMoRongToiDa.getText();
         String sql="";
-        if(df2Name==null || df2Size==null)
+        if(df2Name.equals("")|| df2Size.equals(""))
         {
-            sql="CREATE TABLESPACE "+txtTablespaceName+" DATAFILE '"+df1Name+"' SIZE "+df1Size+"M AUTOEXTEND ON NEXT "+txtTuMoRong+"M MAXSIZE "+txtTuMoRongToiDa+"M";
+            sql="CREATE TABLESPACE "+tablespaceName+" DATAFILE '"+df1Name+"' SIZE "+df1Size+"M AUTOEXTEND ON NEXT "+tuMoRong+"M MAXSIZE "+tuMoRongToiDa+"M";
         }
         else
         {
-            sql="CREATE TABLESPACE "+txtTablespaceName+" DATAFILE '"+df1Name+"' SIZE "+df1Size+"M AUTOEXTEND ON NEXT "+txtTuMoRong+"M MAXSIZE "+txtTuMoRongToiDa+"M, DATAFILE '"+df1Name+"' SIZE "+df1Size+"M AUTOEXTEND ON NEXT "+txtTuMoRong+"M MAXSIZE "+txtTuMoRongToiDa+"M";
+            sql="CREATE TABLESPACE "+tablespaceName+" DATAFILE '"+df1Name+"' SIZE "+df1Size+"M AUTOEXTEND ON NEXT "+tuMoRong+"M MAXSIZE "+tuMoRongToiDa+"M, '"+df2Name+"' SIZE "+df2Size+"M AUTOEXTEND ON NEXT "+tuMoRong+"M MAXSIZE "+tuMoRongToiDa+"M";
         }
         
         try {
@@ -262,12 +376,66 @@ public class Tablespaceview extends javax.swing.JFrame {
             stmt.executeUpdate(sql);
             JOptionPane.showMessageDialog(this, "Tạo thành công");
             oracle.closeConnection();
+            RemoveTableItem(jTable1);
+            loadData();
         } catch (SQLException ex) {
-           JOptionPane.showMessageDialog(null, "Lỗi truy vấn: " + ex.getMessage(), "Lỗi", JOptionPane.ERROR_MESSAGE);
-        
+           JOptionPane.showMessageDialog(null, "Lỗi truy vấn: " + ex.getMessage(), "Lỗi", JOptionPane.ERROR_MESSAGE);        
         }
     
     }//GEN-LAST:event_btnTaoActionPerformed
+
+    private void btnThemDBFActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThemDBFActionPerformed
+        // TODO add your handling code here:
+        
+        String tablespaceName=jLabel9.getText();
+        String dfName=txtDFName.getText();
+        String dfSize=txtDFSize.getText();
+        String tuMoRong = txtTuMoRong.getText();
+        String tuMoRongToiDa=txtTuMoRongToiDa.getText();
+        String sql="ALTER TABLESPACE "+tablespaceName+" ADD DATAFILE '"+dfName+"' SIZE "+dfSize+"M AUTOEXTEND ON NEXT "+tuMoRong+"M MAXSIZE "+tuMoRongToiDa+"M";
+        try {
+            oracle.openConnection();
+            Statement stmt=oracle.conn.createStatement();
+            stmt.executeUpdate(sql);
+            JOptionPane.showMessageDialog(this, "Thêm thành công");
+            oracle.closeConnection();
+            RemoveTableItem(jTable1);
+            loadData();
+        } catch (SQLException ex) {
+           JOptionPane.showMessageDialog(null, "Lỗi truy vấn: " + ex.getMessage(), "Lỗi", JOptionPane.ERROR_MESSAGE);        
+        }
+    }//GEN-LAST:event_btnThemDBFActionPerformed
+
+    private void btnXoaTableSpaceActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnXoaTableSpaceActionPerformed
+        // TODO add your handling code here:
+        if (jLabel9.getText().equals("")) {
+            JOptionPane.showMessageDialog(this, "Chọn tablespace cần xóa");
+        }
+        else
+        {
+            if(JOptionPane.showConfirmDialog(this, "Bạn có chắc chắn muốn xóa "+jLabel9.getText()+" không?")==JOptionPane.YES_OPTION)
+            {
+
+                String tablespaceName=jLabel9.getText();
+                String sql="DROP TABLESPACE "+tablespaceName+" INCLUDING CONTENTS AND DATAFILES";
+                try {
+                    oracle.openConnection();
+                    Statement stmt=oracle.conn.createStatement();
+                    stmt.executeUpdate(sql);
+                    JOptionPane.showMessageDialog(this, "Xóa thành công");
+                    oracle.closeConnection();
+                    RemoveTableItem(jTable1);
+                    loadData();
+                } catch (SQLException ex) {
+                JOptionPane.showMessageDialog(null, "Lỗi truy vấn: " + ex.getMessage(), "Lỗi", JOptionPane.ERROR_MESSAGE);        
+                }
+            }
+            else
+            {
+                JOptionPane.showMessageDialog(this, "Xóa không thành công");
+            }
+        }
+    }//GEN-LAST:event_btnXoaTableSpaceActionPerformed
         
 
     /**
@@ -281,33 +449,33 @@ public class Tablespaceview extends javax.swing.JFrame {
         Vector vRow=(Vector)vdata.get(selectedrow);
         String Code=(String)vRow.get(0);
         String Name=(String)vRow.get(1);
-      
+        jLabel9.setText(Name);
         
     }
     public void loadData() throws SQLException
     {
-        try
+         try
         {
             oracle.openConnection();
-            String sql = "SELECT SID, SERIAL#, PROGRAM, USERNAME, STATUS,MACHINE FROM V$SESSION";
+            String sql = "SELECT file_id,file_name, tablespace_name, bytes/1024/1024 as size_mb\n" +
+"FROM dba_data_files";
             Statement stmt = oracle.conn.createStatement();
             ResultSet rs = stmt.executeQuery(sql);
             while(rs.next())
             {
-                String one = rs.getString("SID");
-                String two = rs.getString("SERIAL#");
-                String three = rs.getString("PROGRAM");
-                String four = rs.getString("USERNAME");
-                String five = rs.getString("STATUS");
-                String six = rs.getString("MACHINE");
+                String one = rs.getString("FILE_ID");
+                String two = rs.getString("FILE_NAME");
+                String three = rs.getString("TABLESPACE_NAME");
+                String four = rs.getString("SIZE_MB");
+                
                 
                 Vector<String> v = new Vector<String>();
                 v.add(one);
-                v.add(two);
                 v.add(three);
+                v.add(two);
+                
                 v.add(four);
-                v.add(five);
-                v.add(six);
+                
                 
                 vdata.add(v);
                 
@@ -316,8 +484,13 @@ public class Tablespaceview extends javax.swing.JFrame {
             oracle.closeConnection();
         } catch(SQLException ex)
         {
-            Logger.getLogger(SGA.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(null, "Lỗi truy vấn: " + ex.getMessage(), "Lỗi", JOptionPane.ERROR_MESSAGE);
         }
+    }
+    private void RemoveTableItem(JTable table) {
+        DefaultTableModel model = (DefaultTableModel) table.getModel();
+            model.setRowCount(0);
+            table.removeAll();
     }
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
@@ -354,20 +527,33 @@ public class Tablespaceview extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnTao;
+    private javax.swing.JButton btnThemDBF;
+    private javax.swing.JButton btnXoaTableSpace;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel12;
+    private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
+    private javax.swing.JTextField txtAutoExtendDF;
     private javax.swing.JTextField txtDF1Name;
     private javax.swing.JTextField txtDF1Size;
     private javax.swing.JTextField txtDF2Name;
     private javax.swing.JTextField txtDF2Size;
+    private javax.swing.JTextField txtDFName;
+    private javax.swing.JTextField txtDFSize;
+    private javax.swing.JTextField txtMaxDF;
     private javax.swing.JTextField txtTablespaceName;
     private javax.swing.JTextField txtTuMoRong;
     private javax.swing.JTextField txtTuMoRongToiDa;

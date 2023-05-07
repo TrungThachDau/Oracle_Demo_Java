@@ -33,32 +33,46 @@ public class RestoreDB extends javax.swing.JFrame {
     private void initComponents() {
 
         btnKhoiPhuc = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jTextArea1 = new javax.swing.JTextArea();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Khôi phục Cơ sở dữ liệu");
 
-        btnKhoiPhuc.setText("Khôi phục");
+        btnKhoiPhuc.setText("Phục hồi");
         btnKhoiPhuc.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnKhoiPhucActionPerformed(evt);
             }
         });
 
+        jTextArea1.setEditable(false);
+        jTextArea1.setColumns(20);
+        jTextArea1.setRows(5);
+        jScrollPane1.setViewportView(jTextArea1);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(54, 54, 54)
-                .addComponent(btnKhoiPhuc)
-                .addContainerGap(62, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(18, 18, 18)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 664, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(302, 302, 302)
+                        .addComponent(btnKhoiPhuc)))
+                .addContainerGap(22, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(46, 46, 46)
                 .addComponent(btnKhoiPhuc)
-                .addContainerGap(55, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 321, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(28, Short.MAX_VALUE))
         );
 
         pack();
@@ -71,7 +85,7 @@ public class RestoreDB extends javax.swing.JFrame {
         {
             try {
             
-                String cmd = "impdp '/ as sysdba' directory=dmpdir dumpfile=export_schema.dmp logfile=import_schema.log schemas=admin";
+                String cmd = "impdp '/ as sysdba' directory=dmpdir dumpfile=admin.dmp logfile=import_schema.log schemas=admin";
                 ProcessBuilder pb = new ProcessBuilder("cmd.exe", "/c", cmd);
                 pb.redirectErrorStream(true);
                 Process p = pb.start();
@@ -79,7 +93,7 @@ public class RestoreDB extends javax.swing.JFrame {
                 String line = null;
                 while ((line = in.readLine()) != null) {
                     System.out.println(line);
-                    
+                    jTextArea1.append(line+"\n");
                 }
                 in.close();
                 p.waitFor();
@@ -134,5 +148,7 @@ public class RestoreDB extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnKhoiPhuc;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTextArea jTextArea1;
     // End of variables declaration//GEN-END:variables
 }

@@ -128,7 +128,7 @@ public class BackupRestore extends javax.swing.JFrame implements ActionListener 
         try{
              Connection conn = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:orcl", "sys as SYSDBA", "140102");
         
-        String sql = "expdp sys as sysdba/140102@localhost:1521/ORCL " + "directory="+dir+" "+ "dumpfile=/path/to/backup_dir/backup.dmp " + "logfile=/path/to/backup_dir/backup.log";
+        String sql = "expdp sys as sysdba/123@localhost:1521/ORCL " + "directory="+dir+" "+ "dumpfile=/path/to/backup_dir/backup.dmp " + "logfile=/path/to/backup_dir/backup.log";
         Process process = Runtime.getRuntime().exec(sql);
          int exitStatus = process.waitFor();
             if (exitStatus == 0) {

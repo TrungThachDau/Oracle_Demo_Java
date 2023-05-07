@@ -27,7 +27,7 @@ public class datafile extends javax.swing.JFrame {
     OracleConnection oracle;
     public datafile() {
         initComponents();
-    setTitle("Tablespace");
+        setTitle("Tablespace");
         oracle = new OracleConnection();
         vheader.add("ID tệp");
         vheader.add("Đường dẫn");
