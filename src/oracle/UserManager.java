@@ -94,6 +94,9 @@ public class UserManager extends javax.swing.JFrame {
         btnUnlockUser = new javax.swing.JButton();
         ResetPassword = new javax.swing.JLabel();
         btnChangePassword = new javax.swing.JButton();
+        jLabel13 = new javax.swing.JLabel();
+        btnGrantTable = new javax.swing.JButton();
+        btnRevokeTable = new javax.swing.JButton();
         txtSearch = new javax.swing.JTextField();
         btnSearch = new javax.swing.JButton();
 
@@ -297,6 +300,22 @@ public class UserManager extends javax.swing.JFrame {
             }
         });
 
+        jLabel13.setText("Truy cập dữ liệu");
+
+        btnGrantTable.setText("Gán");
+        btnGrantTable.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnGrantTableActionPerformed(evt);
+            }
+        });
+
+        btnRevokeTable.setText("Thu hồi");
+        btnRevokeTable.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRevokeTableActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -328,7 +347,11 @@ public class UserManager extends javax.swing.JFrame {
                                         .addComponent(BtnLockUser)
                                         .addGap(18, 18, 18)
                                         .addComponent(btnUnlockUser))
-                                    .addComponent(btnChangePassword)))
+                                    .addComponent(btnChangePassword)
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addComponent(btnGrantTable)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(btnRevokeTable, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE))))
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                     .addGroup(jPanel1Layout.createSequentialGroup()
@@ -344,19 +367,19 @@ public class UserManager extends javax.swing.JFrame {
                                         .addGap(18, 18, 18)
                                         .addComponent(RevokeDBA))
                                     .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                        .addContainerGap(14, Short.MAX_VALUE))
+                        .addGap(10, 10, 10))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(cbbRole, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                             .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                .addComponent(cbbProfile, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jLabel10, javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(jLabel11, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jLabel12, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 125, Short.MAX_VALUE)
-                                .addComponent(ResetPassword, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                            .addComponent(cbbProfile, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jLabel10, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel11, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jLabel12, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 125, Short.MAX_VALUE)
+                            .addComponent(ResetPassword, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jLabel13, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addGap(0, 0, Short.MAX_VALUE))))
         );
         jPanel1Layout.setVerticalGroup(
@@ -405,7 +428,12 @@ public class UserManager extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(ResetPassword)
                     .addComponent(btnChangePassword))
-                .addContainerGap(64, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel13)
+                    .addComponent(btnGrantTable)
+                    .addComponent(btnRevokeTable))
+                .addContainerGap(31, Short.MAX_VALUE))
         );
 
         btnSearch.setText("Tìm");
@@ -431,7 +459,7 @@ public class UserManager extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(140, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -752,6 +780,56 @@ public class UserManager extends javax.swing.JFrame {
                            JOptionPane.showMessageDialog(null, "Lỗi truy vấn: " + ex.getMessage(), "Lỗi", JOptionPane.ERROR_MESSAGE);
                        }          // TODO add your handling code here:
     }//GEN-LAST:event_btnSearchActionPerformed
+
+    private void btnGrantTableActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGrantTableActionPerformed
+        // TODO add your handling code here:
+        String username = jLabel6.getText();
+        try {
+            oracle.openConnection();
+            Statement stmt;
+            stmt = oracle.conn.createStatement();
+             String sql = "GRANT SELECT,INSERT,UPDATE,DELETE ON ADMIN.NHANVIEN TO "+username+"";
+             String sql1 = "GRANT SELECT,INSERT,UPDATE,DELETE ON ADMIN.BAN TO "+username+"";
+            String sql2 = "GRANT SELECT,INSERT,UPDATE,DELETE ON ADMIN.DONHANG TO "+username+"";
+            String sql3 = "GRANT SELECT,INSERT,UPDATE,DELETE ON ADMIN.SANPHAM TO "+username+"";
+            String sql4 = "GRANT SELECT,INSERT,UPDATE,DELETE ON ADMIN.CHITIETDONHANG TO "+username+"";
+            ResultSet rset = stmt.executeQuery(sql);
+            ResultSet rset1 = stmt.executeQuery(sql1);
+            ResultSet rset2 = stmt.executeQuery(sql2);
+            ResultSet rset3 = stmt.executeQuery(sql3);
+            ResultSet rset4 = stmt.executeQuery(sql4);            
+            JOptionPane.showMessageDialog(null,"Gán thành công!");
+            oracle.closeConnection();
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Lỗi truy vấn: " + ex.getMessage(), "Lỗi", JOptionPane.ERROR_MESSAGE);
+           
+        }
+    }//GEN-LAST:event_btnGrantTableActionPerformed
+
+    private void btnRevokeTableActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRevokeTableActionPerformed
+        // TODO add your handling code here:
+        String username = jLabel6.getText();
+        try {
+            oracle.openConnection();
+            Statement stmt;
+            stmt = oracle.conn.createStatement();
+             String sql = "REVOKE SELECT,INSERT,UPDATE,DELETE ON ADMIN.NHANVIEN TO "+username+"";
+             String sql1 = "REVOKE SELECT,INSERT,UPDATE,DELETE ON ADMIN.BAN TO "+username+"";
+            String sql2 = "REVOKE SELECT,INSERT,UPDATE,DELETE ON ADMIN.DONHANG TO "+username+"";
+            String sql3 = "REVOKE SELECT,INSERT,UPDATE,DELETE ON ADMIN.SANPHAM TO "+username+"";
+            String sql4 = "REVOKE SELECT,INSERT,UPDATE,DELETE ON ADMIN.CHITIETDONHANG TO "+username+"";
+            ResultSet rset = stmt.executeQuery(sql);
+            ResultSet rset1 = stmt.executeQuery(sql1);
+            ResultSet rset2 = stmt.executeQuery(sql2);
+            ResultSet rset3 = stmt.executeQuery(sql3);
+            ResultSet rset4 = stmt.executeQuery(sql4);            
+            JOptionPane.showMessageDialog(null,"Gán thành công!");
+            oracle.closeConnection();
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Lỗi truy vấn: " + ex.getMessage(), "Lỗi", JOptionPane.ERROR_MESSAGE);
+           
+        }
+    }//GEN-LAST:event_btnRevokeTableActionPerformed
     
 
     /**
@@ -912,9 +990,11 @@ public class UserManager extends javax.swing.JFrame {
     private javax.swing.JButton btnGrantProfile;
     private javax.swing.JButton btnGrantRole;
     private javax.swing.JButton btnGrantSesson;
+    private javax.swing.JButton btnGrantTable;
     private javax.swing.JButton btnRevokeProfile;
     private javax.swing.JButton btnRevokeRole;
     private javax.swing.JButton btnRevokeSession;
+    private javax.swing.JButton btnRevokeTable;
     private javax.swing.JButton btnSearch;
     private javax.swing.JButton btnUnlockUser;
     private javax.swing.JComboBox<String> cbbProfile;
@@ -926,6 +1006,7 @@ public class UserManager extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
+    private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;

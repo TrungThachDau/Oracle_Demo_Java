@@ -6,6 +6,9 @@ package oracle;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.TimeZone;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 /**
@@ -20,9 +23,34 @@ public class MainForm extends javax.swing.JFrame {
     Statement stmt;
     OracleConnection Oracle;
     public MainForm() {
-        setTitle("Trang chính");
+        String username = null;
+        String last_login = null;
         initComponents();
         Oracle = new OracleConnection();
+        try {
+            Oracle.openConnection();
+            stmt = Oracle.conn.createStatement();
+            String sql = "select username from user_users";
+            ResultSet rset = stmt.executeQuery(sql);
+            rset.next();
+            username = rset.getString(1);         
+            rset = stmt.executeQuery("select max(logon_time) from v$session where username='" + username + "'");
+            rset.next();
+            last_login = rset.getString(1);
+            rset.close();
+            Oracle.closeConnection();
+                     
+        } catch (SQLException ex) {
+            Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        Date date = new Date();
+        SimpleDateFormat formatter = new SimpleDateFormat("dd.MM.yyyy H:mm:ss a");
+        formatter.setTimeZone(TimeZone.getTimeZone("Asia/Saigon"));
+        System.out.println(date);
+        System.out.println(last_login);
+        String formattedDate = formatter.format(date);
+        System.out.println("Current date and time is: " + formattedDate);
+        setTitle("Trang chính - "+username+" - "+formattedDate+" Asia/Saigon");   
     }
     /**
      * This method is called from within the constructor to initialize the form.
@@ -33,8 +61,6 @@ public class MainForm extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        lbl_username = new javax.swing.JLabel();
-        lbl_last_login = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
@@ -66,10 +92,6 @@ public class MainForm extends javax.swing.JFrame {
                 formWindowOpened(evt);
             }
         });
-
-        lbl_username.setText("Người dùng:");
-
-        lbl_last_login.setText("Đăng nhập cuối:");
 
         jMenu1.setText("Tệp");
 
@@ -231,21 +253,11 @@ public class MainForm extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(419, 419, 419)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(lbl_username, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lbl_last_login, javax.swing.GroupLayout.PREFERRED_SIZE, 222, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGap(0, 647, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(14, 14, 14)
-                .addComponent(lbl_username)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(lbl_last_login)
-                .addContainerGap(393, Short.MAX_VALUE))
+            .addGap(0, 449, Short.MAX_VALUE)
         );
 
         pack();
@@ -254,23 +266,24 @@ public class MainForm extends javax.swing.JFrame {
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
         // TODO add your handling code here:  
         
-        try {
-            Oracle.openConnection();
-            stmt = Oracle.conn.createStatement();
-            String sql = "select username from user_users";
-            ResultSet rset = stmt.executeQuery(sql);
-            rset.next();
-            String username = rset.getString(1);
-            lbl_username.setText("Người dùng: " + username);
-            rset = stmt.executeQuery("select max(logon_time) from v$session where username='" + username + "'");
-            rset.next();
-            String last_login = rset.getString(1);
-            lbl_last_login.setText("Đăng nhập cuối: " + last_login);
-            rset.close();
-            Oracle.closeConnection();            
-        } catch (SQLException ex) {
-            Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
-        }
+//        try {
+//            Oracle.openConnection();
+//            stmt = Oracle.conn.createStatement();
+//            String sql = "select username from user_users";
+//            ResultSet rset = stmt.executeQuery(sql);
+//            rset.next();
+//            String username = rset.getString(1);
+//            lbl_username.setText("Người dùng: " + username);
+//            titleusername=username;
+//            rset = stmt.executeQuery("select max(logon_time) from v$session where username='" + username + "'");
+//            rset.next();
+//            String last_login = rset.getString(1);
+//            lbl_last_login.setText("Đăng nhập cuối: " + last_login);
+//            rset.close();
+//            Oracle.closeConnection();            
+//        } catch (SQLException ex) {
+//            Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+//        }
     
     }//GEN-LAST:event_formWindowOpened
 
@@ -435,8 +448,6 @@ public class MainForm extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem6;
     private javax.swing.JMenuItem jMenuItem7;
     private javax.swing.JMenuItem jMenuItem8;
-    private javax.swing.JLabel lbl_last_login;
-    private javax.swing.JLabel lbl_username;
     private javax.swing.JMenuItem menuItemChangePw;
     private javax.swing.JMenuItem menuItemProfiles;
     private javax.swing.JMenuItem menuItemRole;

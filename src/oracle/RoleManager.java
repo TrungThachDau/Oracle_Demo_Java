@@ -11,6 +11,7 @@ import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -52,18 +53,21 @@ public class RoleManager extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
         jPanel2 = new javax.swing.JPanel();
-        txtRoleName = new javax.swing.JTextField();
-        jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        btnAdd = new javax.swing.JButton();
+        btnGrant = new javax.swing.JButton();
         ckbSYSDBA = new javax.swing.JCheckBox();
         ckbSession = new javax.swing.JCheckBox();
-        ckbSelect = new javax.swing.JCheckBox();
-        ckbInsert = new javax.swing.JCheckBox();
-        ckbUpdate = new javax.swing.JCheckBox();
-        ckbDelete = new javax.swing.JCheckBox();
+        ckbTable = new javax.swing.JCheckBox();
+        ckbProcedure = new javax.swing.JCheckBox();
+        ckbTrigger = new javax.swing.JCheckBox();
+        ckbUser = new javax.swing.JCheckBox();
         ckbGrant = new javax.swing.JCheckBox();
-        ckbRevoke = new javax.swing.JCheckBox();
+        jButton1 = new javax.swing.JButton();
+        jLabel2 = new javax.swing.JLabel();
+        txtRoleName = new javax.swing.JTextField();
+        btnAddRole = new javax.swing.JButton();
+        btnDeleteRole = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         addWindowListener(new java.awt.event.WindowAdapter() {
@@ -90,34 +94,37 @@ public class RoleManager extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(jTable1);
 
-        jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("Thêm vai trò"));
-
-        jLabel2.setText("Tên vai trò");
+        jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("Gán quyền"));
 
         jLabel3.setText("Gán quyền");
 
-        btnAdd.setText("Thêm");
-        btnAdd.addActionListener(new java.awt.event.ActionListener() {
+        btnGrant.setText("Gán");
+        btnGrant.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnAddActionPerformed(evt);
+                btnGrantActionPerformed(evt);
             }
         });
 
         ckbSYSDBA.setText("SYSDBA");
 
-        ckbSession.setText("Session");
+        ckbSession.setText("Create Session");
 
-        ckbSelect.setText("Select");
+        ckbTable.setText("Create table");
 
-        ckbInsert.setText("Insert");
+        ckbProcedure.setText("create procedure");
 
-        ckbUpdate.setText("Update");
+        ckbTrigger.setText("create trigger");
 
-        ckbDelete.setText("Delete");
+        ckbUser.setText("create user");
 
         ckbGrant.setText("Grant");
 
-        ckbRevoke.setText("Revoke");
+        jButton1.setText("Thu hồi tất cả");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -127,61 +134,72 @@ public class RoleManager extends javax.swing.JFrame {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(btnAdd))
+                        .addComponent(btnGrant)
+                        .addGap(18, 18, 18)
+                        .addComponent(jButton1))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGap(20, 20, 20)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addComponent(ckbSYSDBA, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(ckbSession, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(ckbSelect, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, 73, Short.MAX_VALUE))
-                                .addGap(18, 18, 18)
-                                .addComponent(txtRoleName, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addComponent(ckbInsert, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(ckbUpdate, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(ckbDelete, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addComponent(ckbGrant, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(ckbRevoke, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                .addContainerGap(92, Short.MAX_VALUE))
+                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(jPanel2Layout.createSequentialGroup()
+                                        .addComponent(ckbSYSDBA, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(ckbSession))
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(ckbProcedure, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(ckbGrant, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 12, Short.MAX_VALUE)
+                                        .addComponent(ckbTrigger, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(ckbUser, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(ckbTable, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE))))))
+                .addContainerGap(13, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtRoleName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel2))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(43, 43, 43)
                 .addComponent(jLabel3)
                 .addGap(18, 18, 18)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(ckbSYSDBA)
                     .addComponent(ckbSession)
-                    .addComponent(ckbSelect))
+                    .addComponent(ckbTable))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(ckbInsert)
-                    .addComponent(ckbUpdate)
-                    .addComponent(ckbDelete))
+                    .addComponent(ckbProcedure)
+                    .addComponent(ckbTrigger)
+                    .addComponent(ckbUser))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(ckbGrant)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 95, Short.MAX_VALUE)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(ckbGrant)
-                    .addComponent(ckbRevoke))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 93, Short.MAX_VALUE)
-                .addComponent(btnAdd)
+                    .addComponent(btnGrant)
+                    .addComponent(jButton1))
                 .addGap(14, 14, 14))
         );
+
+        jLabel2.setText("Tên vai trò");
+
+        btnAddRole.setText("Thêm");
+        btnAddRole.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAddRoleActionPerformed(evt);
+            }
+        });
+
+        btnDeleteRole.setText("Xóa");
+        btnDeleteRole.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDeleteRoleActionPerformed(evt);
+            }
+        });
+
+        jLabel1.setText("jLabel1");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -190,9 +208,22 @@ public class RoleManager extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 347, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(33, 33, 33)
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(101, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(43, 43, 43)
+                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(txtRoleName, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(45, 45, 45)
+                        .addComponent(btnAddRole)
+                        .addGap(18, 18, 18)
+                        .addComponent(btnDeleteRole))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(34, 34, 34)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addContainerGap(52, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -202,9 +233,17 @@ public class RoleManager extends javax.swing.JFrame {
                         .addGap(40, 40, 40)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 356, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(50, 50, 50)
-                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(20, Short.MAX_VALUE))
+                        .addGap(62, 62, 62)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel2)
+                            .addComponent(txtRoleName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnAddRole)
+                            .addComponent(btnDeleteRole))
+                        .addGap(36, 36, 36)
+                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel1)))
+                .addContainerGap(87, Short.MAX_VALUE))
         );
 
         jPanel2.getAccessibleContext().setAccessibleName("");
@@ -226,33 +265,117 @@ public class RoleManager extends javax.swing.JFrame {
             DisplayDetails(pos);
     }//GEN-LAST:event_jTable1MouseClicked
     }
-    private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
+    private void btnGrantActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGrantActionPerformed
         // TODO add your handling code here:
         String rolename = txtRoleName.getText();
         String permission = "";
-        String SYSDBA = "SYSDBA";
         if(ckbSYSDBA.isSelected())
         {
-            permission = permission + ", "+SYSDBA;
+            permission = permission + ", "+"SYSDBA";                      
         }
+        if(ckbSession.isSelected())
+        {
+            permission = permission +", "+"CREATE SESSION";
+        }
+        if(ckbTable.isSelected())
+        {
+            permission = permission +", "+"CREATE TABLE";
+        }
+        if(ckbProcedure.isSelected())
+        {
+            permission = permission +", "+"CREATE PROCEDURE";
+        }
+        if(ckbTrigger.isSelected())
+        {
+            permission = permission +", "+"CREATE TRIGGER";
+        }
+        if(ckbUser.isSelected())
+        {
+            permission = permission +", "+"CREATE USER";
+        }
+        if(ckbGrant.isSelected())
+        {
+            permission = permission +", "+"GRANT ANY PRIVILEGE";
+        }
+        if(permission.startsWith(","))
+            {
+                permission = permission.substring(1);
+            }  
         
+        System.out.println(permission);
         try {
             oracle.openConnection();
             Statement stmt;
             stmt = oracle.conn.createStatement();
-             String sql = "CREATE ROLE "+rolename+"";
-            ResultSet rset = stmt.executeQuery(sql);
-            ResultSet rset2 = stmt.executeQuery("GRANT "+permission+" ON table_name TO "+rolename+"");
-
-            loadData();
-            JOptionPane.showMessageDialog(null,"Đã thêm vai trò");
+            ResultSet rset2 = stmt.executeQuery("GRANT "+permission+" TO "+rolename+"");           
+            JOptionPane.showMessageDialog(null,"Đã gán quyền cho vai trò");
             oracle.closeConnection();
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Lỗi truy vấn: " + ex.getMessage(), "Lỗi", JOptionPane.ERROR_MESSAGE);
            
         }
            
-    }//GEN-LAST:event_btnAddActionPerformed
+    }//GEN-LAST:event_btnGrantActionPerformed
+
+    private void btnAddRoleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddRoleActionPerformed
+        // TODO add your handling code here:
+        String rolename = txtRoleName.getText();
+        try {
+            oracle.openConnection();
+            Statement stmt;
+            stmt = oracle.conn.createStatement();
+             String sql = "CREATE ROLE "+rolename+"";
+            ResultSet rset = stmt.executeQuery(sql);
+            RemoveTableItem(jTable1);
+            loadData();
+            JOptionPane.showMessageDialog(null,"Đã thêm vai trò");
+            txtRoleName.setText("");
+            oracle.closeConnection();
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Lỗi truy vấn: " + ex.getMessage(), "Lỗi", JOptionPane.ERROR_MESSAGE);
+           
+        }
+    }//GEN-LAST:event_btnAddRoleActionPerformed
+
+    private void btnDeleteRoleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteRoleActionPerformed
+        // TODO add your handling code here:
+        String rolename = txtRoleName.getText();
+        try {
+            oracle.openConnection();
+            Statement stmt;
+            stmt = oracle.conn.createStatement();
+             String sql = "DROP ROLE "+rolename+"";
+            ResultSet rset = stmt.executeQuery(sql);    
+            RemoveTableItem(jTable1);
+            loadData();
+            JOptionPane.showMessageDialog(null,"Đã xóa vai trò");
+            txtRoleName.setText("");
+            oracle.closeConnection();
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Lỗi truy vấn: " + ex.getMessage(), "Lỗi", JOptionPane.ERROR_MESSAGE);
+           
+        }
+    }//GEN-LAST:event_btnDeleteRoleActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        String rolename = txtRoleName.getText();
+        try {
+            oracle.openConnection();
+            Statement stmt;
+            stmt = oracle.conn.createStatement();
+             String sql = "REVOKE ALL PRIVILEGES FROM "+rolename+"";
+            ResultSet rset = stmt.executeQuery(sql);    
+            RemoveTableItem(jTable1);
+            loadData();
+            JOptionPane.showMessageDialog(null,"Đã thu hồi tất cả quyền");
+            txtRoleName.setText("");
+            oracle.closeConnection();
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Lỗi truy vấn: " + ex.getMessage(), "Lỗi", JOptionPane.ERROR_MESSAGE);
+           
+        }
+    }//GEN-LAST:event_jButton1ActionPerformed
     
 
     /**
@@ -265,7 +388,7 @@ public class RoleManager extends javax.swing.JFrame {
     {
         Vector vRow=(Vector)vdata.get(selectedrow);
         String Code=(String)vRow.get(0);
-        String Name=(String)vRow.get(1);
+        
       
         txtRoleName.setText(Code);
         
@@ -286,12 +409,17 @@ public class RoleManager extends javax.swing.JFrame {
                 v.add(one);                              
                 vdata.add(v);               
             }
-            jTable1.updateUI();
+            //jTable1.updateUI();
             oracle.closeConnection();
         } catch(SQLException ex)
         {            
             JOptionPane.showMessageDialog(null, "Lỗi truy vấn: " + ex.getMessage(), "Lỗi", JOptionPane.ERROR_MESSAGE);
         }
+    }
+    private void RemoveTableItem(JTable table) {
+        DefaultTableModel model = (DefaultTableModel) table.getModel();
+            model.setRowCount(0);
+            table.removeAll();
     }
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
@@ -327,15 +455,18 @@ public class RoleManager extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnAdd;
-    private javax.swing.JCheckBox ckbDelete;
+    private javax.swing.JButton btnAddRole;
+    private javax.swing.JButton btnDeleteRole;
+    private javax.swing.JButton btnGrant;
     private javax.swing.JCheckBox ckbGrant;
-    private javax.swing.JCheckBox ckbInsert;
-    private javax.swing.JCheckBox ckbRevoke;
+    private javax.swing.JCheckBox ckbProcedure;
     private javax.swing.JCheckBox ckbSYSDBA;
-    private javax.swing.JCheckBox ckbSelect;
     private javax.swing.JCheckBox ckbSession;
-    private javax.swing.JCheckBox ckbUpdate;
+    private javax.swing.JCheckBox ckbTable;
+    private javax.swing.JCheckBox ckbTrigger;
+    private javax.swing.JCheckBox ckbUser;
+    private javax.swing.JButton jButton1;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel2;

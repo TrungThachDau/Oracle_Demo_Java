@@ -18,7 +18,7 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author QTrun
  */
-public class AuditView extends javax.swing.JFrame {
+public class Ban extends javax.swing.JFrame {
 
     /**
      * Creates new form Session
@@ -26,7 +26,7 @@ public class AuditView extends javax.swing.JFrame {
     Vector vdata=new Vector();
     Vector vheader = new Vector();
     OracleConnection oracle;
-    public AuditView() {
+    public Ban() {
         initComponents();
     setTitle("Bảng ghi Kiểm toán");
         oracle = new OracleConnection("jdbc:oracle:thin:@localhost:1521:orcl","sys as sysdba","123");
@@ -71,11 +71,11 @@ public class AuditView extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Dấu thời gian", "Đối tượng", "Hành động", "Đoạn SQL"
+                "Bàn", "Số lượng", "Trạng thái"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false
+                false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -90,8 +90,6 @@ public class AuditView extends javax.swing.JFrame {
             jTable1.getColumnModel().getColumn(1).setPreferredWidth(20);
             jTable1.getColumnModel().getColumn(2).setResizable(false);
             jTable1.getColumnModel().getColumn(2).setPreferredWidth(20);
-            jTable1.getColumnModel().getColumn(3).setResizable(false);
-            jTable1.getColumnModel().getColumn(3).setPreferredWidth(300);
         }
 
         BtnReload.setText("Tải lại");
@@ -249,17 +247,16 @@ private void RemoveTableItem(JTable table) {
         try
         {
             oracle.openConnection();
-            String sql = "select extended_timestamp, OBJECT_NAME,statement_type,sql_text\n" +
-                        "from dba_common_audit_trail";
+            String sql = "Select * from admin.ban";
             Statement stmt = oracle.conn.createStatement();
             ResultSet rs = stmt.executeQuery(sql);
             while(rs.next())
             {
-                String one = rs.getString("EXTENDED_TIMESTAMP");
-                String two = rs.getString("OBJECT_NAME");
-                String three = rs.getString("STATEMENT_TYPE");
-                String four = rs.getString("SQL_TEXT");               
-                String tbData[] = {one,two,three,four};
+                String one = rs.getString("MABAN");
+                String two = rs.getString("SOLUONGKHACH");
+                String three = rs.getString("TRANGTHAIBAN");
+                             
+                String tbData[] = {one,two,three};
                 DefaultTableModel tblModel = (DefaultTableModel)jTable1.getModel();
                 
                 tblModel.addRow(tbData);  
@@ -285,21 +282,23 @@ private void RemoveTableItem(JTable table) {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(AuditView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Ban.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(AuditView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Ban.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(AuditView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Ban.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(AuditView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Ban.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new AuditView().setVisible(true);
+                new Ban().setVisible(true);
             }
         });
     }
