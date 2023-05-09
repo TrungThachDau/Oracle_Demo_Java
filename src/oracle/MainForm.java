@@ -45,12 +45,10 @@ public class MainForm extends javax.swing.JFrame {
         }
         Date date = new Date();
         SimpleDateFormat formatter = new SimpleDateFormat("dd.MM.yyyy H:mm:ss a");
-        formatter.setTimeZone(TimeZone.getTimeZone("Asia/Saigon"));
-        System.out.println(date);
+        formatter.setTimeZone(TimeZone.getTimeZone("GMT+7"));       
         System.out.println(last_login);
         String formattedDate = formatter.format(date);
-        System.out.println("Current date and time is: " + formattedDate);
-        setTitle("Trang chính - "+username+" - "+formattedDate+" Asia/Saigon");   
+        setTitle("Trang chính - "+username+" - "+formattedDate+" ICT");   
     }
     /**
      * This method is called from within the constructor to initialize the form.
@@ -86,7 +84,7 @@ public class MainForm extends javax.swing.JFrame {
         jMenuItem5 = new javax.swing.JMenuItem();
         jMenuItem6 = new javax.swing.JMenuItem();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowOpened(java.awt.event.WindowEvent evt) {
                 formWindowOpened(evt);
@@ -322,7 +320,8 @@ public class MainForm extends javax.swing.JFrame {
         // TODO add your handling code here:
         OracleConnection conn = new OracleConnection();
         conn.closeConnection();
-        System.exit(0);
+        dispose();
+        new Main().setVisible(true);
         
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 

@@ -32,6 +32,7 @@ public class OracleConnection
         }
         catch(Exception ex)
         {
+            System.out.println(ex.getMessage());
             JOptionPane.showMessageDialog(null, "Lỗi JDBC: " + ex.getMessage(), "Lỗi", JOptionPane.ERROR_MESSAGE);
         }
     }
@@ -48,6 +49,7 @@ public class OracleConnection
         }
         catch(Exception ex)
         {
+            System.out.println(ex.getMessage());
            JOptionPane.showMessageDialog(null, "Lỗi đăng nhập: " + ex.getMessage(), "Lỗi", JOptionPane.ERROR_MESSAGE);
         }
     }
@@ -62,7 +64,7 @@ public class OracleConnection
         }
         catch(Exception e)
         {
-            System.out.println(e);
+            System.out.println(e.getMessage());
             Logger.getLogger(OracleConnection.class.getName()).log(Level.SEVERE, null, e);
         }
         return conn;
@@ -79,7 +81,7 @@ public class OracleConnection
         }
         catch(Exception e)
         {
-            System.out.println(e);
+            System.out.println(e.getMessage());
             Logger.getLogger(OracleConnection.class.getName()).log(Level.SEVERE, null, e);
         }
         return conn;

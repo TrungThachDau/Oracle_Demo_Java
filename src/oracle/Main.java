@@ -96,7 +96,7 @@ public class Main extends javax.swing.JFrame {
 
         cbbRole.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Thường", "SYSDBA" }));
 
-        ckbRemeberMe.setText("Ghi nhớ đăng nhập");
+        ckbRemeberMe.setText("Ghi nhớ tên người dùng và mật khẩu");
         ckbRemeberMe.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 ckbRemeberMeActionPerformed(evt);
@@ -143,7 +143,7 @@ public class Main extends javax.swing.JFrame {
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                         .addGap(168, 168, 168)
-                        .addComponent(ckbRemeberMe, javax.swing.GroupLayout.PREFERRED_SIZE, 199, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(ckbRemeberMe, javax.swing.GroupLayout.PREFERRED_SIZE, 238, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
         layout.setVerticalGroup(
@@ -188,7 +188,11 @@ public class Main extends javax.swing.JFrame {
         if (cbbRole.getSelectedItem().equals("SYSDBA"))
         {
             username2=username+" as sysdba";
-        }  
+        }
+        else if (cbbRole.getSelectedItem().equals("Thường"))
+        {
+            username2=username;
+        }
         String host = txtHost.getText();
         String port = txtPort.getText();
         String sid = txtSID.getText();
@@ -229,14 +233,7 @@ public class Main extends javax.swing.JFrame {
           {
                 JOptionPane.showMessageDialog(null, "Lỗi");
           }
-
-          
-
-
-            
-         
         Connection conn = oracle.openConnection(); // TODO: handle exception
-
         if(conn!=null)
         {
          try {
@@ -246,11 +243,12 @@ public class Main extends javax.swing.JFrame {
             while(rs.next())
             {
                 username1 = rs.getString(1);
+                System.out.println(rs.getString(1));
             }
             try {
                 Statement stmt1 = conn.createStatement();
                 ResultSet rs1 = stmt1.executeQuery("SELECT SYSDBA FROM v$pwfile_users WHERE username = '"+username1+"'");
-                JOptionPane.showMessageDialog(null, "Đăng nhập thành công bằng người dùng "+username1+" bằng quyền quản trị");
+                JOptionPane.showMessageDialog(null, "Đăng nhập thành công bằng người dùng "+username+" bằng quyền quản trị");
                 new MainForm().setVisible(true);
                 this.setVisible(false);
                 oracle.closeConnection();
