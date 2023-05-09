@@ -3,9 +3,24 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
+            <file>file:/D:/GitHub/Oracle_Demo_Java/src/oracle/datafile.java</file>
             <file>file:/D:/GitHub/Oracle_Demo_Java/src/oracle/MainForm.java</file>
-            <file>file:/D:/GitHub/Oracle_Demo_Java/src/oracle/OracleConnection.java</file>
+            <file>file:/D:/GitHub/Oracle_Demo_Java/src/oracle/SGA.java</file>
+            <file>file:/D:/GitHub/Oracle_Demo_Java/src/oracle/BackupDB.java</file>
             <file>file:/D:/GitHub/Oracle_Demo_Java/src/oracle/Main.java</file>
+            <file>file:/D:/GitHub/Oracle_Demo_Java/src/oracle/PGA.java</file>
+            <file>file:/D:/GitHub/Oracle_Demo_Java/src/oracle/RestoreDB.java</file>
+            <file>file:/D:/GitHub/Oracle_Demo_Java/src/oracle/RoleManager.java</file>
+            <file>file:/D:/GitHub/Oracle_Demo_Java/src/oracle/AuditView.java</file>
+            <file>file:/D:/GitHub/Oracle_Demo_Java/src/oracle/ProfileManager.java</file>
+            <file>file:/D:/GitHub/Oracle_Demo_Java/src/oracle/ChangePassword.java</file>
+            <file>file:/D:/GitHub/Oracle_Demo_Java/src/oracle/Policy.java</file>
+            <file>file:/D:/GitHub/Oracle_Demo_Java/src/oracle/ProcessView.java</file>
+            <file>file:/D:/GitHub/Oracle_Demo_Java/src/oracle/OracleConnection.java</file>
+            <file>file:/D:/GitHub/Oracle_Demo_Java/src/oracle/MainFormUser.java</file>
+            <file>file:/D:/GitHub/Oracle_Demo_Java/src/oracle/Tablespaceview.java</file>
+            <file>file:/D:/GitHub/Oracle_Demo_Java/src/oracle/Session.java</file>
+            <file>file:/D:/GitHub/Oracle_Demo_Java/src/oracle/UserManager.java</file>
         </group>
     </open-files>
 </project-private>

@@ -44,7 +44,7 @@ public class MainForm extends javax.swing.JFrame {
             Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
         }
         Date date = new Date();
-        SimpleDateFormat formatter = new SimpleDateFormat("dd.MM.yyyy H:mm:ss a");
+        SimpleDateFormat formatter = new SimpleDateFormat("dd.MM.yyyy h:mm:ss a");
         formatter.setTimeZone(TimeZone.getTimeZone("GMT+7"));       
         System.out.println(last_login);
         String formattedDate = formatter.format(date);
@@ -84,7 +84,7 @@ public class MainForm extends javax.swing.JFrame {
         jMenuItem5 = new javax.swing.JMenuItem();
         jMenuItem6 = new javax.swing.JMenuItem();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowOpened(java.awt.event.WindowEvent evt) {
                 formWindowOpened(evt);

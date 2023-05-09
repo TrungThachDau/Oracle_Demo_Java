@@ -4,6 +4,7 @@
   <Properties>
     <Property name="defaultCloseOperation" type="int" value="2"/>
     <Property name="name" type="java.lang.String" value="PGA" noResource="true"/>
+    <Property name="resizable" type="boolean" value="false"/>
   </Properties>
   <SyntheticProperties>
     <SyntheticProperty name="formSizePolicy" type="int" value="1"/>
@@ -30,7 +31,7 @@
               <Component id="txtSearch" min="-2" pref="275" max="-2" attributes="0"/>
               <EmptySpace type="unrelated" max="-2" attributes="0"/>
               <Component id="btnSeach" min="-2" max="-2" attributes="0"/>
-              <EmptySpace pref="462" max="32767" attributes="0"/>
+              <EmptySpace pref="452" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -43,7 +44,7 @@
                   <Component id="btnSeach" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
-              <Component id="jScrollPane1" min="-2" pref="449" max="-2" attributes="0"/>
+              <Component id="jScrollPane1" min="-2" pref="525" max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
