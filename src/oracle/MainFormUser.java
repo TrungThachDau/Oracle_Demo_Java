@@ -77,10 +77,8 @@ public class MainFormUser extends javax.swing.JFrame {
             String sql = "select username from user_users";
             ResultSet rset = stmt.executeQuery(sql);
             rset.next();
-            username = rset.getString(1);         
-            rset = stmt.executeQuery("select max(logon_time) from v$session where username='" + username + "'");
-            rset.next();
-            last_login = rset.getString(1);
+            username = rset.getString(1);                     
+            rset.next();           
             rset.close();
             Oracle.closeConnection();
                      
@@ -90,7 +88,7 @@ public class MainFormUser extends javax.swing.JFrame {
         Date date = new Date();
         SimpleDateFormat formatter = new SimpleDateFormat("dd.MM.yyyy h:mm:ss a");
         formatter.setTimeZone(TimeZone.getTimeZone("GMT+7"));       
-        System.out.println(last_login);
+        //System.out.println(last_login);
         String formattedDate = formatter.format(date);
         setTitle("Trang chính - "+username+" - "+formattedDate+" ICT");   
     }
@@ -127,7 +125,6 @@ public class MainFormUser extends javax.swing.JFrame {
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
-        jMenu2 = new javax.swing.JMenu();
         jMenu4 = new javax.swing.JMenu();
         menuItemChangePw = new javax.swing.JMenuItem();
 
@@ -171,9 +168,6 @@ public class MainFormUser extends javax.swing.JFrame {
         jMenu1.add(jMenuItem1);
 
         jMenuBar1.add(jMenu1);
-
-        jMenu2.setText("Sửa");
-        jMenuBar1.add(jMenu2);
 
         jMenu4.setText("Tài khoản");
 
@@ -228,7 +222,8 @@ public class MainFormUser extends javax.swing.JFrame {
 
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
         // TODO add your handling code here:
-
+        dispose();
+        new Main().setVisible(true);
         
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
@@ -344,7 +339,6 @@ public class MainFormUser extends javax.swing.JFrame {
     private javax.swing.JButton btn_order;
     private javax.swing.JButton btn_table;
     private javax.swing.JMenu jMenu1;
-    private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu4;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;
