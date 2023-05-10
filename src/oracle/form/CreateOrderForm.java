@@ -309,11 +309,12 @@ public class CreateOrderForm extends javax.swing.JFrame {
             layout_productLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout_productLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout_productLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout_productLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(layout_productLayout.createSequentialGroup()
-                        .addComponent(btn_add_to_cart, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btn_add_donhang, javax.swing.GroupLayout.PREFERRED_SIZE, 344, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(220, 220, 220)
+                        .addComponent(btn_add_to_cart, javax.swing.GroupLayout.PREFERRED_SIZE, 326, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(btn_add_donhang, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(layout_productLayout.createSequentialGroup()
                         .addComponent(lbl_hinh_anh, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -349,7 +350,7 @@ public class CreateOrderForm extends javax.swing.JFrame {
                     .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 572, Short.MAX_VALUE)
                     .addGroup(layout_productLayout.createSequentialGroup()
                         .addComponent(lbl_hinh_anh, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                        .addGap(0, 367, Short.MAX_VALUE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout_productLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout_productLayout.createSequentialGroup()
@@ -554,6 +555,8 @@ public class CreateOrderForm extends javax.swing.JFrame {
                  JOptionPane.showMessageDialog(null, "Vui lòng chọn sản phẩm !");
                      return;
              }
+             
+             
 
              btn_add_donhang.setEnabled(true);
 
@@ -566,12 +569,27 @@ public class CreateOrderForm extends javax.swing.JFrame {
                      break;
                  }
              }
+             // kiem tra san pham con trong kho khong
+             if (productModel.getSoLuongTon() <= 0 || productModel.getSoLuongTon() < (int) txt_quantity_order_product.getValue()) {
+                JOptionPane.showMessageDialog(null, "Vượt quá số lượng sản phẩm còn lại !");
+                 return;
+            }
+             
              // kiem tra sp duoc chon da co trong gio hang chua
              boolean flag = false;
              for (int i = 0; i < cartModels.size(); i++) {
                  GioHangModel cartModel = cartModels.get(i);
                  if (cartModel.getProductModel().getMaSP() == productModel.getMaSP()) {
+                     // DA co trong gio hang
+                     // kiem tra co vuot qua slton khong
                      int newQuan = cartModel.getSoLuong()+ (int) txt_quantity_order_product.getValue();
+                     if (newQuan > productModel.getSoLuongTon()) {
+                         JOptionPane.showMessageDialog(null, "Vượt quá số lượng sản phẩm còn lại !");
+                         return;
+                     }
+                     
+                     // Khong vuot, cap nhat sp trong gio
+                     
                      cartModels.get(i).setSoLuong(newQuan);
                      flag = true;
                      break;
@@ -653,6 +671,10 @@ public class CreateOrderForm extends javax.swing.JFrame {
                     CTDonHangModel cTDonHangModel = new CTDonHangModel(maCTDH, maSP, maDH, soLuong);
                     //                them chitietdonhang vao db
                     complete = cTDonHangDB.addCTDonHang(cTDonHangModel);
+                    // Giam so luong ton san pham
+                    SanPhamModel sanPham = sanPhamDB.getSanPham(maSP);
+                    sanPham.setSoLuongTon(sanPham.getSoLuongTon() - soLuong);
+                    sanPhamDB.updateSanPham(sanPham);
                 }
 
                 // Xoa du lieu
@@ -678,9 +700,18 @@ public class CreateOrderForm extends javax.swing.JFrame {
         int maSP = Integer.parseInt(table_product.getValueAt(table_product.getSelectedRow(), 0).toString().trim());
         String tenSP = table_product.getValueAt(table_product.getSelectedRow(), 1).toString();
         txt_product_name.setText(tenSP);
-        btn_add_to_cart.setEnabled(true);
+        
         for (SanPhamModel productModel : productModels) {
             if (productModel.getMaSP() == maSP) {
+                
+                // neu slton = 0 => an nut them vao gio hang
+                if (productModel.getSoLuongTon() <= 0) {
+                    btn_add_to_cart.setEnabled(false);
+                }
+                else{
+                    btn_add_to_cart.setEnabled(true);
+                }
+                // hien thi anh sp
                 loadAnhSP(productModel.getMaSP(), lbl_hinh_anh);
                 break;
             }

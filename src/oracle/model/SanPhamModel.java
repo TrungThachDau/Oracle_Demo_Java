@@ -12,6 +12,14 @@ public class SanPhamModel {
     int maSP;
     String tenSP;
     String moTaSP;
+
+    public String getMoTaSP() {
+        return moTaSP;
+    }
+
+    public void setMoTaSP(String moTaSP) {
+        this.moTaSP = moTaSP;
+    }
     float giaSP;
     int soLuongTon;
     Blob hinhAnh;

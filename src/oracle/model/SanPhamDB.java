@@ -121,4 +121,24 @@ public class SanPhamDB {
         return null;
     }
     
+    public boolean updateSanPham(SanPhamModel sanPham){
+        try {
+            orclConn.openConnection();
+            String sql = "UPDATE admin.SANPHAM SET TENSP = ?, MOTASP = ?, GIASP = ?, HINHANH = ?, SLTON = ? WHERE MASP = ?";
+            PreparedStatement ps = orclConn.conn.prepareStatement(sql); 
+            ps.setString(1, sanPham.getTenSP());
+            ps.setString(2, sanPham.getMoTaSP());
+            ps.setFloat(3, sanPham.getGiaSP());
+            ps.setBlob(4, sanPham.getHinhAnh());
+            ps.setInt(5, sanPham.getSoLuongTon());
+            ps.setInt(6, sanPham.getMaSP());
+            ps.executeUpdate();
+            orclConn.closeConnection();
+            return true;
+
+        } catch ( SQLException exception) {
+           JOptionPane.showMessageDialog(null, "Lỗi truy vấn " + exception.getMessage(), "Lỗi", JOptionPane.ERROR_MESSAGE);
+        }
+        return false;
+    }
 }
