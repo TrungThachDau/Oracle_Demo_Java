@@ -33,10 +33,8 @@ public class EmployeeManager extends javax.swing.JFrame {
         oracle = new OracleConnection();
         vheader.add("Mã");
         vheader.add("Tên");
-        vheader.add("Số ĐT");
-        vheader.add("Địa chỉ");
+        vheader.add("Lương");
         vheader.add("Chức vụ");
-        
         jTable1.setModel(new DefaultTableModel(vdata, vheader));
         try {
             loadData();
@@ -59,15 +57,11 @@ public class EmployeeManager extends javax.swing.JFrame {
         txtSearch = new javax.swing.JTextField();
         txtID = new javax.swing.JTextField();
         txtTennv = new javax.swing.JTextField();
-        txtSDT = new javax.swing.JTextField();
-        txtDiaChi = new javax.swing.JTextField();
-        jTextField5 = new javax.swing.JTextField();
+        txtLuong = new javax.swing.JTextField();
         cbbChucvu = new javax.swing.JComboBox<>();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
-        jLabel7 = new javax.swing.JLabel();
-        jLabel8 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
         btnSearch = new javax.swing.JButton();
         btnThem = new javax.swing.JButton();
@@ -75,6 +69,7 @@ public class EmployeeManager extends javax.swing.JFrame {
         btnSua = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setResizable(false);
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowOpened(java.awt.event.WindowEvent evt) {
                 formWindowOpened(evt);
@@ -118,11 +113,7 @@ public class EmployeeManager extends javax.swing.JFrame {
 
         jLabel5.setText("Tên nhân viên");
 
-        jLabel6.setText("Điện thoại");
-
-        jLabel7.setText("Địa chỉ");
-
-        jLabel8.setText("Hình ảnh");
+        jLabel6.setText("Lương");
 
         jLabel9.setText("Chức vụ");
 
@@ -165,88 +156,68 @@ public class EmployeeManager extends javax.swing.JFrame {
                         .addComponent(txtSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 201, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(btnSearch)
-                        .addGap(0, 0, Short.MAX_VALUE))
+                        .addGap(0, 744, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 427, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 530, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(37, 37, 37)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jTextField5, javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(txtDiaChi)))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(txtSDT))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                .addGap(18, 18, 18)
+                                    .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(cbbChucvu, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(txtLuong)
                                     .addComponent(txtID)
-                                    .addComponent(txtTennv, javax.swing.GroupLayout.DEFAULT_SIZE, 166, Short.MAX_VALUE)))
+                                    .addComponent(txtTennv, javax.swing.GroupLayout.DEFAULT_SIZE, 166, Short.MAX_VALUE))
+                                .addGap(158, 158, 158))
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                     .addComponent(btnThem)
                                     .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(25, 25, 25)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(cbbChucvu, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(btnXoa)
-                                        .addGap(31, 31, 31)
-                                        .addComponent(btnSua)
-                                        .addGap(0, 0, Short.MAX_VALUE)))))))
-                .addGap(158, 158, 158))
+                                .addGap(18, 18, 18)
+                                .addComponent(btnXoa)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(btnSua)
+                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(40, 40, 40)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtSearch, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnSearch))
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 316, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(7, 7, 7)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(txtID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel4))
-                                .addGap(12, 12, 12)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(txtTennv, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel5))
-                                .addGap(18, 18, 18)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(txtSDT, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel6))
-                                .addGap(18, 18, 18)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(txtDiaChi, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel7))
-                                .addGap(18, 18, 18)
-                                .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(jLabel8))
-                        .addGap(34, 34, 34)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(cbbChucvu)
-                            .addComponent(jLabel9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(txtID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel4))
+                        .addGap(12, 12, 12)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(txtTennv, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel5))
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(txtLuong, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel6))
+                        .addGap(42, 42, 42)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(cbbChucvu, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(50, 50, 50)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(btnThem)
                             .addComponent(btnXoa)
-                            .addComponent(btnSua))))
-                .addContainerGap(54, Short.MAX_VALUE))
+                            .addComponent(btnSua))
+                        .addContainerGap(268, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jScrollPane1)
+                        .addContainerGap())))
         );
 
         pack();
@@ -290,30 +261,31 @@ public class EmployeeManager extends javax.swing.JFrame {
         // TODO add your handling code here:
         String id=txtID.getText().trim();
         String tennv=txtTennv.getText();
-        String sdt=txtSDT.getText();
-        String diachi=txtDiaChi.getText();
-        String chucvu=cbbChucvu.getSelectedItem().toString();
-        if(id.equals("")||tennv.equals("")||sdt.equals("")||diachi.equals("")||chucvu.equals("")){
+        String luong=txtLuong.getText();
+        String chucvu;
+        if(cbbChucvu.getSelectedItem().toString().equals("Nhân viên"))
+        {
+            chucvu="0";
+        }
+        else
+        {
+            chucvu="1";
+        }
+        if(id.equals("")||tennv.equals("")||luong.equals("")||chucvu.equals("")){
             JOptionPane.showMessageDialog(null, "Vui lòng nhập đầy đủ thông tin");
         }
         else{
             try {
                 oracle.openConnection();
                 
-                String sql = "insert into admin.nhanvien (MANV,TENNV,DIENTHOAI, DIACHI, CHUCVU) values (?, ?, ?, ?, ?)";
-                PreparedStatement ps = oracle.conn.prepareStatement(sql); 
-                ps.setString(1, id);
-                ps.setString(2, tennv);
-                ps.setString(3, sdt);
-                ps.setString(4, diachi);
-                ps.setString(5,chucvu);
-                ps.executeUpdate();
-                JOptionPane.showMessageDialog(null, "Thêm thành công");
-
-                
+                String sql = "INSERT INTO nhanvien VALUES("+id+",'"+tennv+"',"+luong+","+chucvu+")";
+                Statement st = oracle.conn.createStatement(); 
+               
+                st.executeUpdate(sql);
+                JOptionPane.showMessageDialog(null, "Thêm thành công");   
                 RemoveTableItem(jTable1);
                 loadData();
-                
+                oracle.closeConnection();
 
             } catch (SQLException ex) {
                 Logger.getLogger(EmployeeManager.class.getName()).log(Level.SEVERE, null, ex);
@@ -334,14 +306,11 @@ public class EmployeeManager extends javax.swing.JFrame {
                 
                 String sql = "DELETE FROM ADMIN.NHANVIEN WHERE MANV ='"+id+"'";
                 Statement st = oracle.conn.createStatement(); 
-                
-                
-                st.executeUpdate(sql);
-                JOptionPane.showMessageDialog(null, "Xóa thành công");
-
-                
+             st.executeUpdate(sql);
+                JOptionPane.showMessageDialog(null, "Xóa thành công"); 
                 RemoveTableItem(jTable1);
                 loadData();
+                oracle.closeConnection();
         }
         catch(SQLException ex)
         {
@@ -354,31 +323,32 @@ public class EmployeeManager extends javax.swing.JFrame {
         // TODO add your handling code here:
         String id = txtID.getText().trim();
         String tennv=txtTennv.getText();
-        String sdt=txtSDT.getText();
-        String diachi=txtDiaChi.getText();
-        String chucvu=cbbChucvu.getSelectedItem().toString();
-        if(id.equals("")||tennv.equals("")||sdt.equals("")||diachi.equals("")||chucvu.equals("")){
-            JOptionPane.showMessageDialog(null, "Vui lòng nhập đầy đủ thông tin");
+        String luong=txtLuong.getText();
+        String chucvu;
+        if(cbbChucvu.getSelectedItem().toString().equals("Nhân viên"))
+        {
+            chucvu="0";
         }
-        else{
+        else
+        {
+            chucvu="1";
+        }
+        if (id.equals("") || tennv.equals("") || luong.equals("") || chucvu.equals("")) {
+            JOptionPane.showMessageDialog(null, "Vui lòng nhập đầy đủ thông tin");
+        } else {
             try {
                 oracle.openConnection();
-                
-                String sql = "update admin.nhanvien set TENNV='"+tennv+"', DIENTHOAI='"+sdt+"', DIACHI='"+diachi+"', CHUCVU='"+chucvu+"' WHERE MANV='"+id+"'";
-                Statement st = oracle.conn.createStatement(); 
-                
-                
+                String sql = "UPDATE ADMIN.NHANVIEN SET TENNV='" + tennv + "',LUONGNV=" + luong + ",MACHUCVU='" + chucvu + "' WHERE MANV='" + id + "'";
+                Statement st = oracle.conn.createStatement();
                 st.executeUpdate(sql);
-                JOptionPane.showMessageDialog(null, "Cập nhật thành công");
+                JOptionPane.showMessageDialog(null, "Sửa thành công");
                 RemoveTableItem(jTable1);
                 loadData();
-                
-
+                oracle.closeConnection();
             } catch (SQLException ex) {
-                Logger.getLogger(EmployeeManager.class.getName()).log(Level.SEVERE, null, ex);
-               JOptionPane.showMessageDialog(null, "Lỗi truy vấn: " + ex.getMessage(), "Lỗi", JOptionPane.ERROR_MESSAGE);
+               
+                JOptionPane.showMessageDialog(null, "Lỗi truy vấn: " + ex.getMessage(), "Lỗi", JOptionPane.ERROR_MESSAGE);
             }
-                
         }
     }//GEN-LAST:event_btnSuaActionPerformed
         
@@ -395,17 +365,10 @@ public class EmployeeManager extends javax.swing.JFrame {
         String Code=(String)vRow.get(0);
         String Name=(String)vRow.get(1);
         String Phone=(String)vRow.get(2);
-        String Address=(String)vRow.get(3);
-        String Chucvu=(String)vRow.get(4);
 
         txtID.setText(Code);
         txtTennv.setText(Name);
-        txtSDT.setText(Phone);
-        txtDiaChi.setText(Address);
-        cbbChucvu.setSelectedItem(Chucvu);
-        
-        
-        
+        txtLuong.setText(Phone);
     }
     public void loadData() throws SQLException
     {
@@ -419,33 +382,27 @@ public class EmployeeManager extends javax.swing.JFrame {
             {
                 String one = rs.getString("MANV");
                 String two = rs.getString("TENNV");
-                String three = rs.getString("DIENTHOAI");
-                String four = rs.getString("DIACHI");
-                String five = rs.getString("CHUCVU");
+                String three = rs.getString("LUONGNV");                
+                String four = rs.getString("MACHUCVU");
 
                 Vector<String> v = new Vector<String>();
                 v.add(one);
                 v.add(two);
                 v.add(three);
-                v.add(four);
-                v.add(five);
-                
-                
-                vdata.add(v);
-                
-            }
-            
+                v.add(four);               
+                vdata.add(v);       
+            }            
             jTable1.updateUI();
             oracle.closeConnection();
         } catch(SQLException ex)
         {
-            Logger.getLogger(SGA.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(null, "Lỗi truy vấn: " + ex.getMessage(), "Lỗi", JOptionPane.ERROR_MESSAGE);
+            
         }
     }
     public void Search() throws SQLException
     {
-        RemoveTableItem(jTable1);
-        
+        RemoveTableItem(jTable1);        
         try
         {
             oracle.openConnection();
@@ -456,9 +413,8 @@ public class EmployeeManager extends javax.swing.JFrame {
             {
                 String one = rs.getString("MANV");
                 String two = rs.getString("TENNV");
-                String three = rs.getString("DIENTHOAI");
-                String four = rs.getString("DIACHI");
-                String five = rs.getString("CHUCVU");
+                String three = rs.getString("LUONGNV");
+                String four = rs.getString("MACHUCVU");
                 
                 
                 Vector<String> v = new Vector<String>();
@@ -466,7 +422,6 @@ public class EmployeeManager extends javax.swing.JFrame {
                 v.add(two);
                 v.add(three);
                 v.add(four);
-                v.add(five);
                 
                 
                 vdata.add(v);
@@ -528,15 +483,11 @@ public class EmployeeManager extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
-    private javax.swing.JTextField jTextField5;
-    private javax.swing.JTextField txtDiaChi;
     private javax.swing.JTextField txtID;
-    private javax.swing.JTextField txtSDT;
+    private javax.swing.JTextField txtLuong;
     private javax.swing.JTextField txtSearch;
     private javax.swing.JTextField txtTennv;
     // End of variables declaration//GEN-END:variables

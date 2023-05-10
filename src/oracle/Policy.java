@@ -61,7 +61,7 @@ public class Policy extends javax.swing.JFrame {
                 {null, null, null, null}
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "Object schema", "Object name", "Policy owner", "Policy name"
             }
         ));
         jScrollPane1.setViewportView(jTable1);

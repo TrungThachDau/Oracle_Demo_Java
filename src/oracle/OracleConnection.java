@@ -53,6 +53,22 @@ public class OracleConnection
            JOptionPane.showMessageDialog(null, "Lỗi đăng nhập: " + ex.getMessage(), "Lỗi", JOptionPane.ERROR_MESSAGE);
         }
     }
+    public OracleConnection(String username,String password)
+    {
+        this.username=username;
+        this.password=password;
+        try
+        {
+            Class.forName("oracle.jdbc.driver.OracleDriver");
+            conn=DriverManager.getConnection(url, username, password);
+            stmt=conn.createStatement();
+        }
+        catch(Exception e)
+        {
+            System.out.println(e);
+            Logger.getLogger(OracleConnection.class.getName()).log(Level.SEVERE, null, e);
+        }
+    }
     public Connection openConnection()
     {
         try
