@@ -27,9 +27,6 @@ public class Policy extends javax.swing.JFrame {
         setTitle("Xem các chính sách");
         initComponents();
         oracle = new OracleConnection();
-        
-        
-        
         //jTable1.setModel(new DefaultTableModel(vdata, vheader));
         try {
             loadData();
@@ -61,7 +58,7 @@ public class Policy extends javax.swing.JFrame {
                 {null, null, null, null}
             },
             new String [] {
-                "Object schema", "Object name", "Policy owner", "Policy name"
+                "Sở hữu", "Tên đối tượng", "Nhóm", "Tên"
             }
         ));
         jScrollPane1.setViewportView(jTable1);
@@ -88,23 +85,20 @@ public class Policy extends javax.swing.JFrame {
         try
         {
             oracle.openConnection();
-            String sql = "select object_schema,object_name,policy_owner,policy_name from dba_audit_policies";
+            String sql = "select object_owner,object_name,policy_group,policy_name from dba_policies";
             Statement stmt = oracle.conn.createStatement();
             ResultSet rs = stmt.executeQuery(sql);
             while(rs.next())
             {
-                String one = rs.getString("object_schema");
+                String one = rs.getString("object_owner");
                 String two = rs.getString("object_name");
-                String three = rs.getString("policy_owner");
+                String three = rs.getString("policy_group");
                 String four = rs.getString("policy_name");
 
-                Vector<String> v = new Vector<String>();
-                v.add(one);
-                v.add(two);
-                v.add(three);
-                v.add(four);
-
-                vdata.add(v);
+                String tbData[] = {one,two,three,four};
+                DefaultTableModel tblModel = (DefaultTableModel)jTable1.getModel();
+                
+                tblModel.addRow(tbData);  
                 
             }
             jTable1.updateUI();

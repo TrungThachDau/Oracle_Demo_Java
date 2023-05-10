@@ -55,15 +55,15 @@ SET DEFINE OFF;
 Insert into ADMIN.NHANVIEN (MANV,TENNV,LUONGNV,MACHUCVU) values ('1','Trung','15000','0');
 REM INSERTING into ADMIN.SANPHAM
 SET DEFINE OFF;
-Insert into ADMIN.SANPHAM (MASP,TENSP,MOTASP,GIASP,SLTON) values ('1','Cà phê s?a',null,'20000','10');
-Insert into ADMIN.SANPHAM (MASP,TENSP,MOTASP,GIASP,SLTON) values ('2','7UP',null,'11000','20');
-Insert into ADMIN.SANPHAM (MASP,TENSP,MOTASP,GIASP,SLTON) values ('3','Coca Cola',null,'15000','10');
-Insert into ADMIN.SANPHAM (MASP,TENSP,MOTASP,GIASP,SLTON) values ('4','Cà phê kem',null,'25000','15');
-Insert into ADMIN.SANPHAM (MASP,TENSP,MOTASP,GIASP,SLTON) values ('5','Trà xanh',null,'15000','10');
-Insert into ADMIN.SANPHAM (MASP,TENSP,MOTASP,GIASP,SLTON) values ('6','Ný?c cam',null,'20000','10');
-Insert into ADMIN.SANPHAM (MASP,TENSP,MOTASP,GIASP,SLTON) values ('7','Soda Blue',null,'25000','10');
-Insert into ADMIN.SANPHAM (MASP,TENSP,MOTASP,GIASP,SLTON) values ('8','Mojito Chanh Dây',null,'20000','10');
-Insert into ADMIN.SANPHAM (MASP,TENSP,MOTASP,GIASP,SLTON) values ('9','S?a l?c',null,'30000','10');
+Insert into ADMIN.SANPHAM (MASP,TENSP,MOTASP,GIASP,SLTON) values ('1','Cà phê s?a','Cà phê s?a','20000','10');
+Insert into ADMIN.SANPHAM (MASP,TENSP,MOTASP,GIASP,SLTON) values ('2','7UP','Cà phê s?a','11000','20');
+Insert into ADMIN.SANPHAM (MASP,TENSP,MOTASP,GIASP,SLTON) values ('3','Coca Cola','Coca','15000','10');
+Insert into ADMIN.SANPHAM (MASP,TENSP,MOTASP,GIASP,SLTON) values ('4','Cà phê kem','Cà phê kem','25000','15');
+Insert into ADMIN.SANPHAM (MASP,TENSP,MOTASP,GIASP,SLTON) values ('5','Trà xanh','Trà xanh','15000','10');
+Insert into ADMIN.SANPHAM (MASP,TENSP,MOTASP,GIASP,SLTON) values ('6','Ný?c cam','Ný?c cam','20000','10');
+Insert into ADMIN.SANPHAM (MASP,TENSP,MOTASP,GIASP,SLTON) values ('7','Soda Blue','Soda','25000','10');
+Insert into ADMIN.SANPHAM (MASP,TENSP,MOTASP,GIASP,SLTON) values ('8','Mojito Chanh Dây','Mojito','20000','10');
+Insert into ADMIN.SANPHAM (MASP,TENSP,MOTASP,GIASP,SLTON) values ('9','S?a l?c','S?a l?c','30000','10');
 --------------------------------------------------------
 --  DDL for Index BAN_PK
 --------------------------------------------------------
