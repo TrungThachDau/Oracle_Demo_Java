@@ -103,8 +103,7 @@ public class MainForm extends javax.swing.JFrame {
         
         JPanel tabJPanel = new TableControlPanel();
 //        Them panel vao tablePanel
-        panel_main.add(tabJPanel);
-        panel_main.setVisible(true);
+        panel_main.insertTab("Bàn", null, tabJPanel, null, 0);
         pack();
         
     }
@@ -465,7 +464,7 @@ public class MainForm extends javax.swing.JFrame {
         // TODO add your handling code here:
         OrderControlPanel orderControlPanel = new OrderControlPanel();
         panel_main.removeAll();
-        panel_main.insertTab("Tạo đơn", null, orderControlPanel, null, 0);
+        panel_main.insertTab("Quản lí đơn", null, orderControlPanel, null, 0);
         pack();
     }//GEN-LAST:event_btn_orderActionPerformed
 

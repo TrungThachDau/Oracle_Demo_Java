@@ -389,7 +389,7 @@ public class CreateOrderForm extends javax.swing.JFrame {
 //       Tao dt productlayout
         for (SanPhamModel productModel : productModels) {
             Object tbData[] = {
-                productModel.getHinhAnh(),
+                "",
                 productModel.getMaSP(),
                 productModel.getTenSP(), 
                 productModel.getGiaSP(),
