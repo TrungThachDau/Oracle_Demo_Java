@@ -1,213 +1,149 @@
 --------------------------------------------------------
---  File created - Th? Hai-thÃ¡ng 4-17-2023   
+--  File created - Th? Tý-tháng 5-10-2023   
 --------------------------------------------------------
 --------------------------------------------------------
 --  DDL for Table BAN
 --------------------------------------------------------
 
-  CREATE TABLE "BAN" 
-   (	"MABAN" NUMBER, 
-	"SOLUONGKHACH" NUMBER, 
-	"TRANGTHAIBAN" NUMBER
-   ) SEGMENT CREATION DEFERRED 
-  PCTFREE 10 PCTUSED 40 INITRANS 1 MAXTRANS 255 
- NOCOMPRESS LOGGING
-  TABLESPACE "USERS" ;
+  CREATE TABLE "ADMIN"."BAN" ("MABAN" NUMBER, "SOLUONGKHACH" NUMBER, "TRANGTHAIBAN" NUMBER)
 --------------------------------------------------------
 --  DDL for Table CHITIETDONHANG
 --------------------------------------------------------
 
-  CREATE TABLE "CHITIETDONHANG" 
-   (	"MASP" NUMBER, 
-	"MACTDH" NUMBER, 
-	"MADH" NUMBER, 
-	"SOLUONG" NUMBER
-   ) SEGMENT CREATION DEFERRED 
-  PCTFREE 10 PCTUSED 40 INITRANS 1 MAXTRANS 255 
- NOCOMPRESS LOGGING
-  TABLESPACE "USERS" ;
+  CREATE TABLE "ADMIN"."CHITIETDONHANG" ("MACTDH" NUMBER, "MASP" NUMBER, "MADH" NUMBER, "SOLUONG" NUMBER)
 --------------------------------------------------------
 --  DDL for Table CHUCVU
 --------------------------------------------------------
 
-  CREATE TABLE "CHUCVU" 
-   (	"MACV" NUMBER, 
-	"TENCV" VARCHAR2(50 BYTE), 
-	"MOTACV" VARCHAR2(50 BYTE)
-   ) SEGMENT CREATION DEFERRED 
-  PCTFREE 10 PCTUSED 40 INITRANS 1 MAXTRANS 255 
- NOCOMPRESS LOGGING
-  TABLESPACE "USERS" ;
+  CREATE TABLE "ADMIN"."CHUCVU" ("MACV" NUMBER, "TENCV" VARCHAR2(50 BYTE), "MOTACV" VARCHAR2(50 BYTE))
 --------------------------------------------------------
 --  DDL for Table DONHANG
 --------------------------------------------------------
 
-  CREATE TABLE "DONHANG" 
-   (	"MADH" NUMBER, 
-	"THOIGIANDATDH" DATE, 
-	"TRANGTHAIDH" NUMBER, 
-	"TONGGIATRIDH" NUMBER, 
-	"MANV" NUMBER, 
-	"MOTADH" VARCHAR2(50 BYTE), 
-	"MABAN" NUMBER
-   ) SEGMENT CREATION DEFERRED 
-  PCTFREE 10 PCTUSED 40 INITRANS 1 MAXTRANS 255 
- NOCOMPRESS LOGGING
-  TABLESPACE "USERS" ;
+  CREATE TABLE "ADMIN"."DONHANG" ("MADH" NUMBER, "THOIGIANDATDH" DATE, "TRANGTHAIDH" NUMBER, "TONGGIATRIDH" NUMBER, "MANV" NUMBER, "MOTADH" VARCHAR2(50 BYTE), "MABAN" NUMBER)
 --------------------------------------------------------
 --  DDL for Table NHANVIEN
 --------------------------------------------------------
 
-  CREATE TABLE "NHANVIEN" 
-   (	"MANV" NUMBER, 
-	"TENNV" VARCHAR2(50 BYTE), 
-	"LUONGNV" NUMBER, 
-	"MACHUCVU" NUMBER
-   ) SEGMENT CREATION DEFERRED 
-  PCTFREE 10 PCTUSED 40 INITRANS 1 MAXTRANS 255 
- NOCOMPRESS LOGGING
-  TABLESPACE "USERS" ;
+  CREATE TABLE "ADMIN"."NHANVIEN" ("MANV" NUMBER, "TENNV" VARCHAR2(50 BYTE), "LUONGNV" NUMBER, "MACHUCVU" NUMBER)
 --------------------------------------------------------
 --  DDL for Table SANPHAM
 --------------------------------------------------------
 
-  CREATE TABLE "SANPHAM" 
-   (	"MASP" NUMBER, 
-	"TENSP" VARCHAR2(50 BYTE), 
-	"MOTASP" VARCHAR2(100 BYTE), 
-	"GIASP" NUMBER, 
-	"HINHANH" BLOB, 
-	"SLTON" NUMBER
-   ) SEGMENT CREATION DEFERRED 
-  PCTFREE 10 PCTUSED 40 INITRANS 1 MAXTRANS 255 
- NOCOMPRESS LOGGING
-  TABLESPACE "USERS" 
- LOB ("HINHANH") STORE AS SECUREFILE (
-  TABLESPACE "USERS" ENABLE STORAGE IN ROW 4000 CHUNK 8192
-  NOCACHE LOGGING  NOCOMPRESS  KEEP_DUPLICATES ) ;
-REM INSERTING into BAN
+  CREATE TABLE "ADMIN"."SANPHAM" ("MASP" NUMBER, "TENSP" VARCHAR2(50 BYTE), "MOTASP" VARCHAR2(100 BYTE), "GIASP" NUMBER, "HINHANH" BLOB, "SLTON" NUMBER)
+REM INSERTING into ADMIN.BAN
 SET DEFINE OFF;
-REM INSERTING into CHITIETDONHANG
+Insert into ADMIN.BAN (MABAN,SOLUONGKHACH,TRANGTHAIBAN) values ('1','0','0');
+Insert into ADMIN.BAN (MABAN,SOLUONGKHACH,TRANGTHAIBAN) values ('2','5','0');
+Insert into ADMIN.BAN (MABAN,SOLUONGKHACH,TRANGTHAIBAN) values ('3','0','0');
+Insert into ADMIN.BAN (MABAN,SOLUONGKHACH,TRANGTHAIBAN) values ('4','4','0');
+Insert into ADMIN.BAN (MABAN,SOLUONGKHACH,TRANGTHAIBAN) values ('5','0','0');
+Insert into ADMIN.BAN (MABAN,SOLUONGKHACH,TRANGTHAIBAN) values ('6','0','0');
+REM INSERTING into ADMIN.CHITIETDONHANG
 SET DEFINE OFF;
-REM INSERTING into CHUCVU
+Insert into ADMIN.CHITIETDONHANG (MACTDH,MASP,MADH,SOLUONG) values ('1','1','1','1');
+Insert into ADMIN.CHITIETDONHANG (MACTDH,MASP,MADH,SOLUONG) values ('2','2','1','1');
+REM INSERTING into ADMIN.CHUCVU
 SET DEFINE OFF;
-REM INSERTING into DONHANG
+Insert into ADMIN.CHUCVU (MACV,TENCV,MOTACV) values ('1','Nhân viên','Nhân viên');
+Insert into ADMIN.CHUCVU (MACV,TENCV,MOTACV) values ('0','Qu?n l?','Qu?n l?');
+REM INSERTING into ADMIN.DONHANG
 SET DEFINE OFF;
-REM INSERTING into NHANVIEN
+Insert into ADMIN.DONHANG (MADH,THOIGIANDATDH,TRANGTHAIDH,TONGGIATRIDH,MANV,MOTADH,MABAN) values ('1',to_date('10-05-2023','DD-MM-RRRR'),'1','50000','1',null,'1');
+REM INSERTING into ADMIN.NHANVIEN
 SET DEFINE OFF;
-REM INSERTING into SANPHAM
+Insert into ADMIN.NHANVIEN (MANV,TENNV,LUONGNV,MACHUCVU) values ('1','Trung','15000','0');
+REM INSERTING into ADMIN.SANPHAM
 SET DEFINE OFF;
---------------------------------------------------------
---  DDL for Index CHUCVU_PK
---------------------------------------------------------
-
-  CREATE UNIQUE INDEX "CHUCVU_PK" ON "CHUCVU" ("MACV") 
-  PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
-  TABLESPACE "USERS" ;
---------------------------------------------------------
---  DDL for Index DONHANG_PK
---------------------------------------------------------
-
-  CREATE UNIQUE INDEX "DONHANG_PK" ON "DONHANG" ("MADH") 
-  PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
-  TABLESPACE "USERS" ;
---------------------------------------------------------
---  DDL for Index NHANVIEN_PK
---------------------------------------------------------
-
-  CREATE UNIQUE INDEX "NHANVIEN_PK" ON "NHANVIEN" ("MANV") 
-  PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
-  TABLESPACE "USERS" ;
---------------------------------------------------------
---  DDL for Index CHITIETDONHANG_PK
---------------------------------------------------------
-
-  CREATE UNIQUE INDEX "CHITIETDONHANG_PK" ON "CHITIETDONHANG" ("MACTDH") 
-  PCTFREE 10 INITRANS 2 MAXTRANS 255 
-  TABLESPACE "USERS" ;
+Insert into ADMIN.SANPHAM (MASP,TENSP,MOTASP,GIASP,SLTON) values ('1','Cà phê s?a',null,'20000','10');
+Insert into ADMIN.SANPHAM (MASP,TENSP,MOTASP,GIASP,SLTON) values ('2','7UP',null,'11000','20');
+Insert into ADMIN.SANPHAM (MASP,TENSP,MOTASP,GIASP,SLTON) values ('3','Coca Cola',null,'15000','10');
+Insert into ADMIN.SANPHAM (MASP,TENSP,MOTASP,GIASP,SLTON) values ('4','Cà phê kem',null,'25000','15');
+Insert into ADMIN.SANPHAM (MASP,TENSP,MOTASP,GIASP,SLTON) values ('5','Trà xanh',null,'15000','10');
+Insert into ADMIN.SANPHAM (MASP,TENSP,MOTASP,GIASP,SLTON) values ('6','Ný?c cam',null,'20000','10');
+Insert into ADMIN.SANPHAM (MASP,TENSP,MOTASP,GIASP,SLTON) values ('7','Soda Blue',null,'25000','10');
+Insert into ADMIN.SANPHAM (MASP,TENSP,MOTASP,GIASP,SLTON) values ('8','Mojito Chanh Dây',null,'20000','10');
+Insert into ADMIN.SANPHAM (MASP,TENSP,MOTASP,GIASP,SLTON) values ('9','S?a l?c',null,'30000','10');
 --------------------------------------------------------
 --  DDL for Index BAN_PK
 --------------------------------------------------------
 
-  CREATE UNIQUE INDEX "BAN_PK" ON "BAN" ("MABAN") 
-  PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
-  TABLESPACE "USERS" ;
+  CREATE UNIQUE INDEX "ADMIN"."BAN_PK" ON "ADMIN"."BAN" ("MABAN")
+--------------------------------------------------------
+--  DDL for Index CHITIETDONHANG_PK
+--------------------------------------------------------
+
+  CREATE UNIQUE INDEX "ADMIN"."CHITIETDONHANG_PK" ON "ADMIN"."CHITIETDONHANG" ("MACTDH")
+--------------------------------------------------------
+--  DDL for Index CHUCVU_PK
+--------------------------------------------------------
+
+  CREATE UNIQUE INDEX "ADMIN"."CHUCVU_PK" ON "ADMIN"."CHUCVU" ("MACV")
+--------------------------------------------------------
+--  DDL for Index DONHANG_PK
+--------------------------------------------------------
+
+  CREATE UNIQUE INDEX "ADMIN"."DONHANG_PK" ON "ADMIN"."DONHANG" ("MADH")
+--------------------------------------------------------
+--  DDL for Index NHANVIEN_PK
+--------------------------------------------------------
+
+  CREATE UNIQUE INDEX "ADMIN"."NHANVIEN_PK" ON "ADMIN"."NHANVIEN" ("MANV")
 --------------------------------------------------------
 --  DDL for Index SANPHAM_PK
 --------------------------------------------------------
 
-  CREATE UNIQUE INDEX "SANPHAM_PK" ON "SANPHAM" ("MASP") 
-  PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
-  TABLESPACE "USERS" ;
+  CREATE UNIQUE INDEX "ADMIN"."SANPHAM_PK" ON "ADMIN"."SANPHAM" ("MASP")
 --------------------------------------------------------
 --  Constraints for Table SANPHAM
 --------------------------------------------------------
 
-  ALTER TABLE "SANPHAM" MODIFY ("MASP" NOT NULL ENABLE);
-  ALTER TABLE "SANPHAM" ADD CONSTRAINT "SANPHAM_PK" PRIMARY KEY ("MASP")
-  USING INDEX PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
-  TABLESPACE "USERS"  ENABLE;
+  ALTER TABLE "ADMIN"."SANPHAM" MODIFY ("MASP" NOT NULL ENABLE)
+  ALTER TABLE "ADMIN"."SANPHAM" ADD CONSTRAINT "SANPHAM_PK" PRIMARY KEY ("MASP") USING INDEX  ENABLE
 --------------------------------------------------------
 --  Constraints for Table BAN
 --------------------------------------------------------
 
-  ALTER TABLE "BAN" MODIFY ("MABAN" NOT NULL ENABLE);
-  ALTER TABLE "BAN" ADD CONSTRAINT "BAN_PK" PRIMARY KEY ("MABAN")
-  USING INDEX PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
-  TABLESPACE "USERS"  ENABLE;
+  ALTER TABLE "ADMIN"."BAN" MODIFY ("MABAN" NOT NULL ENABLE)
+  ALTER TABLE "ADMIN"."BAN" ADD CONSTRAINT "BAN_PK" PRIMARY KEY ("MABAN") USING INDEX  ENABLE
 --------------------------------------------------------
 --  Constraints for Table CHUCVU
 --------------------------------------------------------
 
-  ALTER TABLE "CHUCVU" MODIFY ("MACV" NOT NULL ENABLE);
-  ALTER TABLE "CHUCVU" ADD CONSTRAINT "CHUCVU_PK" PRIMARY KEY ("MACV")
-  USING INDEX PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
-  TABLESPACE "USERS"  ENABLE;
+  ALTER TABLE "ADMIN"."CHUCVU" MODIFY ("MACV" NOT NULL ENABLE)
+  ALTER TABLE "ADMIN"."CHUCVU" ADD CONSTRAINT "CHUCVU_PK" PRIMARY KEY ("MACV") USING INDEX  ENABLE
 --------------------------------------------------------
 --  Constraints for Table CHITIETDONHANG
 --------------------------------------------------------
 
-  ALTER TABLE "CHITIETDONHANG" MODIFY ("MASP" NOT NULL ENABLE);
-  ALTER TABLE "CHITIETDONHANG" MODIFY ("MACTDH" NOT NULL ENABLE);
-  ALTER TABLE "CHITIETDONHANG" ADD CONSTRAINT "CHITIETDONHANG_PK" PRIMARY KEY ("MACTDH")
-  USING INDEX PCTFREE 10 INITRANS 2 MAXTRANS 255 
-  TABLESPACE "USERS"  ENABLE;
+  ALTER TABLE "ADMIN"."CHITIETDONHANG" MODIFY ("MACTDH" NOT NULL ENABLE)
+  ALTER TABLE "ADMIN"."CHITIETDONHANG" ADD CONSTRAINT "CHITIETDONHANG_PK" PRIMARY KEY ("MACTDH") USING INDEX  ENABLE
 --------------------------------------------------------
 --  Constraints for Table NHANVIEN
 --------------------------------------------------------
 
-  ALTER TABLE "NHANVIEN" MODIFY ("MANV" NOT NULL ENABLE);
-  ALTER TABLE "NHANVIEN" MODIFY ("TENNV" NOT NULL ENABLE);
-  ALTER TABLE "NHANVIEN" ADD CONSTRAINT "NHANVIEN_PK" PRIMARY KEY ("MANV")
-  USING INDEX PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
-  TABLESPACE "USERS"  ENABLE;
+  ALTER TABLE "ADMIN"."NHANVIEN" MODIFY ("MANV" NOT NULL ENABLE)
+  ALTER TABLE "ADMIN"."NHANVIEN" ADD CONSTRAINT "NHANVIEN_PK" PRIMARY KEY ("MANV") USING INDEX  ENABLE
 --------------------------------------------------------
 --  Constraints for Table DONHANG
 --------------------------------------------------------
 
-  ALTER TABLE "DONHANG" MODIFY ("MADH" NOT NULL ENABLE);
-  ALTER TABLE "DONHANG" ADD CONSTRAINT "DONHANG_PK" PRIMARY KEY ("MADH")
-  USING INDEX PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
-  TABLESPACE "USERS"  ENABLE;
+  ALTER TABLE "ADMIN"."DONHANG" MODIFY ("MADH" NOT NULL ENABLE)
+  ALTER TABLE "ADMIN"."DONHANG" ADD CONSTRAINT "DONHANG_PK" PRIMARY KEY ("MADH") USING INDEX  ENABLE
 --------------------------------------------------------
 --  Ref Constraints for Table CHITIETDONHANG
 --------------------------------------------------------
 
-  ALTER TABLE "CHITIETDONHANG" ADD CONSTRAINT "CHITIETDONHANG_FK1" FOREIGN KEY ("MASP")
-	  REFERENCES "SANPHAM" ("MASP") ENABLE;
-  ALTER TABLE "CHITIETDONHANG" ADD CONSTRAINT "CHITIETDONHANG_FK2" FOREIGN KEY ("MADH")
-	  REFERENCES "DONHANG" ("MADH") ENABLE;
+  ALTER TABLE "ADMIN"."CHITIETDONHANG" ADD CONSTRAINT "CHITIETDONHANG_FK1" FOREIGN KEY ("MASP") REFERENCES "ADMIN"."SANPHAM" ("MASP") ENABLE
+  ALTER TABLE "ADMIN"."CHITIETDONHANG" ADD CONSTRAINT "CHITIETDONHANG_FK2" FOREIGN KEY ("MADH") REFERENCES "ADMIN"."DONHANG" ("MADH") ENABLE
 --------------------------------------------------------
 --  Ref Constraints for Table DONHANG
 --------------------------------------------------------
 
-  ALTER TABLE "DONHANG" ADD CONSTRAINT "DONHANG_FK1" FOREIGN KEY ("MANV")
-	  REFERENCES "NHANVIEN" ("MANV") ENABLE;
-  ALTER TABLE "DONHANG" ADD CONSTRAINT "DONHANG_FK2" FOREIGN KEY ("MABAN")
-	  REFERENCES "BAN" ("MABAN") ENABLE;
+  ALTER TABLE "ADMIN"."DONHANG" ADD CONSTRAINT "DONHANG_FK1" FOREIGN KEY ("MANV") REFERENCES "ADMIN"."NHANVIEN" ("MANV") ENABLE
+  ALTER TABLE "ADMIN"."DONHANG" ADD CONSTRAINT "DONHANG_FK2" FOREIGN KEY ("MABAN") REFERENCES "ADMIN"."BAN" ("MABAN") ENABLE
 --------------------------------------------------------
 --  Ref Constraints for Table NHANVIEN
 --------------------------------------------------------
 
-  ALTER TABLE "NHANVIEN" ADD CONSTRAINT "NHANVIEN_FK1" FOREIGN KEY ("MANV")
-	  REFERENCES "CHUCVU" ("MACV") ENABLE;
+  ALTER TABLE "ADMIN"."NHANVIEN" ADD CONSTRAINT "NHANVIEN_FK1" FOREIGN KEY ("MACHUCVU") REFERENCES "ADMIN"."CHUCVU" ("MACV") ENABLE
