@@ -5,12 +5,22 @@
 package oracle.form;
 
 import java.awt.Component;
+import java.awt.Image;
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import java.io.FileInputStream;
+import java.io.InputStream;
+import java.sql.Blob;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.imageio.ImageIO;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListModel;
 import javax.swing.ImageIcon;
@@ -21,7 +31,9 @@ import javax.swing.JTable;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellRenderer;
+import oracle.Main;
 import oracle.OracleConnection;
+import oracle.ProductManager;
 import oracle.model.BanDB;
 import oracle.model.BanModel;
 import oracle.model.CTDonHangDB;
@@ -80,6 +92,15 @@ public class CreateOrderForm extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        layout_giohang = new javax.swing.JPanel();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        table_gio_hang = new javax.swing.JTable();
+        txt_gh_sl_sp = new javax.swing.JSpinner();
+        btn_gh_capnhat_sp = new javax.swing.JButton();
+        btn_gh_xoa_sp = new javax.swing.JButton();
+        jLabel6 = new javax.swing.JLabel();
+        txt_gh_ten_sp = new javax.swing.JLabel();
+        jLabel7 = new javax.swing.JLabel();
         layout_product = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
         table_product = new javax.swing.JTable();
@@ -95,17 +116,115 @@ public class CreateOrderForm extends javax.swing.JFrame {
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         txt_so_khach = new javax.swing.JTextField();
-        jScrollPane3 = new javax.swing.JScrollPane();
-        table_gio_hang = new javax.swing.JTable();
-        jLabel6 = new javax.swing.JLabel();
-        txt_gh_ten_sp = new javax.swing.JLabel();
-        jLabel7 = new javax.swing.JLabel();
-        txt_gh_sl_sp = new javax.swing.JSpinner();
-        btn_gh_capnhat_sp = new javax.swing.JButton();
-        btn_gh_xoa_sp = new javax.swing.JButton();
+        lbl_hinh_anh = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Tạo đơn hàng");
+
+        table_gio_hang.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "ID", "Tên SP", "Số Lượng", "Thành Tiền"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.Integer.class, java.lang.String.class, java.lang.Integer.class, java.lang.Integer.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        table_gio_hang.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                table_gio_hangMouseClicked(evt);
+            }
+        });
+        jScrollPane3.setViewportView(table_gio_hang);
+
+        txt_gh_sl_sp.addInputMethodListener(new java.awt.event.InputMethodListener() {
+            public void caretPositionChanged(java.awt.event.InputMethodEvent evt) {
+            }
+            public void inputMethodTextChanged(java.awt.event.InputMethodEvent evt) {
+                txt_gh_sl_spInputMethodTextChanged(evt);
+            }
+        });
+
+        btn_gh_capnhat_sp.setText("Cập nhật sản phẩm");
+        btn_gh_capnhat_sp.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_gh_capnhat_spActionPerformed(evt);
+            }
+        });
+
+        btn_gh_xoa_sp.setText("Xóa sản phẩm");
+        btn_gh_xoa_sp.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_gh_xoa_spActionPerformed(evt);
+            }
+        });
+
+        jLabel6.setText("Tên sản phẩm:");
+
+        jLabel7.setText("Số lượng:");
+
+        javax.swing.GroupLayout layout_giohangLayout = new javax.swing.GroupLayout(layout_giohang);
+        layout_giohang.setLayout(layout_giohangLayout);
+        layout_giohangLayout.setHorizontalGroup(
+            layout_giohangLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout_giohangLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(btn_gh_capnhat_sp, javax.swing.GroupLayout.PREFERRED_SIZE, 232, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(btn_gh_xoa_sp, javax.swing.GroupLayout.DEFAULT_SIZE, 240, Short.MAX_VALUE)
+                .addContainerGap())
+            .addGroup(layout_giohangLayout.createSequentialGroup()
+                .addGap(21, 21, 21)
+                .addGroup(layout_giohangLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout_giohangLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(txt_gh_sl_sp, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txt_gh_ten_sp, javax.swing.GroupLayout.PREFERRED_SIZE, 221, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(layout_giohangLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout_giohangLayout.createSequentialGroup()
+                    .addContainerGap()
+                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 490, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+        );
+        layout_giohangLayout.setVerticalGroup(
+            layout_giohangLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout_giohangLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(layout_giohangLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel6)
+                    .addComponent(txt_gh_ten_sp, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout_giohangLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel7)
+                    .addComponent(txt_gh_sl_sp, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(40, 40, 40)
+                .addGroup(layout_giohangLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(btn_gh_xoa_sp, javax.swing.GroupLayout.DEFAULT_SIZE, 55, Short.MAX_VALUE)
+                    .addComponent(btn_gh_capnhat_sp, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
+            .addGroup(layout_giohangLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout_giohangLayout.createSequentialGroup()
+                    .addContainerGap()
+                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 571, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addContainerGap(163, Short.MAX_VALUE)))
+        );
 
         layout_product.setMaximumSize(new java.awt.Dimension(728, 526));
         layout_product.setRequestFocusEnabled(false);
@@ -115,14 +234,14 @@ public class CreateOrderForm extends javax.swing.JFrame {
 
             },
             new String [] {
-                "", "ID", "Tên Sản Phẩm", "Giá", "Tồn Kho"
+                "ID", "Tên Sản Phẩm", "Giá", "Tồn Kho"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Object.class, java.lang.Integer.class, java.lang.String.class, java.lang.Float.class, java.lang.Integer.class
+                java.lang.Integer.class, java.lang.String.class, java.lang.Float.class, java.lang.Integer.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false
+                false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -180,61 +299,9 @@ public class CreateOrderForm extends javax.swing.JFrame {
 
         jLabel5.setText("Số Khách:");
 
-        table_gio_hang.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-
-            },
-            new String [] {
-                "ID", "Tên SP", "Số Lượng", "Thành Tiền"
-            }
-        ) {
-            Class[] types = new Class [] {
-                java.lang.Integer.class, java.lang.String.class, java.lang.Integer.class, java.lang.Integer.class
-            };
-            boolean[] canEdit = new boolean [] {
-                false, false, false, false
-            };
-
-            public Class getColumnClass(int columnIndex) {
-                return types [columnIndex];
-            }
-
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
-            }
-        });
-        table_gio_hang.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                table_gio_hangMouseClicked(evt);
-            }
-        });
-        jScrollPane3.setViewportView(table_gio_hang);
-
-        jLabel6.setText("Tên sản phẩm:");
-
-        jLabel7.setText("Số lượng:");
-
-        txt_gh_sl_sp.addInputMethodListener(new java.awt.event.InputMethodListener() {
-            public void caretPositionChanged(java.awt.event.InputMethodEvent evt) {
-            }
-            public void inputMethodTextChanged(java.awt.event.InputMethodEvent evt) {
-                txt_gh_sl_spInputMethodTextChanged(evt);
-            }
-        });
-
-        btn_gh_capnhat_sp.setText("Cập nhật sản phẩm");
-        btn_gh_capnhat_sp.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn_gh_capnhat_spActionPerformed(evt);
-            }
-        });
-
-        btn_gh_xoa_sp.setText("Xóa sản phẩm");
-        btn_gh_xoa_sp.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn_gh_xoa_spActionPerformed(evt);
-            }
-        });
+        lbl_hinh_anh.setMaximumSize(new java.awt.Dimension(200, 200));
+        lbl_hinh_anh.setMinimumSize(new java.awt.Dimension(200, 200));
+        lbl_hinh_anh.setPreferredSize(new java.awt.Dimension(200, 200));
 
         javax.swing.GroupLayout layout_productLayout = new javax.swing.GroupLayout(layout_product);
         layout_product.setLayout(layout_productLayout);
@@ -243,53 +310,35 @@ public class CreateOrderForm extends javax.swing.JFrame {
             .addGroup(layout_productLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout_productLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane2)
-                    .addGroup(layout_productLayout.createSequentialGroup()
-                        .addGroup(layout_productLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout_productLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txt_quantity_order_product, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txt_product_name, javax.swing.GroupLayout.PREFERRED_SIZE, 216, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(18, 18, 18)
-                        .addGroup(layout_productLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout_productLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(txt_so_khach)
-                            .addComponent(cb_ban, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(33, 33, 33)
-                        .addGroup(layout_productLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(txt_total, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel3))
-                        .addGap(0, 16, Short.MAX_VALUE))
                     .addGroup(layout_productLayout.createSequentialGroup()
                         .addComponent(btn_add_to_cart, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btn_add_donhang, javax.swing.GroupLayout.PREFERRED_SIZE, 344, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGroup(layout_productLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btn_add_donhang, javax.swing.GroupLayout.PREFERRED_SIZE, 344, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout_productLayout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout_productLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 455, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(lbl_hinh_anh, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(layout_productLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(layout_productLayout.createSequentialGroup()
+                                .addGroup(layout_productLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(layout_productLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(txt_quantity_order_product, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(txt_product_name, javax.swing.GroupLayout.PREFERRED_SIZE, 216, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addGap(18, 18, 18)
                                 .addGroup(layout_productLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(layout_productLayout.createSequentialGroup()
-                                        .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(txt_gh_sl_sp, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGroup(layout_productLayout.createSequentialGroup()
-                                        .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(txt_gh_ten_sp, javax.swing.GroupLayout.PREFERRED_SIZE, 221, javax.swing.GroupLayout.PREFERRED_SIZE))))))
-                    .addGroup(layout_productLayout.createSequentialGroup()
-                        .addGap(10, 10, 10)
-                        .addComponent(btn_gh_capnhat_sp, javax.swing.GroupLayout.PREFERRED_SIZE, 232, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btn_gh_xoa_sp, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                                    .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(layout_productLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(txt_so_khach)
+                                    .addComponent(cb_ban, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addGroup(layout_productLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(txt_total, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel3))))))
                 .addContainerGap())
         );
         layout_productLayout.setVerticalGroup(
@@ -297,8 +346,10 @@ public class CreateOrderForm extends javax.swing.JFrame {
             .addGroup(layout_productLayout.createSequentialGroup()
                 .addGap(18, 18, 18)
                 .addGroup(layout_productLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 569, Short.MAX_VALUE)
-                    .addComponent(jScrollPane3))
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 572, Short.MAX_VALUE)
+                    .addGroup(layout_productLayout.createSequentialGroup()
+                        .addComponent(lbl_hinh_anh, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout_productLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout_productLayout.createSequentialGroup()
@@ -320,21 +371,11 @@ public class CreateOrderForm extends javax.swing.JFrame {
                     .addGroup(layout_productLayout.createSequentialGroup()
                         .addComponent(jLabel3)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txt_total, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout_productLayout.createSequentialGroup()
-                        .addGroup(layout_productLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel6)
-                            .addComponent(txt_gh_ten_sp, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout_productLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel7)
-                            .addComponent(txt_gh_sl_sp, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addComponent(txt_total, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(29, 29, 29)
-                .addGroup(layout_productLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(btn_add_to_cart, javax.swing.GroupLayout.DEFAULT_SIZE, 55, Short.MAX_VALUE)
-                    .addComponent(btn_add_donhang, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btn_gh_capnhat_sp, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btn_gh_xoa_sp, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(layout_productLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btn_add_to_cart, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btn_add_donhang, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
 
@@ -342,16 +383,20 @@ public class CreateOrderForm extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(layout_product, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(layout_giohang, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(0, 6, Short.MAX_VALUE)
-                .addComponent(layout_product, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(layout_product, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(layout_giohang, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
 
         pack();
@@ -389,7 +434,6 @@ public class CreateOrderForm extends javax.swing.JFrame {
 //       Tao dt productlayout
         for (SanPhamModel productModel : productModels) {
             Object tbData[] = {
-                "",
                 productModel.getMaSP(),
                 productModel.getTenSP(), 
                 productModel.getGiaSP(),
@@ -401,14 +445,11 @@ public class CreateOrderForm extends javax.swing.JFrame {
         }
         table_product.setRowHeight(50);
 //        set hien thi hinh anh cho cot 0
-        table_product.getColumnModel().getColumn(0).setCellRenderer(new ImageRenderer());
 //        set width choc ac cot
-        table_product.getColumnModel().getColumn(0).setMinWidth(100);
-        table_product.getColumnModel().getColumn(0).setMaxWidth(100);
-        table_product.getColumnModel().getColumn(1).setPreferredWidth(5);
-        table_product.getColumnModel().getColumn(2).setPreferredWidth(250);
-        table_product.getColumnModel().getColumn(3).setPreferredWidth(30);
-        table_product.getColumnModel().getColumn(4).setPreferredWidth(10);
+        table_product.getColumnModel().getColumn(0).setPreferredWidth(5);
+        table_product.getColumnModel().getColumn(1).setPreferredWidth(250);
+        table_product.getColumnModel().getColumn(2).setPreferredWidth(30);
+        table_product.getColumnModel().getColumn(3).setPreferredWidth(10);
         table_product.setAutoResizeMode(JTable.AUTO_RESIZE_LAST_COLUMN);
         table_product.updateUI();
     }
@@ -438,6 +479,46 @@ public class CreateOrderForm extends javax.swing.JFrame {
         table_gio_hang.getColumnModel().getColumn(3).setPreferredWidth(50);
         table_gio_hang.setAutoResizeMode(JTable.AUTO_RESIZE_LAST_COLUMN);
         table_gio_hang.updateUI();
+        
+    }
+    
+    public void loadAnhSP(int maSP, JLabel lblHinh){
+        try {
+            connDB.openConnection();
+            String sql = "Select HINHANH from admin.SANPHAM where MASP="+ maSP;
+            Statement stmt = connDB.conn.createStatement();
+            ResultSet rs = stmt.executeQuery(sql);
+            while(rs.next())
+            {
+                Blob blob = rs.getBlob("HINHANH");
+                
+                if (blob == null){
+                    lblHinh.setIcon(null);
+                    lblHinh.setText("");
+                     return;
+                }
+                   
+                
+                int blobLength = (int) blob.length();  
+                byte[] bytes = blob.getBytes(1, blobLength);
+                BufferedImage img = null;
+                try {
+                    img = ImageIO.read(new ByteArrayInputStream(bytes));
+                } catch (IOException ex) {
+                    Logger.getLogger(ProductManager.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                ImageIcon icon = new ImageIcon(img);
+                Image image = icon.getImage();
+                Image newimg = image.getScaledInstance(200, 200,  java.awt.Image.SCALE_SMOOTH);
+                icon = new ImageIcon(newimg);
+                lblHinh.setIcon(icon);
+                lblHinh.setText("");
+            }
+            stmt.close();
+            connDB.closeConnection();
+        } catch (Exception e) {
+            Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, e);
+        }
         
     }
     
@@ -476,7 +557,8 @@ public class CreateOrderForm extends javax.swing.JFrame {
 
              btn_add_donhang.setEnabled(true);
 
-             int id_selected = (int) table_product.getValueAt(table_product.getSelectedRow(), 1);
+             int id_selected = (int) table_product.getValueAt(table_product.getSelectedRow(), 0);
+             
              SanPhamModel productModel = new SanPhamModel();
              for (SanPhamModel item : productModels) {
                  if (item.getMaSP() == id_selected) {
@@ -592,9 +674,19 @@ public class CreateOrderForm extends javax.swing.JFrame {
 
     private void table_productMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_table_productMouseReleased
         // TODO add your handling code here:
-        String tenSP = table_product.getValueAt(table_product.getSelectedRow(), 2).toString();
+        
+        int maSP = Integer.parseInt(table_product.getValueAt(table_product.getSelectedRow(), 0).toString().trim());
+        String tenSP = table_product.getValueAt(table_product.getSelectedRow(), 1).toString();
         txt_product_name.setText(tenSP);
         btn_add_to_cart.setEnabled(true);
+        for (SanPhamModel productModel : productModels) {
+            if (productModel.getMaSP() == maSP) {
+                loadAnhSP(productModel.getMaSP(), lbl_hinh_anh);
+                break;
+            }
+        }
+        
+        
     }//GEN-LAST:event_table_productMouseReleased
 
     private void txt_quantity_order_productInputMethodTextChanged(java.awt.event.InputMethodEvent evt) {//GEN-FIRST:event_txt_quantity_order_productInputMethodTextChanged
@@ -705,7 +797,9 @@ public class CreateOrderForm extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel7;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JPanel layout_giohang;
     private javax.swing.JPanel layout_product;
+    private javax.swing.JLabel lbl_hinh_anh;
     private javax.swing.JTable table_gio_hang;
     private javax.swing.JTable table_product;
     private javax.swing.JSpinner txt_gh_sl_sp;

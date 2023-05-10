@@ -440,6 +440,11 @@ public class OrderControlPanel extends javax.swing.JPanel {
         //        Lay ma don hang dang duoc chon
         int maDH = Integer.parseInt(table_don_hang.getValueAt(table_don_hang.getSelectedRow(), 0).toString().trim());
         if (confirmAction("Bạn muốn xóa đơn hàng này ?")) {
+            // Xoa chi tiet don hang
+            ArrayList<CTDonHangModel> cTDonHangs = cTDonHangDB.getCTDonHangFromDonHangs(maDH);
+            for (CTDonHangModel cTDonHang : cTDonHangs) {
+                cTDonHangDB.deleteCTDonHang(cTDonHang.getMaCTDH());
+            }
 //            Xoa don hang
             DonHangModel donHang = donHangDB.getDonHang(maDH);
             boolean result = donHangDB.deleteDonHang(maDH);
@@ -450,6 +455,8 @@ public class OrderControlPanel extends javax.swing.JPanel {
                 bm.setTrangThaiBan(0);
                 bm.setSoLuongKhach(0);
                 banDB.updateBan(bm);
+                // load lai ctdh
+                loadCTDonHang(0);
                 JOptionPane.showMessageDialog(null, "Xóa đơn hàng thành công");
             }
 
