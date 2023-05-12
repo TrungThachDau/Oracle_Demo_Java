@@ -7,6 +7,8 @@ import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -27,6 +29,7 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTable;
+import javax.swing.Timer;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import javax.swing.table.DefaultTableModel;
@@ -78,7 +81,7 @@ public class MainForm extends javax.swing.JFrame {
             ResultSet rset = stmt.executeQuery(sql);
             rset.next();
             username = rset.getString(1);         
-            rset = stmt.executeQuery("select max(logon_time) from v$session where username='" + username + "'");
+            rset = stmt.executeQuery("SELECT CURRENT_TIMESTAMP FROM DUAL");
             rset.next();
             last_login = rset.getString(1);
             rset.close();
@@ -87,12 +90,30 @@ public class MainForm extends javax.swing.JFrame {
         } catch (SQLException ex) {
             Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
         }
-        Date date = new Date();
-        SimpleDateFormat formatter = new SimpleDateFormat("dd.MM.yyyy h:mm:ss a");
-        formatter.setTimeZone(TimeZone.getTimeZone("GMT+7"));       
-        System.out.println(last_login);
-        String formattedDate = formatter.format(date);
-        setTitle("Trang chính - "+username+" - "+formattedDate+" ICT");   
+        
+        setTitle("Trang chính - "+username+" - "+last_login);
+        Timer timer = new Timer(5000, new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                try {
+                    //Oracle.openConnection();
+                    
+                    stmt = Oracle.conn.createStatement();                    
+                    ResultSet rset2 = stmt.executeQuery("SELECT * FROM USER_USERS");                               
+                    //Oracle.LogOut();
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Phiên đã bị hủy, Nhấn OK để trở về trang đăng nhập", "Phiên hết hạn", JOptionPane.OK_OPTION);
+            dispose();
+            //new Main().setVisible(true);
+            
+        }
+            System.out.println("OK");
+            }
+            
+        });
+         timer.start();
+         //timer.stop();
+              
     }
     private void init(){
        //Oracle = new OracleConnection("admin","123");
@@ -143,6 +164,7 @@ public class MainForm extends javax.swing.JFrame {
         menuItemUser = new javax.swing.JMenuItem();
         menuItemProfiles = new javax.swing.JMenuItem();
         menuItemChangePw = new javax.swing.JMenuItem();
+        jMenuItem8 = new javax.swing.JMenuItem();
         jMenu5 = new javax.swing.JMenu();
         jMenuItem3 = new javax.swing.JMenuItem();
         jMenuItem4 = new javax.swing.JMenuItem();
@@ -310,11 +332,19 @@ public class MainForm extends javax.swing.JFrame {
         });
         jMenu4.add(menuItemChangePw);
 
+        jMenuItem8.setText("Phân quyền");
+        jMenuItem8.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem8ActionPerformed(evt);
+            }
+        });
+        jMenu4.add(jMenuItem8);
+
         jMenuBar1.add(jMenu4);
 
         jMenu5.setText("Bảo trì");
 
-        jMenuItem3.setText("Sao lưu");
+        jMenuItem3.setText("Xuất");
         jMenuItem3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuItem3ActionPerformed(evt);
@@ -322,7 +352,7 @@ public class MainForm extends javax.swing.JFrame {
         });
         jMenu5.add(jMenuItem3);
 
-        jMenuItem4.setText("Phục hồi");
+        jMenuItem4.setText("Nhập");
         jMenuItem4.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuItem4ActionPerformed(evt);
@@ -413,7 +443,7 @@ public class MainForm extends javax.swing.JFrame {
         // TODO add your handling code here:
         
         
-            datafile fm = new datafile();
+            Tablespaceview fm = new Tablespaceview();
         fm.setVisible(true);
         
         
@@ -501,6 +531,11 @@ public class MainForm extends javax.swing.JFrame {
         new ProductManager().setVisible(true);
     }//GEN-LAST:event_jMenuItem7ActionPerformed
 
+    private void jMenuItem8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem8ActionPerformed
+        // TODO add your handling code here:
+        new PermissionGroup().setVisible(true);
+    }//GEN-LAST:event_jMenuItem8ActionPerformed
+
    
     
     private void loadInfoUser(){
@@ -586,6 +621,7 @@ public class MainForm extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem5;
     private javax.swing.JMenuItem jMenuItem6;
     private javax.swing.JMenuItem jMenuItem7;
+    private javax.swing.JMenuItem jMenuItem8;
     private javax.swing.JMenuItem menuItemChangePw;
     private javax.swing.JMenuItem menuItemProfiles;
     private javax.swing.JMenuItem menuItemRole;

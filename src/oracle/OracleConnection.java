@@ -71,23 +71,40 @@ public class OracleConnection
     }
     public Connection openConnection()
     {
-        try
-        {
-           if(conn!=null&conn.isClosed()==false)
-              return conn;
-            conn=DriverManager.getConnection(url, username, password);
-            stmt=conn.createStatement();
-        }
-        catch(Exception e)
-        {
-            System.out.println(e.getMessage());
-            Logger.getLogger(OracleConnection.class.getName()).log(Level.SEVERE, null, e);
-        }
+//        try
+//        {
+//           if(conn!=null&conn.isClosed()==false)
+//              return conn;
+//            conn=DriverManager.getConnection(url, username, password);
+//            stmt=conn.createStatement();
+//        }
+//        catch(Exception e)
+//        {
+//            System.out.println(e.getMessage());
+//            Logger.getLogger(OracleConnection.class.getName()).log(Level.SEVERE, null, e);
+//        }
         return conn;
-    }
+   }
     public Connection closeConnection()
     {
-        try
+//        try
+//        {
+//            if(conn!=null&conn.isClosed()==false)
+//            {
+//                conn.close();
+//                stmt.close();
+//            }
+//        }
+//        catch(Exception e)
+//        {
+//            System.out.println(e.getMessage());
+//            Logger.getLogger(OracleConnection.class.getName()).log(Level.SEVERE, null, e);
+//        }
+        return conn;
+    }
+    public Connection LogOut()
+    {
+                try
         {
             if(conn!=null&conn.isClosed()==false)
             {

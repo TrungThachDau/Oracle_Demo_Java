@@ -278,7 +278,7 @@ public class EmployeeManager extends javax.swing.JFrame {
             try {
                 oracle.openConnection();
                 
-                String sql = "INSERT INTO nhanvien VALUES("+id+",'"+tennv+"',"+luong+","+chucvu+")";
+                String sql = "INSERT INTO admin.nhanvien VALUES("+id+",'"+tennv+"',"+luong+","+chucvu+")";
                 Statement st = oracle.conn.createStatement(); 
                
                 st.executeUpdate(sql);

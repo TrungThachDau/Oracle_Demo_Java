@@ -29,7 +29,7 @@ public class Session extends javax.swing.JFrame {
     public Session() {
         initComponents();
     setTitle("Quản lý phiên");
-        oracle = new OracleConnection();
+        oracle = new OracleConnection("sys as sysdba","123");
         vheader.add("SID");
         vheader.add("Serial");
         vheader.add("Chương trình");
@@ -214,7 +214,7 @@ public class Session extends javax.swing.JFrame {
             rset.next();
             String count = rset.getString(1);
             labelCountSession.setText(count);
-            oracle.closeConnection();
+            //oracle.closeConnection();
         } catch (SQLException ex) {
             
             JOptionPane.showMessageDialog(null, "Lỗi truy vấn: " + ex.getMessage(), "Lỗi", JOptionPane.ERROR_MESSAGE);
@@ -240,9 +240,11 @@ public class Session extends javax.swing.JFrame {
             stmt = oracle.conn.createStatement();
              String sql = "ALTER SYSTEM KILL SESSION '"+SID+","+serial+"' IMMEDIATE";
             ResultSet rset = stmt.executeQuery(sql);
-            loadData();
+            
             JOptionPane.showMessageDialog(null,"Phiên đã bị hủy");
-            oracle.closeConnection();
+            RemoveTableItem(jTable1);
+            loadData();
+            //oracle.closeConnection();
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Lỗi truy vấn: " + ex.getMessage(), "Lỗi", JOptionPane.ERROR_MESSAGE);
            
@@ -304,7 +306,7 @@ public class Session extends javax.swing.JFrame {
                 
             }
             jTable1.updateUI();
-            oracle.closeConnection();
+            //oracle.closeConnection();
         } catch(SQLException ex)
         {
             Logger.getLogger(SGA.class.getName()).log(Level.SEVERE, null, ex);
@@ -341,7 +343,7 @@ public class Session extends javax.swing.JFrame {
             }
             
             jTable1.updateUI();
-            oracle.closeConnection();
+            //oracle.closeConnection();
         } catch(SQLException ex)
         {
             JOptionPane.showMessageDialog(null, "Lỗi truy vấn: " + ex.getMessage(), "Lỗi", JOptionPane.ERROR_MESSAGE);

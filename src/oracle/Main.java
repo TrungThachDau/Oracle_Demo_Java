@@ -261,13 +261,14 @@ public class Main extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(null, "Đăng nhập thành công bằng người dùng "+username+" bằng quyền quản trị");
                 new MainForm().setVisible(true);
                 this.setVisible(false);
-                oracle.closeConnection();
+                oracle.LogOut();
             } catch (Exception e) {
                 // TODO: handle exception
+                Statement stmt1 = conn.createStatement();
                 JOptionPane.showMessageDialog(null, "Đăng nhập thành công bằng người dùng "+username1+" bằng quyền thường");
                 new MainFormUser().setVisible(true);
                 this.setVisible(false);
-                oracle.closeConnection();
+                oracle.LogOut();
             }
             
          } catch (Exception e) {
@@ -336,7 +337,7 @@ public class Main extends javax.swing.JFrame {
          */
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Windows".equals(info.getName())) {
+                if ("Nimbus".equals(info.getName())) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
                 }

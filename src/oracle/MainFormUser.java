@@ -7,6 +7,8 @@ import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -27,6 +29,7 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTable;
+import javax.swing.Timer;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import javax.swing.table.DefaultTableModel;
@@ -77,20 +80,39 @@ public class MainFormUser extends javax.swing.JFrame {
             String sql = "select username from user_users";
             ResultSet rset = stmt.executeQuery(sql);
             rset.next();
-            username = rset.getString(1);                     
-            rset.next();           
+            username = rset.getString(1);         
+            rset = stmt.executeQuery("SELECT CURRENT_TIMESTAMP FROM DUAL");
+            rset.next();
+            last_login = rset.getString(1);
             rset.close();
             Oracle.closeConnection();
                      
         } catch (SQLException ex) {
             Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
         }
-        Date date = new Date();
-        SimpleDateFormat formatter = new SimpleDateFormat("dd.MM.yyyy h:mm:ss a");
-        formatter.setTimeZone(TimeZone.getTimeZone("GMT+7"));       
-        //System.out.println(last_login);
-        String formattedDate = formatter.format(date);
-        setTitle("Trang chính - "+username+" - "+formattedDate+" ICT");   
+        
+        setTitle("Trang chính - "+username+" - "+last_login);
+        Timer timer = new Timer(5000, new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                try {
+                    //Oracle.openConnection();
+                    
+                    stmt = Oracle.conn.createStatement();                    
+                    ResultSet rset2 = stmt.executeQuery("SELECT * FROM USER_USERS");                               
+                    //Oracle.LogOut();
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Phiên đã bị hủy, Nhấn OK để trở về trang đăng nhập", "Phiên hết hạn", JOptionPane.OK_OPTION);
+            dispose();
+            //new Main().setVisible(true);
+            
+        }
+            System.out.println("OK");
+            }
+            
+        });
+         timer.start();
+         //timer.stop();
     }
     private void init(){
        //Oracle = new OracleConnection("admin","123");
@@ -126,6 +148,9 @@ public class MainFormUser extends javax.swing.JFrame {
         jMenuItem1 = new javax.swing.JMenuItem();
         jMenu4 = new javax.swing.JMenu();
         menuItemChangePw = new javax.swing.JMenuItem();
+        jMenu2 = new javax.swing.JMenu();
+        jMenuItem2 = new javax.swing.JMenuItem();
+        jMenuItem3 = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setSize(new java.awt.Dimension(1005, 828));
@@ -180,6 +205,26 @@ public class MainFormUser extends javax.swing.JFrame {
 
         jMenuBar1.add(jMenu4);
 
+        jMenu2.setText("Quản lý");
+
+        jMenuItem2.setText("Nhân viên");
+        jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem2ActionPerformed(evt);
+            }
+        });
+        jMenu2.add(jMenuItem2);
+
+        jMenuItem3.setText("Sản phẩm");
+        jMenuItem3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem3ActionPerformed(evt);
+            }
+        });
+        jMenu2.add(jMenuItem3);
+
+        jMenuBar1.add(jMenu2);
+
         setJMenuBar(jMenuBar1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -221,6 +266,7 @@ public class MainFormUser extends javax.swing.JFrame {
 
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
         // TODO add your handling code here:
+        Oracle.LogOut();
         dispose();
         new Main().setVisible(true);
         
@@ -256,6 +302,16 @@ public class MainFormUser extends javax.swing.JFrame {
         panel_main.insertTab("Quản lí đơn", null, orderControlPanel, null, 0);
         pack();
     }//GEN-LAST:event_btn_orderActionPerformed
+
+    private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
+        // TODO add your handling code here:
+        new EmployeeManager().setVisible(true);
+    }//GEN-LAST:event_jMenuItem2ActionPerformed
+
+    private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
+        // TODO add your handling code here:
+        new ProductManager().setVisible(true);
+    }//GEN-LAST:event_jMenuItem3ActionPerformed
 
    
     
@@ -338,9 +394,12 @@ public class MainFormUser extends javax.swing.JFrame {
     private javax.swing.JButton btn_order;
     private javax.swing.JButton btn_table;
     private javax.swing.JMenu jMenu1;
+    private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu4;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;
+    private javax.swing.JMenuItem jMenuItem2;
+    private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem menuItemChangePw;
     private javax.swing.JTabbedPane panel_main;
     // End of variables declaration//GEN-END:variables

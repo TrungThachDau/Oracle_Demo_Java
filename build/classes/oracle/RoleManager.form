@@ -123,19 +123,14 @@
                               <Component id="jLabel3" min="-2" pref="73" max="-2" attributes="0"/>
                               <Group type="102" alignment="0" attributes="0">
                                   <Group type="103" groupAlignment="0" attributes="0">
-                                      <Group type="102" alignment="0" attributes="0">
-                                          <Component id="ckbSYSDBA" min="-2" pref="90" max="-2" attributes="0"/>
-                                          <EmptySpace max="32767" attributes="0"/>
-                                          <Component id="ckbSession" min="-2" max="-2" attributes="0"/>
-                                      </Group>
-                                      <Group type="102" alignment="1" attributes="0">
-                                          <Group type="103" groupAlignment="0" attributes="0">
-                                              <Component id="ckbProcedure" alignment="0" min="-2" pref="139" max="-2" attributes="0"/>
-                                              <Component id="ckbGrant" alignment="0" min="-2" pref="90" max="-2" attributes="0"/>
-                                          </Group>
-                                          <EmptySpace pref="12" max="32767" attributes="0"/>
-                                          <Component id="ckbTrigger" min="-2" pref="112" max="-2" attributes="0"/>
-                                      </Group>
+                                      <Component id="ckbProcedure" alignment="0" min="-2" pref="139" max="-2" attributes="0"/>
+                                      <Component id="ckbGrant" alignment="0" min="-2" pref="90" max="-2" attributes="0"/>
+                                      <Component id="ckbSYSDBA" alignment="0" min="-2" pref="90" max="-2" attributes="0"/>
+                                  </Group>
+                                  <EmptySpace pref="12" max="32767" attributes="0"/>
+                                  <Group type="103" groupAlignment="0" attributes="0">
+                                      <Component id="ckbTrigger" min="-2" pref="112" max="-2" attributes="0"/>
+                                      <Component id="ckbSession" min="-2" max="-2" attributes="0"/>
                                   </Group>
                                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
                                   <Group type="103" groupAlignment="0" attributes="0">
