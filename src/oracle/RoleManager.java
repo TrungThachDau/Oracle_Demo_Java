@@ -6,7 +6,7 @@ package oracle;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -62,7 +62,7 @@ public class RoleManager extends javax.swing.JFrame {
         ckbTrigger = new javax.swing.JCheckBox();
         ckbUser = new javax.swing.JCheckBox();
         ckbGrant = new javax.swing.JCheckBox();
-        jButton1 = new javax.swing.JButton();
+        btnRevokeAll = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
         txtRoleName = new javax.swing.JTextField();
         btnAddRole = new javax.swing.JButton();
@@ -119,10 +119,10 @@ public class RoleManager extends javax.swing.JFrame {
 
         ckbGrant.setText("Grant");
 
-        jButton1.setText("Thu hồi tất cả");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        btnRevokeAll.setText("Thu hồi tất cả");
+        btnRevokeAll.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                btnRevokeAllActionPerformed(evt);
             }
         });
 
@@ -136,7 +136,7 @@ public class RoleManager extends javax.swing.JFrame {
                         .addContainerGap()
                         .addComponent(btnGrant)
                         .addGap(18, 18, 18)
-                        .addComponent(jButton1))
+                        .addComponent(btnRevokeAll))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGap(20, 20, 20)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -176,7 +176,7 @@ public class RoleManager extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 95, Short.MAX_VALUE)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnGrant)
-                    .addComponent(jButton1))
+                    .addComponent(btnRevokeAll))
                 .addGap(14, 14, 14))
         );
 
@@ -291,10 +291,15 @@ public class RoleManager extends javax.swing.JFrame {
         
         System.out.println(permission);
         try {
-            oracle.openConnection();
-            Statement stmt;
-            stmt = oracle.conn.createStatement();
-            ResultSet rset2 = stmt.executeQuery("GRANT "+permission+" TO "+rolename+"");           
+//            oracle.openConnection();
+//            Statement stmt;
+//            stmt = oracle.conn.createStatement();
+//            ResultSet rset2 = stmt.executeQuery("GRANT "+permission+" TO "+rolename+"");
+                String sql = "BEGIN grant_per_to_role(?,?);END;";
+                PreparedStatement pstmt = oracle.conn.prepareStatement(sql);
+                pstmt.setString(1, permission);
+                pstmt.setString(2,rolename);
+                ResultSet rs = pstmt.executeQuery();
             JOptionPane.showMessageDialog(null,"Đã gán quyền cho vai trò");
             oracle.closeConnection();
         } catch (SQLException ex) {
@@ -308,16 +313,15 @@ public class RoleManager extends javax.swing.JFrame {
         // TODO add your handling code here:
         String rolename = txtRoleName.getText();
         try {
-            oracle.openConnection();
-            Statement stmt;
-            stmt = oracle.conn.createStatement();
-             String sql = "CREATE ROLE "+rolename+"";
-            ResultSet rset = stmt.executeQuery(sql);
-            RemoveTableItem(jTable1);
-            loadData();
-            JOptionPane.showMessageDialog(null,"Đã thêm vai trò");
-            txtRoleName.setText("");
-            oracle.closeConnection();
+                String sql = "BEGIN add_role(?);END;";
+                PreparedStatement pstmt = oracle.conn.prepareStatement(sql);
+                pstmt.setString(1, rolename);               
+                ResultSet rs = pstmt.executeQuery(); 
+                RemoveTableItem(jTable1);
+                loadData();
+                JOptionPane.showMessageDialog(null,"Đã thêm vai trò");
+                txtRoleName.setText("");
+                
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Lỗi truy vấn: " + ex.getMessage(), "Lỗi", JOptionPane.ERROR_MESSAGE);
            
@@ -328,31 +332,29 @@ public class RoleManager extends javax.swing.JFrame {
         // TODO add your handling code here:
         String rolename = txtRoleName.getText();
         try {
-            oracle.openConnection();
-            Statement stmt;
-            stmt = oracle.conn.createStatement();
-             String sql = "DROP ROLE "+rolename+"";
-            ResultSet rset = stmt.executeQuery(sql);    
+            String sql = "BEGIN drop_role(?);END;";
+            PreparedStatement pstmt = oracle.conn.prepareStatement(sql);
+            pstmt.setString(1, rolename);               
+            ResultSet rs = pstmt.executeQuery();   
             RemoveTableItem(jTable1);
             loadData();
             JOptionPane.showMessageDialog(null,"Đã xóa vai trò");
             txtRoleName.setText("");
-            oracle.closeConnection();
+            
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Lỗi truy vấn: " + ex.getMessage(), "Lỗi", JOptionPane.ERROR_MESSAGE);
            
         }
     }//GEN-LAST:event_btnDeleteRoleActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void btnRevokeAllActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRevokeAllActionPerformed
         // TODO add your handling code here:
         String rolename = txtRoleName.getText();
         try {
-            oracle.openConnection();
-            Statement stmt;
-            stmt = oracle.conn.createStatement();
-             String sql = "REVOKE ALL PRIVILEGES FROM "+rolename+"";
-            ResultSet rset = stmt.executeQuery(sql);    
+            String sql = "BEGIN revoke_all_per_of_role(?);END;";
+            PreparedStatement pstmt = oracle.conn.prepareStatement(sql);
+            pstmt.setString(1, rolename);               
+            ResultSet rs = pstmt.executeQuery();
             RemoveTableItem(jTable1);
             loadData();
             JOptionPane.showMessageDialog(null,"Đã thu hồi tất cả quyền");
@@ -362,7 +364,7 @@ public class RoleManager extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Lỗi truy vấn: " + ex.getMessage(), "Lỗi", JOptionPane.ERROR_MESSAGE);
            
         }
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_btnRevokeAllActionPerformed
     
 
     /**
@@ -445,6 +447,7 @@ public class RoleManager extends javax.swing.JFrame {
     private javax.swing.JButton btnAddRole;
     private javax.swing.JButton btnDeleteRole;
     private javax.swing.JButton btnGrant;
+    private javax.swing.JButton btnRevokeAll;
     private javax.swing.JCheckBox ckbGrant;
     private javax.swing.JCheckBox ckbProcedure;
     private javax.swing.JCheckBox ckbSYSDBA;
@@ -452,7 +455,6 @@ public class RoleManager extends javax.swing.JFrame {
     private javax.swing.JCheckBox ckbTable;
     private javax.swing.JCheckBox ckbTrigger;
     private javax.swing.JCheckBox ckbUser;
-    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel2;

@@ -6,7 +6,7 @@ package oracle;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -96,9 +96,6 @@ public class UserManager extends javax.swing.JFrame {
         btnUnlockUser = new javax.swing.JButton();
         ResetPassword = new javax.swing.JLabel();
         btnChangePassword = new javax.swing.JButton();
-        jLabel13 = new javax.swing.JLabel();
-        btnGrantTable = new javax.swing.JButton();
-        btnRevokeTable = new javax.swing.JButton();
         txtSearch = new javax.swing.JTextField();
         btnSearch = new javax.swing.JButton();
 
@@ -265,7 +262,7 @@ public class UserManager extends javax.swing.JFrame {
             }
         });
 
-        btnRevokeProfile.setText("Thu hồi");
+        btnRevokeProfile.setText("Mặc định");
         btnRevokeProfile.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnRevokeProfileActionPerformed(evt);
@@ -303,26 +300,10 @@ public class UserManager extends javax.swing.JFrame {
 
         ResetPassword.setText("Đặt mật khẩu về 123");
 
-        btnChangePassword.setText("Đổi");
+        btnChangePassword.setText("Đặt");
         btnChangePassword.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnChangePasswordActionPerformed(evt);
-            }
-        });
-
-        jLabel13.setText("Truy cập dữ liệu");
-
-        btnGrantTable.setText("Gán");
-        btnGrantTable.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnGrantTableActionPerformed(evt);
-            }
-        });
-
-        btnRevokeTable.setText("Thu hồi");
-        btnRevokeTable.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnRevokeTableActionPerformed(evt);
             }
         });
 
@@ -331,76 +312,64 @@ public class UserManager extends javax.swing.JFrame {
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(12, 12, 12)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(cbbProfile, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addGap(0, 0, Short.MAX_VALUE))
+                        .addComponent(jLabel10)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(6, 6, 6)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jLabel10)
-                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                        .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(cbbRole, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(ResetPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 43, Short.MAX_VALUE)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addComponent(btnGrantSesson)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(btnRevokeSession, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addComponent(btnGrantRole)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(btnRevokeRole, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                    .addComponent(btnDeleteUser)
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addComponent(BtnLockUser)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(btnUnlockUser, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                    .addComponent(btnChangePassword)
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addComponent(grantDBA)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(RevokeDBA, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addComponent(btnGrantProfile)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(btnRevokeProfile)))
+                                .addGap(10, 10, 10))
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                                .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addComponent(cbbRole, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addComponent(ResetPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                                .addComponent(btnGrantSesson)
-                                                .addGap(18, 18, 18)
-                                                .addComponent(btnRevokeSession))
-                                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                                .addComponent(btnGrantRole)
-                                                .addGap(18, 18, 18)
-                                                .addComponent(btnRevokeRole))
-                                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                                .addComponent(btnGrantProfile)
-                                                .addGap(18, 18, 18)
-                                                .addComponent(btnRevokeProfile))
-                                            .addComponent(btnDeleteUser)
-                                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                                .addComponent(BtnLockUser)
-                                                .addGap(18, 18, 18)
-                                                .addComponent(btnUnlockUser))
-                                            .addComponent(btnChangePassword)
-                                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                                .addComponent(btnGrantTable)
-                                                .addGap(18, 18, 18)
-                                                .addComponent(btnRevokeTable, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                                    .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 75, Short.MAX_VALUE)
-                                                .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                                .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addGap(0, 0, Short.MAX_VALUE)))
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                                .addComponent(grantDBA)
-                                                .addGap(18, 18, 18)
-                                                .addComponent(RevokeDBA))
-                                            .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                                .addGap(10, 10, 10))))))
+                                    .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(10, 10, 10))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(cbbProfile, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(0, 0, Short.MAX_VALUE))))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel5)
                     .addComponent(jLabel6))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -422,9 +391,9 @@ public class UserManager extends javax.swing.JFrame {
                             .addComponent(cbbRole, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(btnGrantRole)
                             .addComponent(btnRevokeRole))))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel9)
                 .addGap(5, 5, 5)
+                .addComponent(jLabel9)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(cbbProfile, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnGrantProfile)
@@ -442,12 +411,7 @@ public class UserManager extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(ResetPassword)
                     .addComponent(btnChangePassword))
-                .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel13)
-                    .addComponent(btnGrantTable)
-                    .addComponent(btnRevokeTable))
-                .addContainerGap(67, Short.MAX_VALUE))
+                .addContainerGap(74, Short.MAX_VALUE))
         );
 
         btnSearch.setText("Tìm");
@@ -469,7 +433,7 @@ public class UserManager extends javax.swing.JFrame {
                         .addGap(18, 18, 18)
                         .addComponent(btnSearch))
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 821, Short.MAX_VALUE)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 827, Short.MAX_VALUE)
                         .addGap(35, 35, 35)))
                 .addGap(27, 27, 27)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
@@ -486,7 +450,7 @@ public class UserManager extends javax.swing.JFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(txtSearch, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(btnSearch))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 93, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 55, Short.MAX_VALUE)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 602, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(68, 68, 68)
@@ -521,11 +485,10 @@ public class UserManager extends javax.swing.JFrame {
         // TODO add your handling code here:
         String username = jLabel6.getText();
         try {
-            oracle.openConnection();
-            Statement stmt;
-            stmt = oracle.conn.createStatement();
-             String sql = "GRANT SYSDBA TO "+username+" container=all";
-            ResultSet rset = stmt.executeQuery(sql);
+            String sql = "BEGIN grant_sysdba_user(?);END;";
+            PreparedStatement pstmt = oracle.conn.prepareStatement(sql);
+            pstmt.setString(1, username);               
+            ResultSet rs = pstmt.executeQuery();   
             RemoveTableItem(jTable1);
             loadData();
             JOptionPane.showMessageDialog(null,"Gán thành công!");
@@ -541,11 +504,10 @@ public class UserManager extends javax.swing.JFrame {
         // TODO add your handling code here:
         String username = jLabel6.getText();
         try {
-            oracle.openConnection();
-            Statement stmt;
-            stmt = oracle.conn.createStatement();
-             String sql = "REVOKE SYSDBA FROM "+username+" container=all";
-            ResultSet rset = stmt.executeQuery(sql);
+            String sql = "BEGIN revoke_sysdba_user(?);END;";
+            PreparedStatement pstmt = oracle.conn.prepareStatement(sql);
+            pstmt.setString(1, username);
+            ResultSet rs = pstmt.executeQuery();
             RemoveTableItem(jTable1);
             loadData();
             JOptionPane.showMessageDialog(null,"Thu hồi thành công!");
@@ -560,11 +522,10 @@ public class UserManager extends javax.swing.JFrame {
         // TODO add your handling code here:
         String username = jLabel6.getText();
         try {
-            oracle.openConnection();
-            Statement stmt;
-            stmt = oracle.conn.createStatement();
-             String sql = "GRANT CREATE SESSION TO "+username+"";
-            ResultSet rset = stmt.executeQuery(sql);
+            String sql = "BEGIN grant_session_user(?);END;";
+            PreparedStatement pstmt = oracle.conn.prepareStatement(sql);
+            pstmt.setString(1, username);
+            ResultSet rs = pstmt.executeQuery();
             RemoveTableItem(jTable1);
             loadData();
             JOptionPane.showMessageDialog(null,"Gán thành công!");
@@ -579,11 +540,10 @@ public class UserManager extends javax.swing.JFrame {
         // TODO add your handling code here:
          String username = jLabel6.getText();
         try {
-            oracle.openConnection();
-            Statement stmt;
-            stmt = oracle.conn.createStatement();
-             String sql = "REVOKE CREATE SESSION FROM "+username+"";
-            ResultSet rset = stmt.executeQuery(sql);
+            String sql = "BEGIN revoke_session_user(?);END;";
+            PreparedStatement pstmt = oracle.conn.prepareStatement(sql);
+            pstmt.setString(1, username);
+            ResultSet rs = pstmt.executeQuery();
             RemoveTableItem(jTable1);
             jTable1.updateUI();
             loadData();
@@ -600,11 +560,11 @@ public class UserManager extends javax.swing.JFrame {
         String username = jLabel6.getText();
         String rolename = cbbRole.getSelectedItem().toString();
         try {
-            oracle.openConnection();
-            Statement stmt;
-            stmt = oracle.conn.createStatement();
-             String sql = "GRANT "+rolename+" TO "+username+"";
-            ResultSet rset = stmt.executeQuery(sql);
+            String sql = "BEGIN grant_role_user(?,?);END;";
+            PreparedStatement pstmt = oracle.conn.prepareStatement(sql);
+            pstmt.setString(1, rolename);
+            pstmt.setString(2, username);
+            ResultSet rs = pstmt.executeQuery();
             RemoveTableItem(jTable1);
             loadData();
             JOptionPane.showMessageDialog(null,"Gán thành công!");
@@ -620,11 +580,11 @@ public class UserManager extends javax.swing.JFrame {
          String username = jLabel6.getText();
         String rolename = cbbRole.getSelectedItem().toString();
         try {
-            oracle.openConnection();
-            Statement stmt;
-            stmt = oracle.conn.createStatement();
-             String sql = "REVOKE "+rolename+" FROM "+username+"";
-            ResultSet rset = stmt.executeQuery(sql);
+            String sql = "BEGIN revoke_role_user(?,?);END;";
+            PreparedStatement pstmt = oracle.conn.prepareStatement(sql);
+            pstmt.setString(1, rolename);
+            pstmt.setString(2, username);
+            ResultSet rs = pstmt.executeQuery();
             RemoveTableItem(jTable1);
             loadData();
             JOptionPane.showMessageDialog(null,"Thu hồi thành công!");
@@ -641,11 +601,11 @@ public class UserManager extends javax.swing.JFrame {
          String username = jLabel6.getText();
         String profile = cbbProfile.getSelectedItem().toString();
         try {
-            oracle.openConnection();
-            Statement stmt;
-            stmt = oracle.conn.createStatement();
-             String sql = "ALTER USER "+username+" PROFILE "+profile+"";
-            ResultSet rset = stmt.executeQuery(sql);
+            String sql = "BEGIN grant_profile_user(?,?);END;";
+            PreparedStatement pstmt = oracle.conn.prepareStatement(sql);
+            pstmt.setString(1, username);
+            pstmt.setString(2, profile);
+            ResultSet rs = pstmt.executeQuery();
             RemoveTableItem(jTable1);
             loadData();
             JOptionPane.showMessageDialog(null,"Gán thành công!");
@@ -658,14 +618,12 @@ public class UserManager extends javax.swing.JFrame {
 
     private void btnRevokeProfileActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRevokeProfileActionPerformed
         // TODO add your handling code here:
-        String username = jLabel6.getText();
-        
+        String username = jLabel6.getText();        
         try {
-            oracle.openConnection();
-            Statement stmt;
-            stmt = oracle.conn.createStatement();
-             String sql = "ALTER USER "+username+" PROFILE NULL";
-            ResultSet rset = stmt.executeQuery(sql);
+            String sql = "BEGIN revoke_profile_user(?);END;";
+            PreparedStatement pstmt = oracle.conn.prepareStatement(sql);
+            pstmt.setString(1, username);
+            ResultSet rs = pstmt.executeQuery();
             RemoveTableItem(jTable1);
             loadData();
             JOptionPane.showMessageDialog(null,"Thu hồi thành công!");
@@ -681,17 +639,16 @@ public class UserManager extends javax.swing.JFrame {
         String username = jLabel6.getText(); 
         int result = JOptionPane.showConfirmDialog(null, "Hành động không thể hoàn tác?", "Cảnh báo", JOptionPane.YES_NO_OPTION);
         if (result == JOptionPane.YES_OPTION) {
-            // Thực thi hành động cần thiết ở đây
+            
              try {
-            oracle.openConnection();
-            Statement stmt;
-            stmt = oracle.conn.createStatement();
-             String sql = "DROP USER "+username+"";
-            ResultSet rset = stmt.executeQuery(sql);
-            RemoveTableItem(jTable1);
-            loadData();
-            JOptionPane.showMessageDialog(null,"Đã xóa người dùng!");
-            oracle.closeConnection();
+                String sql = "BEGIN drop_user(?);END;";
+                PreparedStatement pstmt = oracle.conn.prepareStatement(sql);
+                pstmt.setString(1, username);
+                ResultSet rs = pstmt.executeQuery();
+                RemoveTableItem(jTable1);
+                loadData();
+                JOptionPane.showMessageDialog(null,"Đã xóa người dùng!");
+                oracle.closeConnection();
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Lỗi truy vấn: " + ex.getMessage(), "Lỗi", JOptionPane.ERROR_MESSAGE);
            
@@ -707,15 +664,14 @@ public class UserManager extends javax.swing.JFrame {
         String username = jLabel6.getText();
         
         try {
-            oracle.openConnection();
-            Statement stmt;
-            stmt = oracle.conn.createStatement();
-             String sql = "ALTER USER "+username+" ACCOUNT LOCK";
-            ResultSet rset = stmt.executeQuery(sql);
-            RemoveTableItem(jTable1);
-            loadData();
-            JOptionPane.showMessageDialog(null,"Đã khóa người dùng!");
-            oracle.closeConnection();
+                String sql = "BEGIN lock_user(?);END;";
+                PreparedStatement pstmt = oracle.conn.prepareStatement(sql);
+                pstmt.setString(1, username);
+                ResultSet rs = pstmt.executeQuery();
+                RemoveTableItem(jTable1);
+                loadData();
+                JOptionPane.showMessageDialog(null,"Đã khóa người dùng!");
+                oracle.closeConnection();
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Lỗi truy vấn: " + ex.getMessage(), "Lỗi", JOptionPane.ERROR_MESSAGE);
             
@@ -727,11 +683,10 @@ public class UserManager extends javax.swing.JFrame {
         String username = jLabel6.getText();
         
         try {
-            oracle.openConnection();
-            Statement stmt;
-            stmt = oracle.conn.createStatement();
-             String sql = "ALTER USER "+username+" ACCOUNT UNLOCK";
-            ResultSet rset = stmt.executeQuery(sql);
+            String sql = "BEGIN unlock_user(?);END;";
+                PreparedStatement pstmt = oracle.conn.prepareStatement(sql);
+                pstmt.setString(1, username);
+                ResultSet rs = pstmt.executeQuery();
             RemoveTableItem(jTable1);
             loadData();
             JOptionPane.showMessageDialog(null,"Đã mở khóa người dùng!");
@@ -746,11 +701,10 @@ public class UserManager extends javax.swing.JFrame {
         String username = jLabel6.getText();
         
         try {
-            oracle.openConnection();
-            Statement stmt;
-            stmt = oracle.conn.createStatement();
-             String sql = "ALTER USER "+username+" IDENTIFIED BY 123";
-            ResultSet rset = stmt.executeQuery(sql);
+            String sql = "BEGIN change_password_user(?,?);END;";
+            PreparedStatement pstmt = oracle.conn.prepareStatement(sql);
+            pstmt.setString(1, username);
+            pstmt.setString(2,"123");
             RemoveTableItem(jTable1);
             loadData();
             JOptionPane.showMessageDialog(null,"Đã đặt lại mật khẩu!");
@@ -769,56 +723,6 @@ public class UserManager extends javax.swing.JFrame {
                        }          // TODO add your handling code here:
     }//GEN-LAST:event_btnSearchActionPerformed
 
-    private void btnGrantTableActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGrantTableActionPerformed
-        // TODO add your handling code here:
-        String username = jLabel6.getText();
-        try {
-            oracle.openConnection();
-            Statement stmt;
-            stmt = oracle.conn.createStatement();
-             String sql = "GRANT SELECT,INSERT,UPDATE,DELETE ON ADMIN.NHANVIEN TO "+username+"";
-             String sql1 = "GRANT SELECT,INSERT,UPDATE,DELETE ON ADMIN.BAN TO "+username+"";
-            String sql2 = "GRANT SELECT,INSERT,UPDATE,DELETE ON ADMIN.DONHANG TO "+username+"";
-            String sql3 = "GRANT SELECT,INSERT,UPDATE,DELETE ON ADMIN.SANPHAM TO "+username+"";
-            String sql4 = "GRANT SELECT,INSERT,UPDATE,DELETE ON ADMIN.CHITIETDONHANG TO "+username+"";
-            ResultSet rset = stmt.executeQuery(sql);
-            ResultSet rset1 = stmt.executeQuery(sql1);
-            ResultSet rset2 = stmt.executeQuery(sql2);
-            ResultSet rset3 = stmt.executeQuery(sql3);
-            ResultSet rset4 = stmt.executeQuery(sql4);            
-            JOptionPane.showMessageDialog(null,"Gán thành công!");
-            oracle.closeConnection();
-        } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Lỗi truy vấn: " + ex.getMessage(), "Lỗi", JOptionPane.ERROR_MESSAGE);
-           
-        }
-    }//GEN-LAST:event_btnGrantTableActionPerformed
-
-    private void btnRevokeTableActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRevokeTableActionPerformed
-        // TODO add your handling code here:
-        String username = jLabel6.getText();
-        try {
-            oracle.openConnection();
-            Statement stmt;
-            stmt = oracle.conn.createStatement();
-             String sql = "REVOKE SELECT,INSERT,UPDATE,DELETE ON ADMIN.NHANVIEN TO "+username+"";
-             String sql1 = "REVOKE SELECT,INSERT,UPDATE,DELETE ON ADMIN.BAN TO "+username+"";
-            String sql2 = "REVOKE SELECT,INSERT,UPDATE,DELETE ON ADMIN.DONHANG TO "+username+"";
-            String sql3 = "REVOKE SELECT,INSERT,UPDATE,DELETE ON ADMIN.SANPHAM TO "+username+"";
-            String sql4 = "REVOKE SELECT,INSERT,UPDATE,DELETE ON ADMIN.CHITIETDONHANG TO "+username+"";
-            ResultSet rset = stmt.executeQuery(sql);
-            ResultSet rset1 = stmt.executeQuery(sql1);
-            ResultSet rset2 = stmt.executeQuery(sql2);
-            ResultSet rset3 = stmt.executeQuery(sql3);
-            ResultSet rset4 = stmt.executeQuery(sql4);            
-            JOptionPane.showMessageDialog(null,"Gán thành công!");
-            oracle.closeConnection();
-        } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Lỗi truy vấn: " + ex.getMessage(), "Lỗi", JOptionPane.ERROR_MESSAGE);
-           
-        }
-    }//GEN-LAST:event_btnRevokeTableActionPerformed
-
     private void cbbTablespaceActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbbTablespaceActionPerformed
 
     }//GEN-LAST:event_cbbTablespaceActionPerformed
@@ -830,14 +734,13 @@ public class UserManager extends javax.swing.JFrame {
         String dtablespace = cbbTablespace.getSelectedItem().toString();
         String ttablespace = cbbTempTablespace.getSelectedItem().toString();
         try {
-            oracle.openConnection();
-            Statement stmt;
-            stmt = oracle.conn.createStatement();
-            String sql = "CREATE USER "+tk+"\n" +
-            "IDENTIFIED BY "+mk+"\n" +
-            "DEFAULT TABLESPACE "+dtablespace+"\n" +
-            "TEMPORARY TABLESPACE "+ttablespace+"";
-            ResultSet rset = stmt.executeQuery(sql);
+             String sql = "BEGIN create_user(?,?,?,?);END;";
+            PreparedStatement pstmt = oracle.conn.prepareStatement(sql);
+            pstmt.setString(1, tk);
+            pstmt.setString(2, mk);               
+            pstmt.setString(3, dtablespace);
+            pstmt.setString(4,ttablespace);
+            ResultSet rs = pstmt.executeQuery();   
             RemoveTableItem(jTable1);
             loadData();
             JOptionPane.showMessageDialog(null,"Thêm thành công");
@@ -1011,11 +914,9 @@ public class UserManager extends javax.swing.JFrame {
     private javax.swing.JButton btnGrantProfile;
     private javax.swing.JButton btnGrantRole;
     private javax.swing.JButton btnGrantSesson;
-    private javax.swing.JButton btnGrantTable;
     private javax.swing.JButton btnRevokeProfile;
     private javax.swing.JButton btnRevokeRole;
     private javax.swing.JButton btnRevokeSession;
-    private javax.swing.JButton btnRevokeTable;
     private javax.swing.JButton btnSearch;
     private javax.swing.JButton btnUnlockUser;
     private javax.swing.JComboBox<String> cbbProfile;
@@ -1027,7 +928,6 @@ public class UserManager extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
-    private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;

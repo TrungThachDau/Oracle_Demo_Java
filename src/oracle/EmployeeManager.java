@@ -276,16 +276,19 @@ public class EmployeeManager extends javax.swing.JFrame {
         }
         else{
             try {
-                oracle.openConnection();
                 
-                String sql = "INSERT INTO admin.nhanvien VALUES("+id+",'"+tennv+"',"+luong+","+chucvu+")";
-                Statement st = oracle.conn.createStatement(); 
-               
-                st.executeUpdate(sql);
+                
+                String sql = "begin admin.Them_NhanVien(?,?,?,?);end;";
+                PreparedStatement pstmt = oracle.conn.prepareStatement(sql);
+                pstmt.setString(1, id);
+                pstmt.setString(2, tennv);
+                pstmt.setString(3, luong);
+                pstmt.setString(4, chucvu);
+                ResultSet rs = pstmt.executeQuery();            
                 JOptionPane.showMessageDialog(null, "Thêm thành công");   
                 RemoveTableItem(jTable1);
                 loadData();
-                oracle.closeConnection();
+                
 
             } catch (SQLException ex) {
                 Logger.getLogger(EmployeeManager.class.getName()).log(Level.SEVERE, null, ex);
@@ -302,11 +305,11 @@ public class EmployeeManager extends javax.swing.JFrame {
         String id=txtID.getText().trim();
         try
         {
-           oracle.openConnection();
-                
-                String sql = "DELETE FROM ADMIN.NHANVIEN WHERE MANV ='"+id+"'";
-                Statement st = oracle.conn.createStatement(); 
-             st.executeUpdate(sql);
+                String sql = "begin admin.Xoa_NhanVien(?);end;";
+                PreparedStatement pstmt = oracle.conn.prepareStatement(sql);
+                pstmt.setString(1, id);
+                ResultSet rs = pstmt.executeQuery();
+
                 JOptionPane.showMessageDialog(null, "Xóa thành công"); 
                 RemoveTableItem(jTable1);
                 loadData();
@@ -337,10 +340,13 @@ public class EmployeeManager extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Vui lòng nhập đầy đủ thông tin");
         } else {
             try {
-                oracle.openConnection();
-                String sql = "UPDATE ADMIN.NHANVIEN SET TENNV='" + tennv + "',LUONGNV=" + luong + ",MACHUCVU='" + chucvu + "' WHERE MANV='" + id + "'";
-                Statement st = oracle.conn.createStatement();
-                st.executeUpdate(sql);
+                String sql = "begin admin.Capnhat_NhanVien(?,?,?,?);end;";
+                PreparedStatement pstmt = oracle.conn.prepareStatement(sql);
+                pstmt.setString(1, id);
+                pstmt.setString(2, tennv);
+                pstmt.setString(3, luong);
+                pstmt.setString(4, chucvu);
+                ResultSet rs = pstmt.executeQuery();
                 JOptionPane.showMessageDialog(null, "Sửa thành công");
                 RemoveTableItem(jTable1);
                 loadData();

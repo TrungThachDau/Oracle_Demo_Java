@@ -6,7 +6,7 @@ package oracle;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
@@ -80,7 +80,6 @@ public class PermissionGroup extends javax.swing.JFrame {
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Người dùng"));
 
-        cbbUsername.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { " " }));
         cbbUsername.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cbbUsernameActionPerformed(evt);
@@ -380,10 +379,12 @@ public class PermissionGroup extends javax.swing.JFrame {
         String rolename = txtRoleName.getText();
         try {
             oracle.openConnection();
-            Statement stmt;
-            stmt = oracle.conn.createStatement();
-             String sql = "CREATE ROLE "+rolename+"";
-            ResultSet rset = stmt.executeQuery(sql);
+            
+            
+            String sql = "BEGIN add_role(?);END;";
+            PreparedStatement pstmt = oracle.conn.prepareStatement(sql);
+            pstmt.setString(1, rolename);
+            ResultSet rs = pstmt.executeQuery();
             //RemoveTableItem(jTable1);
             cbbRole.removeAllItems();
             loadComboBox(cbbRole,"SELECT role FROM dba_roles","role");
@@ -400,16 +401,15 @@ public class PermissionGroup extends javax.swing.JFrame {
         // TODO add your handling code here:
         String rolename = cbbRole.getSelectedItem().toString();
         try {
-            oracle.openConnection();
-            Statement stmt;
-            stmt = oracle.conn.createStatement();
-            String sql = "DROP ROLE "+rolename+"";
-            ResultSet rset = stmt.executeQuery(sql);    
+            String sql = "BEGIN drop_role(?);END;";
+            PreparedStatement pstmt = oracle.conn.prepareStatement(sql);
+            pstmt.setString(1, rolename);
+            ResultSet rs = pstmt.executeQuery();   
             cbbRole.removeAllItems();
             loadComboBox(cbbRole,"SELECT role FROM dba_roles","role");
             JOptionPane.showMessageDialog(null,"Đã xóa vai trò");
             txtRoleName.setText("");
-            oracle.closeConnection();
+            
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Lỗi truy vấn: " + ex.getMessage(), "Lỗi", JOptionPane.ERROR_MESSAGE);
            
@@ -433,16 +433,14 @@ public class PermissionGroup extends javax.swing.JFrame {
             
         if(ckbSelectUser.isSelected())
         {
-            try {
-            oracle.openConnection();
-            Statement stmt;
-            stmt = oracle.conn.createStatement();
-            String sql = "GRANT SELECT ON ADMIN."+table+" TO "+username+"";
-            ResultSet rset = stmt.executeQuery(sql);
-            //RemoveTableItem(jTable1);
-            //cbbRole.removeAllItems();            
+            try {                
+            String sql = "BEGIN grant_select_table_user(?,?);END;";
+            PreparedStatement pstmt = oracle.conn.prepareStatement(sql);
+            pstmt.setString(1, table);
+            pstmt.setString(2, username);
+            ResultSet rs = pstmt.executeQuery();                         
             JOptionPane.showMessageDialog(null,"Đã gán quyền 'CHỌN' trên bảng "+table+" cho người dùng "+username,"Xong",JOptionPane.PLAIN_MESSAGE);         
-            oracle.closeConnection();
+            
             } catch (SQLException ex) 
                 {
                     JOptionPane.showMessageDialog(null, "Lỗi truy vấn: " + ex.getMessage(), "Lỗi", JOptionPane.ERROR_MESSAGE);
@@ -453,15 +451,13 @@ public class PermissionGroup extends javax.swing.JFrame {
         else
         {
             try {
-            oracle.openConnection();
-            Statement stmt;
-            stmt = oracle.conn.createStatement();
-            String sql = "REVOKE SELECT ON ADMIN."+table+" FROM "+username+"";
-            ResultSet rset = stmt.executeQuery(sql);
-            //RemoveTableItem(jTable1);
-            //cbbRole.removeAllItems();            
-            JOptionPane.showMessageDialog(null,"Đã bỏ gán quyền 'CHỌN' trên bảng "+table+" cho người dùng "+username,"Xong",JOptionPane.PLAIN_MESSAGE);         
-            oracle.closeConnection();
+                String sql = "BEGIN revoke_select_table_user(?,?);END;";
+                PreparedStatement pstmt = oracle.conn.prepareStatement(sql);
+                pstmt.setString(1, table);
+                pstmt.setString(2, username);
+                ResultSet rs = pstmt.executeQuery();                         
+                JOptionPane.showMessageDialog(null,"Đã bỏ gán quyền 'CHỌN' trên bảng "+table+" cho người dùng "+username,"Xong",JOptionPane.PLAIN_MESSAGE);         
+                
             } catch (SQLException ex) 
                 {
                     JOptionPane.showMessageDialog(null, "Lỗi truy vấn: " + ex.getMessage(), "Lỗi", JOptionPane.ERROR_MESSAGE);
@@ -479,15 +475,13 @@ public class PermissionGroup extends javax.swing.JFrame {
         if(ckbInsertUser.isSelected())
         {
             try {
-            oracle.openConnection();
-            Statement stmt;
-            stmt = oracle.conn.createStatement();
-            String sql = "GRANT INSERT ON ADMIN."+table+" TO "+username+"";
-            ResultSet rset = stmt.executeQuery(sql);
-            //RemoveTableItem(jTable1);
-            //cbbRole.removeAllItems();            
-            JOptionPane.showMessageDialog(null,"Đã gán quyền 'CHÈN' trên bảng "+table+" cho người dùng "+username,"Xong",JOptionPane.PLAIN_MESSAGE);         
-            oracle.closeConnection();
+                String sql = "BEGIN grant_insert_table_user(?,?);END;";
+                PreparedStatement pstmt = oracle.conn.prepareStatement(sql);
+                pstmt.setString(1, table);
+                pstmt.setString(2, username);
+                ResultSet rs = pstmt.executeQuery();     
+                JOptionPane.showMessageDialog(null,"Đã gán quyền 'CHÈN' trên bảng "+table+" cho người dùng "+username,"Xong",JOptionPane.PLAIN_MESSAGE);         
+                
             } catch (SQLException ex) 
                 {
                     JOptionPane.showMessageDialog(null, "Lỗi truy vấn: " + ex.getMessage(), "Lỗi", JOptionPane.ERROR_MESSAGE);
@@ -498,15 +492,13 @@ public class PermissionGroup extends javax.swing.JFrame {
         else
         {
             try {
-            oracle.openConnection();
-            Statement stmt;
-            stmt = oracle.conn.createStatement();
-            String sql = "REVOKE INSERT ON ADMIN."+table+" FROM "+username+"";
-            ResultSet rset = stmt.executeQuery(sql);
-            //RemoveTableItem(jTable1);
-            //cbbRole.removeAllItems();            
-            JOptionPane.showMessageDialog(null,"Đã bỏ gán quyền 'CHỌN' trên bảng "+table+" cho người dùng "+username,"Xong",JOptionPane.PLAIN_MESSAGE);         
-            oracle.closeConnection();
+                String sql = "BEGIN revoke_insert_table_user(?,?);END;";
+                PreparedStatement pstmt = oracle.conn.prepareStatement(sql);
+                pstmt.setString(1, table);
+                pstmt.setString(2, username);
+                ResultSet rs = pstmt.executeQuery();                 
+                JOptionPane.showMessageDialog(null,"Đã bỏ gán quyền 'CHỌN' trên bảng "+table+" cho người dùng "+username,"Xong",JOptionPane.PLAIN_MESSAGE);         
+                
             } catch (SQLException ex) 
                 {
                     JOptionPane.showMessageDialog(null, "Lỗi truy vấn: " + ex.getMessage(), "Lỗi", JOptionPane.ERROR_MESSAGE);
@@ -524,15 +516,13 @@ public class PermissionGroup extends javax.swing.JFrame {
         if(ckbUpdate.isSelected())
         {
             try {
-            oracle.openConnection();
-            Statement stmt;
-            stmt = oracle.conn.createStatement();
-            String sql = "GRANT UPDATE ON ADMIN."+table+" TO "+username+"";
-            ResultSet rset = stmt.executeQuery(sql);
-            //RemoveTableItem(jTable1);
-            //cbbRole.removeAllItems();            
-            JOptionPane.showMessageDialog(null,"Đã gán quyền 'SỬA' trên bảng "+table+" cho người dùng "+username,"Xong",JOptionPane.PLAIN_MESSAGE);         
-            oracle.closeConnection();
+                String sql = "BEGIN grant_update_table_user(?,?);END;";
+                PreparedStatement pstmt = oracle.conn.prepareStatement(sql);
+                pstmt.setString(1, table);
+                pstmt.setString(2, username);
+                ResultSet rs = pstmt.executeQuery();                  
+                JOptionPane.showMessageDialog(null,"Đã gán quyền 'SỬA' trên bảng "+table+" cho người dùng "+username,"Xong",JOptionPane.PLAIN_MESSAGE);         
+            
             } catch (SQLException ex) 
                 {
                     JOptionPane.showMessageDialog(null, "Lỗi truy vấn: " + ex.getMessage(), "Lỗi", JOptionPane.ERROR_MESSAGE);
@@ -543,15 +533,13 @@ public class PermissionGroup extends javax.swing.JFrame {
         else
         {
             try {
-            oracle.openConnection();
-            Statement stmt;
-            stmt = oracle.conn.createStatement();
-            String sql = "REVOKE UPDATE ON ADMIN."+table+" FROM "+username+"";
-            ResultSet rset = stmt.executeQuery(sql);
-            //RemoveTableItem(jTable1);
-            //cbbRole.removeAllItems();            
-            JOptionPane.showMessageDialog(null,"Đã bỏ gán quyền 'SỬA' trên bảng "+table+" cho người dùng "+username,"Xong",JOptionPane.PLAIN_MESSAGE);         
-            oracle.closeConnection();
+                String sql = "BEGIN revoke_update_table_user(?,?);END;";
+                PreparedStatement pstmt = oracle.conn.prepareStatement(sql);
+                pstmt.setString(1, table);
+                pstmt.setString(2, username);
+                ResultSet rs = pstmt.executeQuery();           
+                JOptionPane.showMessageDialog(null,"Đã bỏ gán quyền 'SỬA' trên bảng "+table+" cho người dùng "+username,"Xong",JOptionPane.PLAIN_MESSAGE);         
+            
             } catch (SQLException ex) 
                 {
                     JOptionPane.showMessageDialog(null, "Lỗi truy vấn: " + ex.getMessage(), "Lỗi", JOptionPane.ERROR_MESSAGE);
@@ -569,15 +557,13 @@ public class PermissionGroup extends javax.swing.JFrame {
         if(ckbDeleteUser.isSelected())
         {
             try {
-            oracle.openConnection();
-            Statement stmt;
-            stmt = oracle.conn.createStatement();
-            String sql = "GRANT DELETE ON ADMIN."+table+" TO "+username+"";
-            ResultSet rset = stmt.executeQuery(sql);
-            //RemoveTableItem(jTable1);
-            //cbbRole.removeAllItems();            
-            JOptionPane.showMessageDialog(null,"Đã gán quyền 'XÓA' trên bảng "+table+" cho người dùng "+username,"Xong",JOptionPane.PLAIN_MESSAGE);         
-            oracle.closeConnection();
+                String sql = "BEGIN grant_delete_table_user(?,?);END;";
+                PreparedStatement pstmt = oracle.conn.prepareStatement(sql);
+                pstmt.setString(1, table);
+                pstmt.setString(2, username);
+                ResultSet rs = pstmt.executeQuery();             
+                JOptionPane.showMessageDialog(null,"Đã gán quyền 'XÓA' trên bảng "+table+" cho người dùng "+username,"Xong",JOptionPane.PLAIN_MESSAGE);         
+            
             } catch (SQLException ex) 
                 {
                     JOptionPane.showMessageDialog(null, "Lỗi truy vấn: " + ex.getMessage(), "Lỗi", JOptionPane.ERROR_MESSAGE);
@@ -588,15 +574,13 @@ public class PermissionGroup extends javax.swing.JFrame {
         else
         {
             try {
-            oracle.openConnection();
-            Statement stmt;
-            stmt = oracle.conn.createStatement();
-            String sql = "REVOKE DELETE ON ADMIN."+table+" FROM "+username+"";
-            ResultSet rset = stmt.executeQuery(sql);
-            //RemoveTableItem(jTable1);
-            //cbbRole.removeAllItems();            
-            JOptionPane.showMessageDialog(null,"Đã bỏ gán quyền 'XÓA' trên bảng "+table+" cho người dùng "+username,"Xong",JOptionPane.PLAIN_MESSAGE);         
-            oracle.closeConnection();
+                String sql = "BEGIN revoke_delete_table_user(?,?);END;";
+                PreparedStatement pstmt = oracle.conn.prepareStatement(sql);
+                pstmt.setString(1, table);
+                pstmt.setString(2, username);
+                ResultSet rs = pstmt.executeQuery();          
+                JOptionPane.showMessageDialog(null,"Đã bỏ gán quyền 'XÓA' trên bảng "+table+" cho người dùng "+username,"Xong",JOptionPane.PLAIN_MESSAGE);         
+            
             } catch (SQLException ex) 
                 {
                     JOptionPane.showMessageDialog(null, "Lỗi truy vấn: " + ex.getMessage(), "Lỗi", JOptionPane.ERROR_MESSAGE);
@@ -614,15 +598,13 @@ public class PermissionGroup extends javax.swing.JFrame {
         if(ckbSelectRole.isSelected())
         {
             try {
-            oracle.openConnection();
-            Statement stmt;
-            stmt = oracle.conn.createStatement();
-            String sql = "GRANT SELECT ON ADMIN."+table+" TO "+role+"";
-            ResultSet rset = stmt.executeQuery(sql);
-            //RemoveTableItem(jTable1);
-            //cbbRole.removeAllItems();            
-            JOptionPane.showMessageDialog(null,"Đã gán quyền 'CHỌN' trên bảng "+table+" cho vai trò "+role,"Xong",JOptionPane.PLAIN_MESSAGE);         
-            oracle.closeConnection();
+                String sql = "BEGIN grant_select_table_role(?,?);END;";
+                PreparedStatement pstmt = oracle.conn.prepareStatement(sql);
+                pstmt.setString(1, table);
+                pstmt.setString(2, role);
+                ResultSet rs = pstmt.executeQuery();           
+                JOptionPane.showMessageDialog(null,"Đã gán quyền 'CHỌN' trên bảng "+table+" cho vai trò "+role,"Xong",JOptionPane.PLAIN_MESSAGE);         
+            
             } catch (SQLException ex) 
                 {
                     JOptionPane.showMessageDialog(null, "Lỗi truy vấn: " + ex.getMessage(), "Lỗi", JOptionPane.ERROR_MESSAGE);
@@ -633,15 +615,13 @@ public class PermissionGroup extends javax.swing.JFrame {
         else
         {
             try {
-            oracle.openConnection();
-            Statement stmt;
-            stmt = oracle.conn.createStatement();
-            String sql = "REVOKE SELECT ON ADMIN."+table+" FROM "+role+"";
-            ResultSet rset = stmt.executeQuery(sql);
-            //RemoveTableItem(jTable1);
-            //cbbRole.removeAllItems();            
-            JOptionPane.showMessageDialog(null,"Đã bỏ gán quyền 'CHỌN' trên bảng "+table+" cho vai trò "+role,"Xong",JOptionPane.PLAIN_MESSAGE);         
-            oracle.closeConnection();
+                String sql = "BEGIN revoke_select_table_role(?,?);END;";
+                PreparedStatement pstmt = oracle.conn.prepareStatement(sql);
+                pstmt.setString(1, table);
+                pstmt.setString(2, role);
+                ResultSet rs = pstmt.executeQuery();         
+                JOptionPane.showMessageDialog(null,"Đã bỏ gán quyền 'CHỌN' trên bảng "+table+" cho vai trò "+role,"Xong",JOptionPane.PLAIN_MESSAGE);         
+                
             } catch (SQLException ex) 
                 {
                     JOptionPane.showMessageDialog(null, "Lỗi truy vấn: " + ex.getMessage(), "Lỗi", JOptionPane.ERROR_MESSAGE);
@@ -659,15 +639,14 @@ public class PermissionGroup extends javax.swing.JFrame {
         if(ckbInsertRole.isSelected())
         {
             try {
-            oracle.openConnection();
-            Statement stmt;
-            stmt = oracle.conn.createStatement();
-            String sql = "GRANT INSERT ON ADMIN."+table+" TO "+role+"";
-            ResultSet rset = stmt.executeQuery(sql);
-            //RemoveTableItem(jTable1);
-            //cbbRole.removeAllItems();            
+                String sql = "BEGIN grant_insert_table_role(?,?);END;";
+                PreparedStatement pstmt = oracle.conn.prepareStatement(sql);
+                pstmt.setString(1, table);
+                pstmt.setString(2, role);
+                ResultSet rs = pstmt.executeQuery(); 
+            
             JOptionPane.showMessageDialog(null,"Đã gán quyền 'CHÈN' trên bảng "+table+" cho vai trò "+role,"Xong",JOptionPane.PLAIN_MESSAGE);         
-            oracle.closeConnection();
+            
             } catch (SQLException ex) 
                 {
                     JOptionPane.showMessageDialog(null, "Lỗi truy vấn: " + ex.getMessage(), "Lỗi", JOptionPane.ERROR_MESSAGE);
@@ -678,15 +657,13 @@ public class PermissionGroup extends javax.swing.JFrame {
         else
         {
             try {
-            oracle.openConnection();
-            Statement stmt;
-            stmt = oracle.conn.createStatement();
-            String sql = "REVOKE INSERT ON ADMIN."+table+" FROM "+role+"";
-            ResultSet rset = stmt.executeQuery(sql);
-            //RemoveTableItem(jTable1);
-            //cbbRole.removeAllItems();            
+                String sql = "BEGIN revoke_insert_table_role(?,?);END;";
+                PreparedStatement pstmt = oracle.conn.prepareStatement(sql);
+                pstmt.setString(1, table);
+                pstmt.setString(2, role);
+                ResultSet rs = pstmt.executeQuery();          
             JOptionPane.showMessageDialog(null,"Đã bỏ gán quyền 'CHÈM' trên bảng "+table+" cho vai trò "+role,"Xong",JOptionPane.PLAIN_MESSAGE);         
-            oracle.closeConnection();
+            
             } catch (SQLException ex) 
                 {
                     JOptionPane.showMessageDialog(null, "Lỗi truy vấn: " + ex.getMessage(), "Lỗi", JOptionPane.ERROR_MESSAGE);
@@ -704,15 +681,13 @@ public class PermissionGroup extends javax.swing.JFrame {
         if(ckbUpdateRole.isSelected())
         {
             try {
-            oracle.openConnection();
-            Statement stmt;
-            stmt = oracle.conn.createStatement();
-            String sql = "GRANT UPDATE ON ADMIN."+table+" TO "+role+"";
-            ResultSet rset = stmt.executeQuery(sql);
-            //RemoveTableItem(jTable1);
-            //cbbRole.removeAllItems();            
-            JOptionPane.showMessageDialog(null,"Đã gán quyền 'SỬA' trên bảng "+table+" cho vai trò "+role,"Xong",JOptionPane.PLAIN_MESSAGE);         
-            oracle.closeConnection();
+                String sql = "BEGIN grant_update_table_role(?,?);END;";
+                PreparedStatement pstmt = oracle.conn.prepareStatement(sql);
+                pstmt.setString(1, table);
+                pstmt.setString(2, role);
+                ResultSet rs = pstmt.executeQuery();      
+                JOptionPane.showMessageDialog(null,"Đã gán quyền 'SỬA' trên bảng "+table+" cho vai trò "+role,"Xong",JOptionPane.PLAIN_MESSAGE);         
+            
             } catch (SQLException ex) 
                 {
                     JOptionPane.showMessageDialog(null, "Lỗi truy vấn: " + ex.getMessage(), "Lỗi", JOptionPane.ERROR_MESSAGE);
@@ -723,15 +698,14 @@ public class PermissionGroup extends javax.swing.JFrame {
         else
         {
             try {
-            oracle.openConnection();
-            Statement stmt;
-            stmt = oracle.conn.createStatement();
-            String sql = "REVOKE UPDATE ON ADMIN."+table+" FROM "+role+"";
-            ResultSet rset = stmt.executeQuery(sql);
-            //RemoveTableItem(jTable1);
-            //cbbRole.removeAllItems();            
-            JOptionPane.showMessageDialog(null,"Đã bỏ gán quyền 'SỬA' trên bảng "+table+" cho vai trò "+role,"Xong",JOptionPane.PLAIN_MESSAGE);         
-            oracle.closeConnection();
+                String sql = "BEGIN revoke_update_table_role(?,?);END;";
+                PreparedStatement pstmt = oracle.conn.prepareStatement(sql);
+                pstmt.setString(1, table);
+                pstmt.setString(2, role);
+                ResultSet rs = pstmt.executeQuery();          
+                      
+                JOptionPane.showMessageDialog(null,"Đã bỏ gán quyền 'SỬA' trên bảng "+table+" cho vai trò "+role,"Xong",JOptionPane.PLAIN_MESSAGE);         
+            
             } catch (SQLException ex) 
                 {
                     JOptionPane.showMessageDialog(null, "Lỗi truy vấn: " + ex.getMessage(), "Lỗi", JOptionPane.ERROR_MESSAGE);
@@ -749,15 +723,13 @@ public class PermissionGroup extends javax.swing.JFrame {
         if(ckbDeleteRole.isSelected())
         {
             try {
-            oracle.openConnection();
-            Statement stmt;
-            stmt = oracle.conn.createStatement();
-            String sql = "GRANT DELETE ON ADMIN."+table+" TO "+role+"";
-            ResultSet rset = stmt.executeQuery(sql);
-            //RemoveTableItem(jTable1);
-            //cbbRole.removeAllItems();            
-            JOptionPane.showMessageDialog(null,"Đã gán quyền 'XÓA' trên bảng "+table+" cho vai trò "+role,"Xong",JOptionPane.PLAIN_MESSAGE);         
-            oracle.closeConnection();
+                String sql = "BEGIN grant_delete_table_role(?,?);END;";
+                PreparedStatement pstmt = oracle.conn.prepareStatement(sql);
+                pstmt.setString(1, table);
+                pstmt.setString(2, role);
+                ResultSet rs = pstmt.executeQuery();
+                JOptionPane.showMessageDialog(null,"Đã gán quyền 'XÓA' trên bảng "+table+" cho vai trò "+role,"Xong",JOptionPane.PLAIN_MESSAGE);         
+            
             } catch (SQLException ex) 
                 {
                     JOptionPane.showMessageDialog(null, "Lỗi truy vấn: " + ex.getMessage(), "Lỗi", JOptionPane.ERROR_MESSAGE);
@@ -768,13 +740,11 @@ public class PermissionGroup extends javax.swing.JFrame {
         else
         {
             try {
-            oracle.openConnection();
-            Statement stmt;
-            stmt = oracle.conn.createStatement();
-            String sql = "REVOKE DELETE ON ADMIN."+table+" FROM "+role+"";
-            ResultSet rset = stmt.executeQuery(sql);
-            //RemoveTableItem(jTable1);
-            //cbbRole.removeAllItems();            
+                String sql = "BEGIN revoke_delete_table_role(?,?);END;";
+                PreparedStatement pstmt = oracle.conn.prepareStatement(sql);
+                pstmt.setString(1, table);
+                pstmt.setString(2, role);
+                ResultSet rs = pstmt.executeQuery();            
             JOptionPane.showMessageDialog(null,"Đã bỏ gán quyền 'XÓA' trên bảng "+table+" cho vai trò "+role,"Xong",JOptionPane.PLAIN_MESSAGE);         
             oracle.closeConnection();
             } catch (SQLException ex) 
@@ -790,11 +760,11 @@ public class PermissionGroup extends javax.swing.JFrame {
         String role = cbbRole.getSelectedItem().toString();
         String username =cbbUsername.getSelectedItem().toString();
         try {
-            oracle.openConnection();
-            Statement stmt;
-            stmt = oracle.conn.createStatement();
-            String sql = "GRANT "+role+" TO "+username+"";
-            ResultSet rset = stmt.executeQuery(sql);                   
+            String sql = "BEGIN grant_role_user(?,?);END;";
+            PreparedStatement pstmt = oracle.conn.prepareStatement(sql);
+            pstmt.setString(1, role);
+            pstmt.setString(2, username);
+            ResultSet rs = pstmt.executeQuery();                    
             JOptionPane.showMessageDialog(null,"Đã gán quyền "+role+" cho người dùng "+username,"Xong",JOptionPane.PLAIN_MESSAGE);         
             oracle.closeConnection();
             RemoveTableItem(tableRoleGrantUser);
@@ -811,11 +781,11 @@ public class PermissionGroup extends javax.swing.JFrame {
         String role = cbbRole.getSelectedItem().toString();
         String username =cbbUsername.getSelectedItem().toString();
         try {
-            oracle.openConnection();
-            Statement stmt;
-            stmt = oracle.conn.createStatement();
-            String sql = "REVOKE "+role+" FROM "+username+"";
-            ResultSet rset = stmt.executeQuery(sql);                   
+            String sql = "BEGIN revoke_role_user(?,?);END;";
+            PreparedStatement pstmt = oracle.conn.prepareStatement(sql);
+            pstmt.setString(1, role);
+            pstmt.setString(2, username);
+            ResultSet rs = pstmt.executeQuery();                       
             JOptionPane.showMessageDialog(null,"Đã hủy gán quyền "+role+" cho người dùng "+username,"Xong",JOptionPane.PLAIN_MESSAGE);         
             oracle.closeConnection();
             RemoveTableItem(tableRoleGrantUser);
@@ -833,7 +803,6 @@ public class PermissionGroup extends javax.swing.JFrame {
                 // Kết nối đến CSDL Oracle
 
                 Statement stmt = oracle.conn.createStatement();
-
                 // Truy vấn dữ liệu
                 ResultSet rs = stmt.executeQuery(sql);
 

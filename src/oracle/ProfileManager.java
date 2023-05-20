@@ -5,6 +5,7 @@
 package oracle;
 
 import java.awt.event.ItemEvent;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -406,16 +407,14 @@ public class ProfileManager extends javax.swing.JFrame {
         if (result == JOptionPane.YES_OPTION) {
             // Thực thi hành động cần thiết ở đây
             try {
-            oracle.openConnection();
-            Statement stmt;
-            stmt = oracle.conn.createStatement();
-             String sql = "DROP PROFILE "+profilename+" CASCADE";
-            ResultSet rset = stmt.executeQuery(sql);
-            
-            RemoveTableItem(jTable1);
-            loadData();
-            JOptionPane.showMessageDialog(null,"Hồ sơ đã bị xóa!");
-            oracle.closeConnection();
+                String sql = "BEGIN drop_profile(?);END;";
+                PreparedStatement pstmt = oracle.conn.prepareStatement(sql);
+                pstmt.setString(1, profilename);
+                pstmt.executeUpdate();                
+                RemoveTableItem(jTable1);
+                loadData();
+                JOptionPane.showMessageDialog(null,"Hồ sơ đã bị xóa!");
+                oracle.closeConnection();
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Lỗi truy vấn: " + ex.getMessage(), "Lỗi", JOptionPane.ERROR_MESSAGE);            
         }

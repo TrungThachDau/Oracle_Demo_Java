@@ -4,6 +4,7 @@
  */
 package oracle;
 
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -127,11 +128,11 @@ public class ChangePassword extends javax.swing.JFrame {
         if(password!=null)
         {
             try {
-            oracle.openConnection();
-            Statement stmt;
-            stmt = oracle.conn.createStatement();
-            String sql = "ALTER USER "+username+" IDENTIFIED BY "+password+"";
-            ResultSet rset = stmt.executeQuery(sql);
+                String sql = "BEGIN change_password_user(?,?);END;";
+                PreparedStatement pstmt = oracle.conn.prepareStatement(sql);
+                pstmt.setString(1, username);
+                pstmt.setString(2, password);
+                pstmt.executeUpdate();       
             JOptionPane.showMessageDialog(null,"Đổi mật khẩu thành công!");
         } catch (SQLException ex) {
             Logger.getLogger(Session.class.getName()).log(Level.SEVERE, null, ex);
