@@ -4,6 +4,7 @@
  */
 package oracle.model;
 
+import java.sql.CallableStatement;
 import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -74,24 +75,26 @@ public class CTDonHangDB {
     }
     
     
-    public boolean addCTDonHang(CTDonHangModel ctDonHang){
+    public int addCTDonHang(CTDonHangModel ctDonHang){
         try {
             orclConn.openConnection();
-            String sql = "INSERT INTO admin.CHITIETDONHANG(MACTDH, MASP, MADH, SOLUONG) values (?, ?, ?, ?)";
-            PreparedStatement ps = orclConn.conn.prepareStatement(sql);
-            ps.setInt(1, ctDonHang.getMaCTDH());
+//            ma_ct_dh, ma_sp, ma_dh, so_luong
+            String sql = "BEGIN create_order_detail(?, ?, ?, ?); END;";
+            CallableStatement ps = orclConn.conn.prepareCall(sql); 
+            ps.registerOutParameter(1, oracle.jdbc.OracleTypes.NUMBER);
             ps.setInt(2, ctDonHang.getMaSP());
             ps.setInt(3, ctDonHang.getMaDH());
             ps.setInt(4, ctDonHang.getSoLuong());
-            ps.executeUpdate();
+            ps.execute();
+            // Lấy kết quả trả về
+            int maCTDH = ps.getInt(1);
             orclConn.closeConnection();
-            return true;
-            
+            return maCTDH;
 
         } catch ( SQLException exception) {
            JOptionPane.showMessageDialog(null, "Lỗi truy vấn " + exception.getMessage(), "Lỗi", JOptionPane.ERROR_MESSAGE);
         }
-        return false;
+        return -1;
     }
     
     public boolean updateCTDonHang(CTDonHangModel cTDonHang){

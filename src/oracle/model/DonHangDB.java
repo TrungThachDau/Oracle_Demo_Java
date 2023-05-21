@@ -13,6 +13,7 @@ import java.sql.PreparedStatement;
 import java.sql.Statement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.CallableStatement;
 import java.util.ArrayList;
 import javax.sql.rowset.serial.SerialBlob;
 import javax.swing.JOptionPane;
@@ -83,26 +84,28 @@ public class DonHangDB {
         return null;
     }
     
-    public boolean addDonHang(DonHangModel donHang){
+    public int addDonHang(DonHangModel donHang, int soLuongKhach){
         try {
             orclConn.openConnection();
-            String sql = "INSERT INTO admin.DONHANG(MADH, THOIGIANDATDH, TRANGTHAIDH, TONGGIATRIDH, MANV, MOTADH, MABAN) values (?, ?, ?, ?, ?, ?, ?)";
-            PreparedStatement ps = orclConn.conn.prepareStatement(sql); 
-            ps.setInt(1, donHang.getMaDH());
-            ps.setDate(2, new Date(donHang.thoiGianDatHang.getTime()));
-            ps.setInt(3, donHang.trangThaiDH);
-            ps.setFloat(4, donHang.tongGiaTriDH);
-            ps.setInt(5, donHang.maNV);
-            ps.setString(6, donHang.MoTaDH);
-            ps.setInt(7, donHang.maBan);
-            ps.executeUpdate();
+//            maDH, tongGiaTri, soLuongKhach, maNV, moTaDH, maBan
+            String sql = "BEGIN create_order(?, ?, ?, ?, ?, ?); END;";
+            CallableStatement ps = orclConn.conn.prepareCall(sql); 
+            ps.registerOutParameter(1, oracle.jdbc.OracleTypes.NUMBER);
+            ps.setFloat(2, donHang.tongGiaTriDH);
+            ps.setInt(3, soLuongKhach);
+            ps.setInt(4, donHang.maNV);
+            ps.setString(5, donHang.MoTaDH);
+            ps.setInt(6, donHang.maBan);
+            ps.execute();
+            // Lấy kết quả trả về
+            int maDH = ps.getInt(1);
             orclConn.closeConnection();
-            return true;
+            return maDH;
 
         } catch ( SQLException exception) {
            JOptionPane.showMessageDialog(null, "Lỗi truy vấn " + exception.getMessage(), "Lỗi", JOptionPane.ERROR_MESSAGE);
         }
-        return false;
+        return -1;
     }
     
     public boolean updateDonHang(DonHangModel donHang){

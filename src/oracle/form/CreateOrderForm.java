@@ -206,7 +206,7 @@ public class CreateOrderForm extends javax.swing.JFrame {
         layout_giohangLayout.setVerticalGroup(
             layout_giohangLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout_giohangLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap(599, Short.MAX_VALUE)
                 .addGroup(layout_giohangLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel6)
                     .addComponent(txt_gh_ten_sp, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -309,17 +309,19 @@ public class CreateOrderForm extends javax.swing.JFrame {
             layout_productLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout_productLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout_productLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(layout_productLayout.createSequentialGroup()
-                        .addGap(220, 220, 220)
-                        .addComponent(btn_add_to_cart, javax.swing.GroupLayout.PREFERRED_SIZE, 326, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(btn_add_donhang, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(layout_productLayout.createSequentialGroup()
-                        .addComponent(lbl_hinh_anh, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout_productLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout_productLayout.createSequentialGroup()
+                        .addComponent(lbl_hinh_anh, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 643, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout_productLayout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
                         .addGroup(layout_productLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout_productLayout.createSequentialGroup()
-                                .addGap(400, 400, 400)
+                                .addComponent(btn_add_to_cart, javax.swing.GroupLayout.PREFERRED_SIZE, 326, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(btn_add_donhang, javax.swing.GroupLayout.PREFERRED_SIZE, 305, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout_productLayout.createSequentialGroup()
                                 .addGroup(layout_productLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -335,25 +337,23 @@ public class CreateOrderForm extends javax.swing.JFrame {
                                 .addGroup(layout_productLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                     .addComponent(txt_so_khach)
                                     .addComponent(cb_ban, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addGroup(layout_productLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(txt_total, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel3)))
-                            .addGroup(layout_productLayout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 925, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                                .addGroup(layout_productLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(layout_productLayout.createSequentialGroup()
+                                        .addGap(94, 94, 94)
+                                        .addComponent(jLabel3))
+                                    .addGroup(layout_productLayout.createSequentialGroup()
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(txt_total, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE)))))))
                 .addContainerGap())
         );
         layout_productLayout.setVerticalGroup(
             layout_productLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout_productLayout.createSequentialGroup()
-                .addGap(18, 18, 18)
+                .addContainerGap()
                 .addGroup(layout_productLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 584, Short.MAX_VALUE)
-                    .addGroup(layout_productLayout.createSequentialGroup()
-                        .addComponent(lbl_hinh_anh, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 384, Short.MAX_VALUE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                    .addComponent(lbl_hinh_anh, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 569, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(layout_productLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout_productLayout.createSequentialGroup()
                         .addGroup(layout_productLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -375,7 +375,7 @@ public class CreateOrderForm extends javax.swing.JFrame {
                         .addComponent(jLabel3)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(txt_total, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(29, 29, 29)
+                .addGap(35, 35, 35)
                 .addGroup(layout_productLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btn_add_to_cart, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btn_add_donhang, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -390,16 +390,16 @@ public class CreateOrderForm extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(layout_product, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(layout_giohang, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(layout_giohang, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGap(0, 0, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(layout_product, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(layout_giohang, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap())
+                    .addComponent(layout_giohang, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(layout_product, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
         );
 
         pack();
@@ -542,191 +542,6 @@ public class CreateOrderForm extends javax.swing.JFrame {
         }
     }
     
-    private void table_productMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_table_productMousePressed
-        // TODO add your handling code here:
-        
-        
-    }//GEN-LAST:event_table_productMousePressed
-
-    private void btn_add_to_cartActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_add_to_cartActionPerformed
-        // TODO add your handling code here:
-        if (table_product.getSelectedRow() != -1 ) {
-                btn_add_donhang.setEnabled(true);
-                // Lay san pham duoc chon
-             if (table_product.getSelectedRow() == -1) {
-                 JOptionPane.showMessageDialog(null, "Vui lòng chọn sản phẩm !");
-                     return;
-             }
-             
-             
-
-             btn_add_donhang.setEnabled(true);
-
-             int id_selected = (int) table_product.getValueAt(table_product.getSelectedRow(), 0);
-             
-             SanPhamModel productModel = new SanPhamModel();
-             for (SanPhamModel item : productModels) {
-                 if (item.getMaSP() == id_selected) {
-                     productModel = item;
-                     break;
-                 }
-             }
-             // kiem tra san pham con trong kho khong
-             if (productModel.getSoLuongTon() <= 0 || productModel.getSoLuongTon() < (int) txt_quantity_order_product.getValue()) {
-                JOptionPane.showMessageDialog(null, "Vượt quá số lượng sản phẩm còn lại !");
-                 return;
-            }
-             
-             // kiem tra sp duoc chon da co trong gio hang chua
-             boolean flag = false;
-             for (int i = 0; i < cartModels.size(); i++) {
-                 GioHangModel cartModel = cartModels.get(i);
-                 if (cartModel.getProductModel().getMaSP() == productModel.getMaSP()) {
-                     // DA co trong gio hang
-                     // kiem tra co vuot qua slton khong
-                     int newQuan = cartModel.getSoLuong()+ (int) txt_quantity_order_product.getValue();
-                     if (newQuan > productModel.getSoLuongTon()) {
-                         JOptionPane.showMessageDialog(null, "Vượt quá số lượng sản phẩm còn lại !");
-                         return;
-                     }
-                     
-                     // Khong vuot, cap nhat sp trong gio
-                     
-                     cartModels.get(i).setSoLuong(newQuan);
-                     flag = true;
-                     break;
-                 }
-             }
-
-             if (!flag) {
-                 // chua co trong gio hang => them moi
-                 cartModels.add(new GioHangModel(productModel, (int) txt_quantity_order_product.getValue()));
-             }
-
-             // Cap nhat len listview cart
-             loadGioHang();
-             updateTotalBill(cartModels);
-             txt_quantity_order_product.setValue(1); 
-        }
-        
-        
-    }//GEN-LAST:event_btn_add_to_cartActionPerformed
-
-    private void btn_add_donhangActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_add_donhangActionPerformed
-        try {
-            // TODO add your handling code here:
-//            Kiem tra du lieu nhap
-            int soKhach = 1;
-            try {
-                 soKhach = Integer.parseInt(txt_so_khach.getText());
-                
-            } catch (Exception e) {
-                JOptionPane.showMessageDialog(null, "Vui lòng nhập số khách đúng định dạng !");
-                return;
-            }
-            
-            if (soKhach <= 0) {
-                JOptionPane.showMessageDialog(null, "Vui lòng nhập số khách lớn hơn 0 !");
-                return;
-            }
-            
-            if (cartModels.size() <= 0) {
-                JOptionPane.showMessageDialog(null, "Vui lòng thêm sản phẩm vào giỏ hàng !");
-                return;
-            }
-            
-            if (DB.confirmAction("Bạn muốn tạo đơn hàng ?")) {
-                // Tao don hang
-                DonHangDB donHangDB = new DonHangDB(connDB);
-                CTDonHangDB cTDonHangDB = new CTDonHangDB(connDB);
-                boolean complete = false;
-
-                int maBan = Integer.parseInt(cb_ban.getSelectedItem().toString());
-                Date currentDate = new Date();
-                int trangThai = 0; // chua thanh toan
-                float tongGiaTri  = 0;
-                // tinh tong gia tri gio hang
-                for (GioHangModel cartModel : cartModels) {
-                    tongGiaTri += cartModel.getSoLuong() * cartModel.getProductModel().getGiaSP();
-                }
-                int maNV = 1;
-                String moTaDH = "";
-                int maDH = DB.getLastIndex("MADH", "admin.DONHANG", connDB) + 1;
-                DonHangModel donHangModel = new DonHangModel(maDH, currentDate, trangThai, tongGiaTri, maNV, moTaDH, maBan);
-
-                //            Them don hang vao db
-                complete = donHangDB.addDonHang(donHangModel);
-
-                // Cap nhat trang thai ban
-                BanDB banDB = new BanDB(connDB);
-                BanModel ban = banDB.getBan(donHangModel.getMaBan());
-                ban.setTrangThaiBan(1);
-                ban.setSoLuongKhach(soKhach);
-
-                banDB.updateBan(ban);
-
-                //            Tao chi tiet don hang
-                for (GioHangModel cartModel : cartModels) {
-                    int maCTDH = DB.getLastIndex("MACTDH", "admin.CHITIETDONHANG", connDB) + 1;
-                    int maSP = cartModel.getProductModel().getMaSP();
-                    int soLuong = cartModel.getSoLuong();
-                    CTDonHangModel cTDonHangModel = new CTDonHangModel(maCTDH, maSP, maDH, soLuong);
-                    //                them chitietdonhang vao db
-                    complete = cTDonHangDB.addCTDonHang(cTDonHangModel);
-                    // Giam so luong ton san pham
-                    SanPhamModel sanPham = sanPhamDB.getSanPham(maSP);
-                    sanPham.setSoLuongTon(sanPham.getSoLuongTon() - soLuong);
-                    sanPhamDB.updateSanPham(sanPham);
-                }
-
-                // Xoa du lieu
-                cartModels.clear();
-                loadGioHang();
-                updateTotalBill(cartModels);
-
-                if (complete) {
-                    JOptionPane.showMessageDialog(null, "Thêm thành công");
-                    this.dispose();
-                }
-            }
-            
-            
-        } catch (SQLException ex) {
-            Logger.getLogger(CreateOrderForm.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }//GEN-LAST:event_btn_add_donhangActionPerformed
-
-    private void table_productMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_table_productMouseReleased
-        // TODO add your handling code here:
-        
-        int maSP = Integer.parseInt(table_product.getValueAt(table_product.getSelectedRow(), 0).toString().trim());
-        String tenSP = table_product.getValueAt(table_product.getSelectedRow(), 1).toString();
-        txt_product_name.setText(tenSP);
-        
-        for (SanPhamModel productModel : productModels) {
-            if (productModel.getMaSP() == maSP) {
-                
-                // neu slton = 0 => an nut them vao gio hang
-                if (productModel.getSoLuongTon() <= 0) {
-                    btn_add_to_cart.setEnabled(false);
-                }
-                else{
-                    btn_add_to_cart.setEnabled(true);
-                }
-                // hien thi anh sp
-                loadAnhSP(productModel.getMaSP(), lbl_hinh_anh);
-                break;
-            }
-        }
-        
-        
-    }//GEN-LAST:event_table_productMouseReleased
-
-    private void txt_quantity_order_productInputMethodTextChanged(java.awt.event.InputMethodEvent evt) {//GEN-FIRST:event_txt_quantity_order_productInputMethodTextChanged
-        // TODO add your handling code here:
-        
-    }//GEN-LAST:event_txt_quantity_order_productInputMethodTextChanged
-
     private void txt_gh_sl_spInputMethodTextChanged(java.awt.event.InputMethodEvent evt) {//GEN-FIRST:event_txt_gh_sl_spInputMethodTextChanged
         // TODO add your handling code here:
     }//GEN-LAST:event_txt_gh_sl_spInputMethodTextChanged
@@ -779,6 +594,168 @@ public class CreateOrderForm extends javax.swing.JFrame {
             }
         }
     }//GEN-LAST:event_btn_gh_xoa_spActionPerformed
+
+    private void btn_add_donhangActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_add_donhangActionPerformed
+        // TODO add your handling code here:
+        //            Kiem tra du lieu nhap
+        int soKhach = 1;
+        try {
+            soKhach = Integer.parseInt(txt_so_khach.getText());
+            
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Vui lòng nhập số khách đúng định dạng !");
+            return;
+        }
+        if (soKhach <= 0) {
+            JOptionPane.showMessageDialog(null, "Vui lòng nhập số khách lớn hơn 0 !");
+            return;
+        }
+        if (cartModels.size() <= 0) {
+            JOptionPane.showMessageDialog(null, "Vui lòng thêm sản phẩm vào giỏ hàng !");
+            return;
+        }
+        if (DB.confirmAction("Bạn muốn tạo đơn hàng ?")) {
+            // Tao don hang
+            DonHangDB donHangDB = new DonHangDB(connDB);
+            CTDonHangDB cTDonHangDB = new CTDonHangDB(connDB);
+            
+            int maBan = Integer.parseInt(cb_ban.getSelectedItem().toString());
+            float tongGiaTri  = 0;
+            // tinh tong gia tri gio hang
+            for (GioHangModel cartModel : cartModels) {
+                tongGiaTri += cartModel.getSoLuong() * cartModel.getProductModel().getGiaSP();
+            }
+            int maNV = 1;
+            String moTaDH = "";
+//                int maDH = DB.getLastIndex("MADH", "admin.DONHANG", connDB) + 1;
+            DonHangModel donHangModel = new DonHangModel(0, null, 0, tongGiaTri, maNV, moTaDH, maBan);
+
+            //            Them don hang vao db
+            int maDH = donHangDB.addDonHang(donHangModel, soKhach);
+            if (maDH == -1) {
+                JOptionPane.showMessageDialog(null, "Tạo đơn thất bại");
+                this.dispose();
+            }
+
+            boolean complete = false;
+            //            Tao chi tiet don hang
+            for (GioHangModel cartModel : cartModels) {
+                int maSP = cartModel.getProductModel().getMaSP();
+                int soLuong = cartModel.getSoLuong();
+                CTDonHangModel cTDonHangModel = new CTDonHangModel(0, maSP, maDH, soLuong);
+                //                them chitietdonhang vao db
+                int maCTDH = cTDonHangDB.addCTDonHang(cTDonHangModel);
+                if (maDH == -1) {
+                    JOptionPane.showMessageDialog(null, "Tạo đơn thất bại");
+                    this.dispose();
+                }
+            }
+
+            // Xoa du lieu
+            cartModels.clear();
+            loadGioHang();
+            updateTotalBill(cartModels);
+            JOptionPane.showMessageDialog(null, "Thêm thành công");
+            this.dispose();
+            
+        }
+    }//GEN-LAST:event_btn_add_donhangActionPerformed
+
+    private void btn_add_to_cartActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_add_to_cartActionPerformed
+        // TODO add your handling code here:
+        if (table_product.getSelectedRow() != -1 ) {
+            btn_add_donhang.setEnabled(true);
+            // Lay san pham duoc chon
+            if (table_product.getSelectedRow() == -1) {
+                JOptionPane.showMessageDialog(null, "Vui lòng chọn sản phẩm !");
+                return;
+            }
+
+            btn_add_donhang.setEnabled(true);
+
+            int id_selected = (int) table_product.getValueAt(table_product.getSelectedRow(), 0);
+
+            SanPhamModel productModel = new SanPhamModel();
+            for (SanPhamModel item : productModels) {
+                if (item.getMaSP() == id_selected) {
+                    productModel = item;
+                    break;
+                }
+            }
+            // kiem tra san pham con trong kho khong
+            if (productModel.getSoLuongTon() <= 0 || productModel.getSoLuongTon() < (int) txt_quantity_order_product.getValue()) {
+                JOptionPane.showMessageDialog(null, "Vượt quá số lượng sản phẩm còn lại !");
+                return;
+            }
+
+            // kiem tra sp duoc chon da co trong gio hang chua
+            boolean flag = false;
+            for (int i = 0; i < cartModels.size(); i++) {
+                GioHangModel cartModel = cartModels.get(i);
+                if (cartModel.getProductModel().getMaSP() == productModel.getMaSP()) {
+                    // DA co trong gio hang
+                    // kiem tra co vuot qua slton khong
+                    int newQuan = cartModel.getSoLuong()+ (int) txt_quantity_order_product.getValue();
+                    if (newQuan > productModel.getSoLuongTon()) {
+                        JOptionPane.showMessageDialog(null, "Vượt quá số lượng sản phẩm còn lại !");
+                        return;
+                    }
+
+                    // Khong vuot, cap nhat sp trong gio
+
+                    cartModels.get(i).setSoLuong(newQuan);
+                    flag = true;
+                    break;
+                }
+            }
+
+            if (!flag) {
+                // chua co trong gio hang => them moi
+                cartModels.add(new GioHangModel(productModel, (int) txt_quantity_order_product.getValue()));
+            }
+
+            // Cap nhat len listview cart
+            loadGioHang();
+            updateTotalBill(cartModels);
+            txt_quantity_order_product.setValue(1);
+        }
+
+    }//GEN-LAST:event_btn_add_to_cartActionPerformed
+
+    private void txt_quantity_order_productInputMethodTextChanged(java.awt.event.InputMethodEvent evt) {//GEN-FIRST:event_txt_quantity_order_productInputMethodTextChanged
+        // TODO add your handling code here:
+
+    }//GEN-LAST:event_txt_quantity_order_productInputMethodTextChanged
+
+    private void table_productMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_table_productMouseReleased
+        // TODO add your handling code here:
+
+        int maSP = Integer.parseInt(table_product.getValueAt(table_product.getSelectedRow(), 0).toString().trim());
+        String tenSP = table_product.getValueAt(table_product.getSelectedRow(), 1).toString();
+        txt_product_name.setText(tenSP);
+
+        for (SanPhamModel productModel : productModels) {
+            if (productModel.getMaSP() == maSP) {
+
+                // neu slton = 0 => an nut them vao gio hang
+                if (productModel.getSoLuongTon() <= 0) {
+                    btn_add_to_cart.setEnabled(false);
+                }
+                else{
+                    btn_add_to_cart.setEnabled(true);
+                }
+                // hien thi anh sp
+                loadAnhSP(productModel.getMaSP(), lbl_hinh_anh);
+                break;
+            }
+        }
+
+    }//GEN-LAST:event_table_productMouseReleased
+
+    private void table_productMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_table_productMousePressed
+        // TODO add your handling code here:
+
+    }//GEN-LAST:event_table_productMousePressed
 
     /**
      * @param args the command line arguments
