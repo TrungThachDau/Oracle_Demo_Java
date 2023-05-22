@@ -440,22 +440,9 @@ public class OrderControlPanel extends javax.swing.JPanel {
         //        Lay ma don hang dang duoc chon
         int maDH = Integer.parseInt(table_don_hang.getValueAt(table_don_hang.getSelectedRow(), 0).toString().trim());
         if (confirmAction("Bạn muốn xóa đơn hàng này ?")) {
-            // Xoa chi tiet don hang
-            ArrayList<CTDonHangModel> cTDonHangs = cTDonHangDB.getCTDonHangFromDonHangs(maDH);
-            SanPhamModel sanPham = new SanPhamModel();
-            for (CTDonHangModel cTDonHang : cTDonHangs) {
-                cTDonHangDB.deleteCTDonHang(cTDonHang.getMaCTDH());
-                // Them lai slton cho san pham
-                sanPham = sanPhamDB.getSanPham(cTDonHang.getMaSP());
-                sanPham.setSoLuongTon(sanPham.getSoLuongTon() + cTDonHang.getSoLuong());
-                sanPhamDB.updateSanPham(sanPham);
-            }
 //            Xoa don hang
             DonHangModel donHang = donHangDB.getDonHang(maDH);
             boolean result = donHangDB.deleteDonHang(maDH);
-            
-            
-            
             if (result){
                 //                Cap nhat trang thai ban
                 BanModel bm = banDB.getBan(donHang.getMaBan());
@@ -496,11 +483,6 @@ public class OrderControlPanel extends javax.swing.JPanel {
                 cTDonHang.setSoLuong(newSoLuong);
                 // luu xuong db
                 boolean result = cTDonHangDB.updateCTDonHang(cTDonHang);
-                
-                // cap nhat lai so luong ton sp
-                int newSLTon = sanPham.getSoLuongTon() - (newSoLuong - oldSoLuong);
-                sanPham.setSoLuongTon(newSLTon);
-                sanPhamDB.updateSanPham(sanPham);
 
                 // CAp nhat lai tong tien don hang
                 DonHangModel currentDonHang = donHangDB.getDonHang(cTDonHang.getMaDH());
@@ -539,38 +521,6 @@ public class OrderControlPanel extends javax.swing.JPanel {
             if (DB.confirmAction("Bạn muốn xóa sản phẩm này ?")) {
                 // xoa ctdh
                 boolean result = cTDonHangDB.deleteCTDonHang(maCTDH);
-                
-                // cap nhat lai so luong ton sp
-                SanPhamModel sanPham = sanPhamDB.getSanPham(cTDonHang.getMaSP());
-                int newSLTon = sanPham.getSoLuongTon() + cTDonHang.getSoLuong();
-                sanPham.setSoLuongTon(newSLTon);
-                sanPhamDB.updateSanPham(sanPham);
-                
-                
-                // Kiem tra don hang con san pham khong
-                ArrayList<CTDonHangModel> dsCTDH = cTDonHangDB.getCTDonHangFromDonHangs(cTDonHang.getMaDH());
-                if (dsCTDH.size() == 0) {
-                    // khong con san pham
-                    // xoa don hang
-                    DonHangModel donHang = donHangDB.getDonHang(cTDonHang.getMaDH());
-                    donHangDB.deleteDonHang(donHang.getMaDH());
-                    //                Cap nhat trang thai ban
-                    BanModel bm = banDB.getBan(donHang.getMaBan());
-                    bm.setTrangThaiBan(0);
-                    bm.setSoLuongKhach(0);
-                    banDB.updateBan(bm);
-                }
-                else{
-                    // cap nhat tong gia don hang
-                    // CAp nhat lai tong tien don hang
-                    DonHangModel currentDonHang = donHangDB.getDonHang(cTDonHang.getMaDH());
-                    float totalChange = currentDonHang.getTongGiaTriDH() - (cTDonHang.getSoLuong() * sanPham.getGiaSP());
-                    currentDonHang.setTongGiaTriDH(totalChange);
-                    result = donHangDB.updateDonHang(currentDonHang);
-                }
-                
-                
-
                 if (result) {
                     JOptionPane.showMessageDialog(null, "Xóa thành công");
                     // load lai dsdonhang

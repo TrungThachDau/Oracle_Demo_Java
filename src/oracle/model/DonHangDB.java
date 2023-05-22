@@ -133,10 +133,11 @@ public class DonHangDB {
     public boolean deleteDonHang(int maDH){
         try {
             orclConn.openConnection();
-            String sql = "DELETE admin.DONHANG WHERE MADH = ?";
-            PreparedStatement ps = orclConn.conn.prepareStatement(sql);
-            ps.setInt(1, maDH);
-            ps.executeUpdate();
+//            maDH, tongGiaTri, soLuongKhach, maNV, moTaDH, maBan
+            String sql = "BEGIN delete_order(?); END;";
+            CallableStatement ps = orclConn.conn.prepareCall(sql); 
+            ps.setFloat(1, maDH);
+            ps.execute();
             orclConn.closeConnection();
             return true;
 

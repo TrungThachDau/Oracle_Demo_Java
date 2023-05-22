@@ -101,16 +101,13 @@ public class CTDonHangDB {
         try
         {
             orclConn.openConnection();
-            stmt = orclConn.conn.createStatement();
-            String sql = "UPDATE admin.CHITIETDONHANG SET MASP = ?, MADH = ?, SOLUONG = ? WHERE MACTDH = ?";
-            PreparedStatement ps = orclConn.conn.prepareStatement(sql); 
-            ps.setInt(1, cTDonHang.getMaSP());
-            ps.setInt(2, cTDonHang.getMaDH());
-            ps.setInt(3, cTDonHang.getSoLuong());
-            ps.setInt(4, cTDonHang.getMaCTDH());
-            ps.executeUpdate();
-            
-            stmt.close();
+//            ma_ct_dh, ma_sp, ma_dh, so_luong
+            String sql = "BEGIN update_order_detail(?, ?); END;";
+            CallableStatement ps = orclConn.conn.prepareCall(sql); 
+            ps.setInt(1, cTDonHang.getMaCTDH());
+            ps.setInt(2, cTDonHang.getSoLuong());
+            ps.execute();
+            // Lấy kết quả trả về
             orclConn.closeConnection();
                         
         } catch(SQLException ex)
@@ -126,13 +123,12 @@ public class CTDonHangDB {
         try
         {
             orclConn.openConnection();
-            stmt = orclConn.conn.createStatement();
-            String sql = "DELETE admin.CHITIETDONHANG WHERE MACTDH = ?";
-            PreparedStatement ps = orclConn.conn.prepareStatement(sql);
+//            ma_ct_dh, ma_sp, ma_dh, so_luong
+            String sql = "BEGIN delete_order_detail(?); END;";
+            CallableStatement ps = orclConn.conn.prepareCall(sql); 
             ps.setInt(1, maCTDH);
-            ps.executeUpdate();
-            
-            stmt.close();
+            ps.execute();
+            // Lấy kết quả trả về
             orclConn.closeConnection();
                         
         } catch(SQLException ex)
